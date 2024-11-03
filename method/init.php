@@ -28,13 +28,13 @@
             $this->set_query($sql);
             $this->excute_query();
 
-            // Tạo bảng Question
+            // Tạo bảng Question với độ khó từ 1 đến 3
             $sql = "CREATE TABLE IF NOT EXISTS Question (
                 QuestID INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                 qDescription TEXT NOT NULL,
                 qAnswer VARCHAR(255) NOT NULL,
                 qType VARCHAR(50) NOT NULL,
-                qDifficulty INT(1) NOT NULL
+                qDifficulty ENUM('1', '2', '3') NOT NULL COMMENT '1=Dễ, 2=Trung, 3=Khó'
             )";
             $this->set_query($sql);
             $this->excute_query();

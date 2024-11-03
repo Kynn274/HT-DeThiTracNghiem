@@ -6,15 +6,20 @@
         // Thêm một câu hỏi mới
         public function add_question($description, $answer, $type, $difficulty)
         {
+            if (!in_array($difficulty, [1, 2, 3])) {
+                throw new Exception("Độ khó không hợp lệ. Chỉ chấp nhận 1 (Dễ), 2 (Trung), hoặc 3 (Khó).");
+            }
             $sql = "INSERT INTO Question (qDescription, qAnswer, qType, qDifficulty)
                     VALUES ('{$description}', '{$answer}', '{$type}', {$difficulty})";
             $this->set_query($sql);
             $this->excute_query();
         }
 
-        // Sửa câu hỏi
         public function update_question($questID, $description, $answer, $type, $difficulty)
         {
+            if (!in_array($difficulty, [1, 2, 3])) {
+                throw new Exception("Độ khó không hợp lệ. Chỉ chấp nhận 1 (Dễ), 2 (Trung), hoặc 3 (Khó).");
+            }
             $sql = "UPDATE Question 
                     SET qDescription = '{$description}', qAnswer = '{$answer}', qType = '{$type}', qDifficulty = {$difficulty}
                     WHERE QuestID = {$questID}";
