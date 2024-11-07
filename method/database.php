@@ -14,7 +14,6 @@
         {
             $this->conn = new mysqli($this->CONFIG_servername, $this->CONFIG_username, $this->CONFIG_password, $this->CONFIG_dbname);
 
-            // Check connection
             if ($this->conn->connect_error) {
                 die("Connection failed: " . $this->conn->connect_error);
             }
@@ -29,6 +28,11 @@
         {
             $result = $this->conn->query($this->query);
             return $result;
+        }
+
+        public function get_connection()
+        {
+            return $this->conn;
         }
 
         public function close()
