@@ -37,8 +37,8 @@
                       <li class="scroll-to-section"><a href="#services">Services</a></li>
                       <li class="scroll-to-section"><a href="#courses">Courses</a></li>
                       <li class="scroll-to-section"><a href="#team">Team</a></li>
-                      <li class="scroll-to-section"><a href="#events">Events</a></li>
-                      <li class="scroll-to-section"><a href="#contact">Register Now!</a></li>
+                      <li class="scroll-to-section"><button class="btn btn-register" id="register-btn">Register</button></li>
+                      <li class="scroll-to-section"><button class="btn btn-signin" id="signin-btn">Sign In</button></li>
                   </ul>   
                     <a class='menu-trigger'>
                         <span>Menu</span>

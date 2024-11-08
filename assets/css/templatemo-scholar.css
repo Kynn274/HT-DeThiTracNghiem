@@ -158,7 +158,7 @@ body {
   font-weight: 600;
 }
 
-.main-button a {
+.main-button a{
   display: inline-block;
   background-color: #fff;
   color: #7a6ad8;
@@ -392,7 +392,7 @@ Header Style
   line-height: 40px;
 }
 
-.header-area .main-nav .nav li a {
+.header-area .main-nav .nav li a, .btn-register, .btn-signin {
   display: block;
   padding-left: 20px;
   padding-right: 20px;
@@ -411,6 +411,10 @@ Header Style
   letter-spacing: .25px;
 }
 
+.btn-register, .btn-signin {
+  line-height: 28px;
+}
+
 .background-header .main-nav .nav {margin-top: 20px;}
 
 .background-header .main-nav .nav li {
@@ -418,13 +422,14 @@ Header Style
   line-height: 80px;
 }
 
-.header-area .main-nav .nav li:hover a {
-  opacity: 0.8;
+.header-area .main-nav .nav li:hover a, .btn-register:hover, .btn-signin:hover {
+  opacity: 0.8 !important;
+  color: #fff !important;
 }
-.header-area .main-nav .nav li a.active {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.10);
-  opacity: 1;
+.header-area .main-nav .nav li a.active, .btn-register.active, .btn-signin.active {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.10) !important;
+  opacity: 1 !important;
 }
 
 .background-header .main-nav .nav li:hover a {
@@ -552,11 +557,10 @@ Header Style
     padding-left: 2px;
     padding-right: 2px;
   }
-  .header-area .main-nav .nav li a {
+  .header-area .main-nav .nav li a, .btn-register, .btn-signin {
     padding-left: 10px;
     padding-right: 10px;
   }
-
 }
 
 @media (max-width: 767px) {

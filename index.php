@@ -3,6 +3,16 @@
   include 'header.php';
 ?>
 
+  <div class="signin-container">
+    <h2>Sign In</h2>
+    <button class="btn btn-close close-signin-btn position-absolute top-0 start-100 bg" id="close-signin-btn"></button>
+    <form action="signin.php" method="post">
+      <input type="text" name="username" placeholder="Username">
+      <input type="password" name="password" placeholder="Password">
+      <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
+      <button type="submit">Sign In</button>
+    </form>
+  </div>
   <div class="main-banner" id="top">
     <div class="container">
       <div class="row">
@@ -59,7 +69,7 @@
     </div>
   </div>
 
-  <div class="services section" id="services">
+  <!-- <div class="services section" id="services">
     <div class="container">
       <div class="row">
         <div class="col-lg-4 col-md-6">
@@ -581,7 +591,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <?php
     include 'footer.php';
