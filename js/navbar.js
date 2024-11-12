@@ -1,33 +1,42 @@
 (function(){
-
 	'use strict'
 
-
 	var siteMenuClone = function() {
-		var jsCloneNavs = document.querySelectorAll('.js-clone-nav');
+		var jsCloneNavs = document.querySelectorAll('.js-clone-nav>li')
 		var siteMobileMenuBody = document.querySelector('.site-mobile-menu-body');
-		
-
-
+		var newNavWrap = document.createElement('ul');
+		newNavWrap.classList.add('site-nav-wrap', 'mx-auto', 'fw-bold');
+		// Clone menu
 		jsCloneNavs.forEach(nav => {
 			var navCloned = nav.cloneNode(true);
-			navCloned.setAttribute('class', 'site-nav-wrap');
-			siteMobileMenuBody.appendChild(navCloned);
+			console.log(navCloned);
+			newNavWrap.appendChild(navCloned);
 		});
+		var separator = document.createElement('hr');
+			separator.style.margin = '20px 0';
+			separator.style.borderColor = 'rgba(255,255,255,0.1)';
+			newNavWrap.appendChild(separator);
+
+		var CloneButtons = document.createElement('li');
+			CloneButtons.classList.add('mobile-auth-buttons');
+
+		var loginBtn = document.querySelector('.auth-btn.login-btn').cloneNode(true);
+		CloneButtons.appendChild(loginBtn);
+		var registerBtn = document.querySelector('.auth-btn.register-btn').cloneNode(true);
+		CloneButtons.appendChild(registerBtn);
+		
+		newNavWrap.appendChild(CloneButtons);
+		siteMobileMenuBody.appendChild(newNavWrap);
 
 		setTimeout(function(){
-
 			var hasChildrens = document.querySelector('.site-mobile-menu').querySelectorAll(' .has-children');
 
 			var counter = 0;
 			hasChildrens.forEach( hasChild => {
-				
 				var refEl = hasChild.querySelector('a');
-
 				var newElSpan = document.createElement('span');
 				newElSpan.setAttribute('class', 'arrow-collapse collapsed');
-
-				// prepend equivalent to jquery
+				
 				hasChild.insertBefore(newElSpan, refEl);
 
 				var arrowCollapse = hasChild.querySelector('.arrow-collapse');
@@ -40,11 +49,8 @@
 
 				counter++;
 			});
-
 		}, 1000);
 
-
-		// Click js-menu-toggle
 
 		var menuToggle = document.querySelectorAll(".js-menu-toggle");
 		var mTog;
@@ -63,8 +69,6 @@
 			});
 		})
 
-
-
 		var specifiedElement = document.querySelector(".site-mobile-menu");
 		var mt, mtoggleTemp;
 		document.addEventListener('click', function(event) {
@@ -80,11 +84,7 @@
 					mtoggleTemp.classList.remove('active');
 				}
 			}
-
 		});
-
 	}; 
 	siteMenuClone();
-
-
 })()
