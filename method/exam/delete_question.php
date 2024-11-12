@@ -1,6 +1,6 @@
 <?php
-require("../m_question.php");
-require("../init.php");
+require_once("../m_question.php");
+require_once("../init.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['questID']) && !empty($_POST['questID'])) {

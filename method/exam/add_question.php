@@ -1,5 +1,5 @@
 <?php
-require("../m_question.php");
+require_once("../m_question.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $description = $_POST['description'];

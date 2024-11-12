@@ -1,5 +1,5 @@
 <?php
-require("../m_question.php");
+require_once("../m_question.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $topic = $_POST['topic']; // Lấy chủ đề từ form
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <option value="Địa lý">Địa lý</option>
         <option value="Lịch sử">Lịch sử</option>
         <option value="Khoa học">Khoa học</option>
-        <option value="Toán học">Toán học</option>
+        <option value="Toán học">Toán học</option> 
     </select><br>
 
     <label for="type">Dạng câu hỏi:</label>
