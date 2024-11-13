@@ -3052,7 +3052,9 @@ textarea.form-control-lg {
 .dropdown,
 .dropstart {
   position: relative; }
-
+.dropdown{
+  width: max-content;
+}
 .dropdown-toggle {
   white-space: nowrap; }
   .dropdown-toggle::after {
@@ -17205,7 +17207,7 @@ textarea {
   background: -o-linear-gradient(310deg, #306ee8 0%, #3038e8 100%);
   background: linear-gradient(140deg, #306ee8 0%, #3038e8 100%);
   font-size: 14px;
-  padding: 70px 0;
+  padding: 50px 0;
   color: white; }
   .site-footer a {
     color: rgba(255, 255, 255, 0.5);
@@ -17226,6 +17228,7 @@ textarea {
       font-weight: 600;
       letter-spacing: .1rem;
       text-transform: uppercase;
+      text-align: center;
       margin-bottom: 15px;
       color: #fff; }
     .site-footer .widget .links {

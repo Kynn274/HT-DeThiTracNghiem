@@ -1,6 +1,131 @@
 <?php
 	include 'head.php';
 ?>
+<style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f0f9ff;
+            --text-color: #1e293b;
+            --border-color: #bfdbfe;
+            --error-color: #ef4444;
+        }
+
+        /* body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        } */
+
+        body>.container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row > * {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .difficulty-section {
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .difficulty-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .password-section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .error {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .total-questions {
+            text-align: right;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            color: var(--primary-color);
+        }
+    </style>
 <body>
 	<?php
 		include 'header.php';
@@ -22,434 +147,101 @@
 
 	<div class="section" id="content">
 		<div class="container">
-			<div class="row justify-content-between">
-				<div class="col-lg-7 mb-4 mb-lg-0" data-aos="fade-up">
-					<img src="images/img-3.jpg" alt="Image" class="img-fluid rounded
-					">
-				</div>
-				<div class="col-lg-4 ps-lg-2" data-aos="fade-up" data-aos-delay="100">
-					<div class="mb-5">
-						<h2 class="text-black h4">Make payment fast and smooth.</h2>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-					</div>
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<span class="bi-wallet-fill me-4"></span>
-						</div>
-						<div>
-							<h3>Build financial</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						</div>
-					</div>
+		<h1>Tạo Đề Thi/Cuộc Thi</h1>
+        <form id="examForm" onsubmit="handleSubmit(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="examName">Tên đề thi:</label>
+                    <input type="text" id="examName" name="examName" required>
+                </div>
+                <div class="form-group">
+                    <label for="school">Trường:</label>
+                    <input type="text" id="school" name="school" required>
+                </div>
+            </div>
 
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<span class="bi-pie-chart-fill me-4"></span>
-						</div>
-						<div>
-							<h3>Invest for the future</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						</div>
-					</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="subject">Môn học:</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">-- Chọn môn học --</option>
+                        <option value="toan">Toán</option>
+                        <option value="ly">Vật lý</option>
+                        <option value="hoa">Hóa học</option>
+                        <option value="sinh">Sinh học</option>
+                        <option value="anh">Tiếng Anh</option>
+                        <option value="van">Ngữ văn</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Thời gian làm bài (phút):</label>
+                    <input type="number" id="duration" name="duration" min="15" max="180" value="60" required>
+                </div>
+            </div>
 
-				</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="examDate">Ngày làm bài:</label>
+                    <input type="datetime-local" id="examDate" name="examDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="questionBank">Thư viện đề thi:</label>
+                    <select id="questionBank" name="questionBank" required>
+                        <option value="">-- Chọn thư viện --</option>
+                        <option value="bank1">Đề thi THPT Quốc gia</option>
+                        <option value="bank2">Đề thi học kì</option>
+                        <option value="bank3">Đề thi thử nghiệm</option>
+                    </select>
+                </div>
+            </div>
 
-			</div>
+            <div class="form-group">
+                <label for="totalQuestions">Tổng số câu hỏi:</label>
+                <input type="number" id="totalQuestions" name="totalQuestions" min="1" max="100" value="40" required onchange="updateDifficultyLimits()">
+            </div>
+
+            <div class="difficulty-section">
+                <div class="difficulty-title">Phân bố độ khó</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="easyQuestions">Số câu dễ:</label>
+                        <input type="number" id="easyQuestions" name="easyQuestions" min="0" value="16" onchange="validateDifficultyDistribution()">
+                    </div>
+                    <div class="form-group">
+                        <label for="mediumQuestions">Số câu trung bình:</label>
+                        <input type="number" id="mediumQuestions" name="mediumQuestions" min="0" value="16" onchange="validateDifficultyDistribution()">
+                    </div>
+                    <div class="form-group">
+                        <label for="hardQuestions">Số câu khó:</label>
+                        <input type="number" id="hardQuestions" name="hardQuestions" min="0" value="8" onchange="validateDifficultyDistribution()">
+                    </div>
+                </div>
+                <div class="total-questions" id="questionDistributionTotal" max-value="" value="">
+                    Tổng: 40/40 câu
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="examMode">Chế độ tạo:</label>
+                    <select id="examMode" name="examMode" required onchange="togglePasswordField()">
+                        <option value="contest">Contest</option>
+                        <option value="pdf">PDF</option>
+                    </select>
+                </div>
+                <div class="form-group password-section" id="passwordSection">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Tạo đề thi</button>
+        </form>
 		</div>
 	</div>
 
-	<div class="section sec-features">
-		<div class="container">
-			<div class="row g-5">
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
-					<div class="feature d-flex">
-						<span class="bi-bag-check-fill"></span>
-						<div>
-							<h3>Build financial</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-						</div>
-					</div>
-				</div>
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-					<div class="feature d-flex">
-						<span class="bi-wallet-fill"></span>
-						<div>
-							<h3>Invest for the future</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-						</div>
-					</div>
-				</div>
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-					<div class="feature d-flex">
-						<span class="bi-pie-chart-fill"></span>
-						<div>
-							<h3>Responsible banking</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-7 order-lg-2 mb-4 mb-lg-0" data-aos="fade-up">
-					<img src="images/img-1.jpg" alt="Image" class="img-fluid">
-				</div>
-				<div class="col-lg-5 pe-lg-5" data-aos="fade-up" data-aos-delay="100">
-					<div class="mb-5">
-						<h2 class="text-black h4">Straight-forward way of financing</h2>
-					</div>
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<span class="bi-wallet-fill me-4"></span>
-						</div>
-						<div>
-							<h3>Build financial</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						</div>
-					</div>
-
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<span class="bi-pie-chart-fill me-4"></span>
-						</div>
-						<div>
-							<h3>Invest for the future</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						</div>
-					</div>
-
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<span class="bi-bag-check-fill me-4"></span>
-						</div>
-						<div>
-							<h3>Responsible banking</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="section sec-cta overlay" style="background-image: url('images/img-3.jpg')">
-	<div class="container">
-		<div class="row justify-content-between align-items-center">
-			<div class="col-lg-5" data-aos="fade-up" data-aos-delay="0">
-				<h2 class="heading">Wanna Talk To Us?</h2>
-				<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-			</div>
-			<div class="col-lg-5 text-end" data-aos="fade-up" data-aos-delay="100">
-				<a href="#" class="btn btn-outline-white-reverse">Contact us</a>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="section sec-portfolio bg-light pb-5	">
-	<div class="container">
-		<div class="row mb-5">
-			<div class="col-lg-5 mx-auto text-center ">
-				<h2 class="heading text-primary mb-3" data-aos="fade-up" data-aos-delay="0">Case Studies</h2>
-				<p class="mb-4" data-aos="fade-up" data-aos-delay="100">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-
-				<div id="post-slider-nav" data-aos="fade-up" data-aos-delay="200">
-					<button class="btn btn-primary py-2" class="prev" data-controls="prev">Prev</button>
-					<button class="btn btn-primary py-2" class="next" data-controls="next">Next</button>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<div class="post-slider-wrap" data-aos="fade-up" data-aos-delay="300">
-
-
-
-		<div id="post-slider" class="post-slider">
-			<div class="item">
-				<a href="case-study.html" class="card d-block">
-					<img src="images/img-1.jpg" class="card-img-top" alt="Image">
-					<div class="card-body">
-						<h5 class="card-title">Behind the word mountains</h5>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-					</div>
-				</a>
-			</div>
-
-			<div class="item">
-				<a href="case-study.html" class="card">
-					<img src="images/img-2.jpg" class="card-img-top" alt="Image">
-					<div class="card-body">
-						<h5 class="card-title">Behind the word mountains</h5>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-					</div>
-				</a>
-			</div>
-
-			<div class="item">
-				<a href="case-study.html" class="card">
-					<img src="images/img-3.jpg" class="card-img-top" alt="Image">
-					<div class="card-body">
-						<h5 class="card-title">Behind the word mountains</h5>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-					</div>
-				</a>
-			</div>
-
-			<div class="item">
-				<a href="case-study.html" class="card">
-					<img src="images/img-4.jpg" class="card-img-top" alt="Image">
-					<div class="card-body">
-						<h5 class="card-title">Behind the word mountains</h5>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-					</div>
-				</a>
-			</div>
-
-			<div class="item">
-				<a href="case-study.html" class="card">
-					<img src="images/img-1.jpg" class="card-img-top" alt="Image">
-					<div class="card-body">
-						<h5 class="card-title">Behind the word mountains</h5>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-					</div>
-				</a>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="section sec-testimonial bg-light">
-	<div class="container">
-		<div class="row mb-5 justify-content-center">
-			<div class="col-lg-6 text-center">
-				<h2 class="heading text-primary">Testimonials</h2>
-			</div>
-
-		</div>
-
-
-		<div class="testimonial-slider-wrap">
-			<div class="testimonial-slider" id="testimonial-slider">
-				<div class="item">
-					<div class="testimonial-half d-lg-flex bg-white">
-						<div class="img" style="background-image: url('images/img-4.jpg')">
-
-						</div>
-						<div class="text">
-							<blockquote>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-							</blockquote>
-							<div class="author">
-								<strong class="d-block text-black">John Campbell</strong>
-								<span>CEO & Co-founder</span>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="testimonial-half d-lg-flex bg-white">
-						<div class="img" style="background-image: url('images/img-3.jpg')">
-
-						</div>
-						<div class="text">
-							<blockquote>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-							</blockquote>
-							<div class="author">
-								<strong class="d-block text-black">John Campbell</strong>
-								<span>CEO & Co-founder</span>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<div class="testimonial-half d-lg-flex bg-white">
-						<div class="img" style="background-image: url('images/img-2.jpg')">
-
-						</div>
-						<div class="text">
-							<blockquote>
-								<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-							</blockquote>
-							<div class="author">
-								<strong class="d-block text-black">John Campbell</strong>
-								<span>CEO & Co-founder</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-<div class="section sec-news">
-	<div class="container">
-		<div class="row mb-5">
-			<div class="col-lg-7">
-				<h2 class="heading text-primary">Latest News</h2>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-lg-4">
-				<div class="card post-entry">
-					<img src="images/img-1.jpg" class="card-img-top" alt="Image">
-					<div class="card-body">
-						<div><span class="text-uppercase font-weight-bold date">Jan 20, 2021</span></div>
-						<h5 class="card-title"><a href="#">Behind the word mountains</a></h5>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-						<p class="mt-5 mb-0"><a href="#">Read more</a></p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4">
-				<div class="card post-entry">
-					<img src="images/img-2.jpg" class="card-img-top" alt="Image">
-					<div class="card-body">
-						<div><span class="text-uppercase font-weight-bold date">Jan 20, 2021</span></div>
-						<h5 class="card-title"><a href="#">Behind the word mountains</a></h5>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-						<p class="mt-5 mb-0"><a href="#">Read more</a></p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-lg-4">
-				<div class="card post-entry">
-					<img src="images/img-3.jpg" class="card-img-top" alt="Image">
-					<div class="card-body">
-						<div><span class="text-uppercase font-weight-bold date">Jan 20, 2021</span></div>
-						<h5 class="card-title"><a href="#">Behind the word mountains</a></h5>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-						<p class="mt-5 mb-0"><a href="#">Read more</a></p>
-					</div>
-				</div>
-			</div>
-
-
-		</div>
-	</div>
-</div>
-
-
-
-
-
-
-
-
-
-
-<div class="site-footer">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-4">
-				<div class="widget">
-					<h3>About</h3>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-				</div> <!-- /.widget -->
-				<div class="widget">
-					<address>43 Raymouth Rd. Baltemoer, <br> London 3910</address>
-					<ul class="list-unstyled links">
-						<li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-						<li><a href="tel://11234567890">+1(123)-456-7890</a></li>
-						<li><a href="mailto:info@mydomain.com">info@mydomain.com</a></li>
-					</ul>
-				</div> <!-- /.widget -->
-			</div> <!-- /.col-lg-4 -->
-			<div class="col-lg-4">
-				<div class="widget">
-					<h3>Company</h3>
-					<ul class="list-unstyled float-start links">
-						<li><a href="#">About us</a></li>
-						<li><a href="#">Services</a></li>
-						<li><a href="#">Vision</a></li>
-						<li><a href="#">Mission</a></li>
-						<li><a href="#">Terms</a></li>
-						<li><a href="#">Privacy</a></li>
-					</ul>
-					<ul class="list-unstyled float-start links">
-						<li><a href="#">Partners</a></li>
-						<li><a href="#">Business</a></li>
-						<li><a href="#">Careers</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">FAQ</a></li>
-						<li><a href="#">Creative</a></li>
-					</ul>
-				</div> <!-- /.widget -->
-			</div> <!-- /.col-lg-4 -->
-			<div class="col-lg-4">
-				<div class="widget">
-					<h3>Navigation</h3>
-					<ul class="list-unstyled links mb-4">
-						<li><a href="#">Our Vision</a></li>
-						<li><a href="#">About us</a></li>
-						<li><a href="#">Contact us</a></li>
-					</ul>
-
-					<h3>Social</h3>
-					<ul class="list-unstyled social">
-						<li><a href="#"><span class="icon-instagram"></span></a></li>
-						<li><a href="#"><span class="icon-twitter"></span></a></li>
-						<li><a href="#"><span class="icon-facebook"></span></a></li>
-						<li><a href="#"><span class="icon-linkedin"></span></a></li>
-						<li><a href="#"><span class="icon-pinterest"></span></a></li>
-						<li><a href="#"><span class="icon-dribbble"></span></a></li>
-					</ul>
-				</div> <!-- /.widget -->
-			</div> <!-- /.col-lg-4 -->
-		</div> <!-- /.row -->
-
-		<div class="row mt-5">
-			<div class="col-12 text-center">
-					<!-- 
-              **==========
-              NOTE: 
-              Please don't remove this copyright link unless you buy the license here https://untree.co/license/  
-              **==========
-            -->
-
-            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> <!-- License information: https://untree.co/license/ -->
-            </p>
-          </div>
-        </div>
-      </div> <!-- /.container -->
-    </div> <!-- /.site-footer -->
-
-    <!-- Preloader -->
-    <div id="overlayer"></div>
-    <div class="loader">
-    	<div class="spinner-border text-primary" role="status">
-    		<span class="visually-hidden">Loading...</span>
-    	</div>
-    </div>
-
-
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/tiny-slider.js"></script>
-
-    <script src="js/flatpickr.min.js"></script>
-
-
-    <script src="js/aos.js"></script>
-    <script src="js/glightbox.min.js"></script>
-    <script src="js/navbar.js"></script>
-    <script src="js/counter.js"></script>
-    <script src="js/custom.js"></script>
-  </html>
+	<?php
+		include 'footer.php';
+		include 'javascript.php';
+	?>
+</html>
