@@ -103,7 +103,7 @@
 				<div class="col-lg-6 text-center text-lg-start pe-lg-5">
 					<h1 class="heading text-white mb-3" data-aos="fade-up">ContestOnline</h1>
 					<div class="align-items-center mb-5 mm" data-aos="fade-up" data-aos-delay="200">
-						<a href="LienHe.html" class="btn btn-outline-white-reverse me-4">Liên Hệ</a>
+						<a href="LienHe.php" class="btn btn-outline-white-reverse me-4">Liên Hệ</a>
 						<a href="#" class="text-white glightbox">Watch the video</a>
 					</div>
 				</div>
@@ -357,7 +357,7 @@
 					<p>Hệ thống của chúng tôi giúp bạn tạo các đề thi trắc nghiệm dễ dàng, nhanh chóng và chính xác.</p>
 				</div>
 				<div class="col-lg-5 text-end" data-aos="fade-up" data-aos-delay="100">
-					<a href="TaoDeThi.html" class="btn btn-outline-white-reverse">Bắt Đầu Tạo Đề Thi</a>
+					<a href="TaoDeThi.php" class="btn btn-outline-white-reverse">Bắt Đầu Tạo Đề Thi</a>
 				</div>
 			</div>
 		</div>
@@ -382,7 +382,7 @@
 		<div class="post-slider-wrap" data-aos="fade-up" data-aos-delay="300">
 			<div id="post-slider" class="post-slider">
 				<div class="item">
-					<a href="TaoDeThi.html" class="card d-block">
+					<a href="TaoDeThi.php" class="card d-block">
 						<img src="images/img_10.jpg" class="card-img-top" alt="Image">
 						<div class="card-body">
 							<h5 class="card-title">Tạo Đề Thi Mới</h5>
@@ -392,7 +392,7 @@
 				</div>
 	
 				<div class="item">
-					<a href="TaoDeThi.html" class="card">
+					<a href="TaoDeThi.php" class="card">
 						<img src="images/img_1.jpeg" class="card-img-top" alt="Image">
 						<div class="card-body">
 							<h5 class="card-title">Chỉnh Sửa Đề Thi</h5>
@@ -402,7 +402,7 @@
 				</div>
 	
 				<div class="item">
-					<a href="XemDanhSachDeThi.html" class="card">
+					<a href="XemDanhSachDeThi.php" class="card">
 						<img src="images/img_2.jpg" class="card-img-top" alt="Image">
 						<div class="card-body">
 							<h5 class="card-title">Danh Sách Đề Thi</h5>
@@ -412,7 +412,7 @@
 				</div>
 	
 				<div class="item">
-					<a href="XemDanhSachDeThi.html" class="card">
+					<a href="XemDanhSachDeThi.php" class="card">
 						<img src="images/img_11.jpg" class="card-img-top" alt="Image">
 						<div class="card-body">
 							<h5 class="card-title">Quản Lý Đề Thi</h5>
@@ -422,7 +422,7 @@
 				</div>
 	
 				<!-- <div class="item">
-					<a href="TaoDeThi.html" class="card">
+					<a href="TaoDeThi.php" class="card">
 						<img src="images/img_3.jpg" class="card-img-top" alt="Image">
 						<div class="card-body">
 							<h5 class="card-title">Tạo Đề Thi Mới</h5>
@@ -455,23 +455,23 @@
 				<div class="widget">
 					<h3 class="widget-title">Category</h3>
 					<ul class="list-unstyled links">
-						<li><a href="TaoDeThi.html"><span class="icon-arrow-right"></span> Tạo Đề Thi</a></li>
-						<li><a href="QuanLyNguoiDung.html"><span class="icon-arrow-right"></span> Quản lý Người Dùng</a></li>
-						<li><a href="QuanLyDeThi.html"><span class="icon-arrow-right"></span> Quản Lý Đề Thi</a></li>
-						<li><a href="TimKiemCuocThi.html"><span class="icon-arrow-right"></span> Tìm Kiếm Cuộc Thi</a></li>
-						<li><a href="LichSuCuocThi.html"><span class="icon-arrow-right"></span> Lịch Sử Cuộc Thi</a></li>
+						<li><a href="TaoDeThi.php"><span class="icon-arrow-right"></span> Tạo Đề Thi</a></li>
+						<li><a href="QuanLyNguoiDung.php"><span class="icon-arrow-right"></span> Quản lý Người Dùng</a></li>
+						<li><a href="QuanLyDeThi.php"><span class="icon-arrow-right"></span> Quản Lý Đề Thi</a></li>
+						<li><a href="TimKiemCuocThi.php"><span class="icon-arrow-right"></span> Tìm Kiếm Cuộc Thi</a></li>
+						<li><a href="LichSuCuocThi.php"><span class="icon-arrow-right"></span> Lịch Sử Cuộc Thi</a></li>
 						<li class="has-children">
 							<a href="#"><span class="icon-arrow-right"></span> Khác</a>
 							<ul class="dropdown">
-								<li><a href="QuanLyThuVienDeThi.html">Quản Lý Thư Viện Đề Thi</a></li>
-								<li><a href="CheDoThi.html">Chế Độ Thi</a></li>
-								<li><a href="ThamGiaThi.html">Tham Gia Thi</a></li>
+								<li><a href="QuanLyThuVienDeThi.php">Quản Lý Thư Viện Đề Thi</a></li>
+								<li><a href="CheDoThi.php">Chế Độ Thi</a></li>
+								<li><a href="ThamGiaThi.php">Tham Gia Thi</a></li>
 							</ul>
 						</li>
 					</ul>
 					<ul class="list-unstyled links">
-						<li><a href="TaoCuocThi.html"><span class="icon-arrow-right"></span> Tạo Cuộc Thi</a></li>
-						<li><a href="LienHe.html"><span class="icon-arrow-right"></span> Liên Hệ</a></li>
+						<li><a href="TaoCuocThi.php"><span class="icon-arrow-right"></span> Tạo Cuộc Thi</a></li>
+						<li><a href="LienHe.php"><span class="icon-arrow-right"></span> Liên Hệ</a></li>
 					</ul>
 				</div> <!-- /.widget --
 			</div>
