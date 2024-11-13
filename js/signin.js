@@ -1,5 +1,5 @@
 const togglePassword = document.getElementById('togglePassword');
-const passwordField = document.getElementById('mk');
+const passwordField = document.getElementById('password');
 const eyeIcon = document.getElementById('eyeIcon');
 
 togglePassword.addEventListener('click', function () {

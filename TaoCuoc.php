@@ -1,5 +1,5 @@
-<?php
-    include 'head.php';
+<!-- <?php
+    // include 'head.php';
 ?>
 <style>
         body {
@@ -36,7 +36,7 @@
     </style>
 <body>
     <?php
-        include 'header.php';
+        // include 'header.php';
     ?>
      <div class="hero overlay" style="height: 100px !important; max-height: 150px !important; min-height: 100px !important">
      </div>
@@ -112,4 +112,4 @@
         };
     </script>
 </body>
-</html>
+</html> -->

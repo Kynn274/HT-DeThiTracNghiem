@@ -102,10 +102,10 @@
 			<div class="row align-items-center justify-content-between pt-5">
 				<div class="col-lg-6 text-center text-lg-start pe-lg-5">
 					<h1 class="heading text-white mb-3" data-aos="fade-up">ContestOnline</h1>
-					<div class="align-items-center mb-5 mm" data-aos="fade-up" data-aos-delay="200">
+					<!-- <div class="align-items-center mb-5 mm" data-aos="fade-up" data-aos-delay="200">
 						<a href="LienHe.php" class="btn btn-outline-white-reverse me-4">Liên Hệ</a>
 						<a href="#" class="text-white glightbox">Watch the video</a>
-					</div>
+					</div> -->
 				</div>
 				<div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
 					<div class="img-wrap">

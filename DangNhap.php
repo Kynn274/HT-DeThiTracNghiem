@@ -179,27 +179,27 @@
 				<!-- Đăng ký -->
 				<p class="text-center mt-3">
 					Bạn chưa có tài khoản? <a href="DangKy.php" class="text-primary">Đăng ký</a><br>
-					<a href="index.html" class="text-primary">Trang Chủ</a>
+					<a href="index.php" class="text-primary">Trang Chủ</a>
 				</p>
 			</form>
 		</div>
 	</div>
 
 	<script src="./js//signin.js">
-		// Chuyển đổi hiển thị mật khẩu
-		 const togglePassword = document.getElementById('togglePassword');
-		 const passwordField = document.getElementById('password');
-		 const eyeIcon = document.getElementById('eyeIcon');
+		// // Chuyển đổi hiển thị mật khẩu
+		//  const togglePassword = document.getElementById('togglePassword');
+		//  const passwordField = document.getElementById('password');
+		//  const eyeIcon = document.getElementById('eyeIcon');
 
-		 togglePassword.addEventListener('click', function () {
-		 	// Chuyển đổi giữa loại mật khẩu và văn bản
-		 	const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-		 	passwordField.setAttribute('type', type);
+		//  togglePassword.addEventListener('click', function () {
+		//  	// Chuyển đổi giữa loại mật khẩu và văn bản
+		//  	const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+		//  	passwordField.setAttribute('type', type);
 			
-		 	// Thay đổi biểu tượng mắt
-		 	eyeIcon.classList.toggle('bi-eye');
-		 	eyeIcon.classList.toggle('bi-eye-slash');
-		 });
+		//  	// Thay đổi biểu tượng mắt
+		//  	eyeIcon.classList.toggle('bi-eye');
+		//  	eyeIcon.classList.toggle('bi-eye-slash');
+		//  });
 	</script>
 
 	<!-- Bootstrap JavaScript -->
