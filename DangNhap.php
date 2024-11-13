@@ -185,22 +185,7 @@
 		</div>
 	</div>
 
-	<script src="./js//signin.js">
-		// // Chuyển đổi hiển thị mật khẩu
-		//  const togglePassword = document.getElementById('togglePassword');
-		//  const passwordField = document.getElementById('password');
-		//  const eyeIcon = document.getElementById('eyeIcon');
-
-		//  togglePassword.addEventListener('click', function () {
-		//  	// Chuyển đổi giữa loại mật khẩu và văn bản
-		//  	const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-		//  	passwordField.setAttribute('type', type);
-			
-		//  	// Thay đổi biểu tượng mắt
-		//  	eyeIcon.classList.toggle('bi-eye');
-		//  	eyeIcon.classList.toggle('bi-eye-slash');
-		//  });
-	</script>
+	<script src="./js/signin.js"></script>
 
 	<!-- Bootstrap JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
