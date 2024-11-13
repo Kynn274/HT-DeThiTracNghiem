@@ -105,7 +105,7 @@
 				<div class="col-lg-6 text-center pe-lg-5">
 					<h1 class="heading text-white mb-3" data-aos="fade-up">Tạo Đề Thi</h1>
 					<div class="align-items-center mb-4" data-aos="fade-up" data-aos-delay="200">
-						<a href="TaoDe.html" class="btn btn-outline-white-reverse me-4">Bắt Đầu</a>
+						<a href="#content" class="btn btn-outline-white-reverse me-4">Bắt Đầu</a>
 					</div>
 				</div>
 			</div>
@@ -113,7 +113,7 @@
 	</div>
 
 
-	<div class="section">
+	<div class="section" id="content">
 		<div class="container">
 			<div class="row justify-content-between">
 				<div class="col-lg-7 mb-4 mb-lg-0" data-aos="fade-up">
@@ -318,8 +318,6 @@
 			</div>
 		</div>
 	</div>
-
-
 </div>
 
 

@@ -18,7 +18,7 @@
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto fw-bold">
-								<li class="active"><a href="index.html">Trang Chủ</a></li>
+								<li class="active"><a href="index.php">Trang Chủ</a></li>
 								<li class="has-children">
 									<a href="#">Chế độ</a>
 									<ul class="dropdown">
@@ -31,7 +31,7 @@
 										<li class="fw-normal"><a href="ThamGiaThi.php">Tham Gia Cuộc Thi</a></li>
 									</ul>
 								</li>
-								<li><a href="LienHe.html">Liên Hệ</a></li>
+								<li><a href="LienHe.php">Liên Hệ</a></li>
 							
 						</div>
 						
