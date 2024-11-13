@@ -1,9 +1,9 @@
-<?php
-  include 'head.php';
+<!-- <?php
+  // include 'head.php';
 ?>
 <body>
   <?php
-    include 'header.php';
+    // include 'header.php';
   ?>
 
   <div class="hero overlay inner-page">
@@ -115,8 +115,8 @@
   </div>
 
   <?php
-    include 'footer.php';
-    include 'javascript.php';
+    // include 'footer.php';
+    // include 'javascript.php';
   ?>
 </body>
-</html>
+</html> -->
