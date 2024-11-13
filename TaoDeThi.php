@@ -239,6 +239,7 @@
         </form>
 		</div>
 	</div>
+    <script src="./js/createExam.js"></script>
 
 	<?php
 		include 'footer.php';
