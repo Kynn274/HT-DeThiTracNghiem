@@ -1,35 +1,3 @@
-<!-- <!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-	<meta name="description" content="" />
-	<meta name="keywords" content="bootstrap, bootstrap5" />
-
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-
-
-	<link rel="stylesheet" href="fonts/icomoon/style.css">
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-
-	<link rel="stylesheet" href="css/tiny-slider.css">
-	<link rel="stylesheet" href="css/aos.css">
-	<link rel="stylesheet" href="css/glightbox.min.css">
-	<link rel="stylesheet" href="css/style.css">
-
-	<link rel="stylesheet" href="css/flatpickr.min.css">
-
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-
-
-	<title>ContestOnline</title>
-</head> -->
 <?php
 	include 'head.php';
 ?>
@@ -37,64 +5,6 @@
 	<?php
 		include 'header.php';
 	?>
-	<!-- <div class="site-mobile-menu site-navbar-target">
-		<div class="site-mobile-menu-header">
-			<div class="site-mobile-menu-close">
-				<span class="icofont-close js-menu-toggle"></span>
-			</div>
-		</div>
-		<div class="site-mobile-menu-body">
-		</div>
-	</div>
-
-	<nav class="site-nav">
-		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<div class="row g-0 align-items-center">
-						<div class="col-2">
-							<a href="index.html" class="logo m-0 float-start"><span class="text-primary">ContestOnline</span></a>
-						</div>
-						<div class="col-8 text-center">
-							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto fw-bold">
-								<li class="active"><a href="index.html">Trang Chủ</a></li>
-								<li class="has-children">
-									<a href="#">Chế độ</a>
-									<ul class="dropdown">
-										<li class="fw-normal"><a href="TaoDeThi.html">Tạo Đề Thi</a></li>
-										<li class="fw-normal"><a href="TaoCuocThi.html">Tạo Cuộc Thi</a></li>
-										<li class="fw-normal"><a href="QuanLyNguoiDung.html">Quản lý Người Dùng</a></li>
-										<li class="fw-normal"><a href="QuanLyThuVienDeThi.html">Quản Lý Thư Viện Đề Thi</a></li>
-										<li class="fw-normal"><a href="QuanLyDeThi.html">Quản Lý Đề Thi</a></li>
-										<li class="fw-normal"><a href="LichSuCuocThi.html">Lịch Sử Cuộc Thi</a></li>
-										<li class="fw-normal"><a href="ThamGiaThi.html">Tham Gia Cuộc Thi</a></li>
-									</ul>
-								</li>
-								<li><a href="LienHe.html">Liên Hệ</a></li>
-							</ul>
-						</div>
-						
-						<div class="col-2 text-end">
-							<div class="d-flex justify-content-end align-items-center">
-								<a href="DangNhap.html" class="auth-btn login-btn text-decoration-none fw-bold">
-									<i class="bi bi-box-arrow-in-right me-1"></i>
-									Đăng nhập
-								</a>
-								<a href="DangKy.html" class="auth-btn register-btn text-decoration-none fw-bold">
-									<i class="bi bi-person-plus me-1"></i>
-									Đăng ký
-								</a>
-								<a href="#" class="burger ms-3 float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
-									<span></span>
-								</a>
-							
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</nav> -->
 
 	<div class="hero overlay">
 		<img src="images/blob.svg" alt="" class="img-fluid blob">
@@ -118,51 +28,55 @@
 
 
 	<div class="section">
-		<div class="container">
-			<div class="row justify-content-between">
-				<div class="col-lg-7 mb-4 mb-lg-0">
-					<img src="images/img_8.jpg" alt="Image" class="img-fluid rounded
-					">
+	<div class="container">
+		<div class="row justify-content-between">
+			<div class="col-lg-7 mb-4 mb-lg-0">
+				<img src="images/img_8.jpg" alt="Image" class="img-fluid rounded">
+			</div>
+			<div class="col-lg-4 ps-lg-2">
+				<div class="mb-5">
+					<h2 class="text-black h4">Tạo Đề Thi Dễ Dàng Và Nhanh Chóng</h2>
+					<p>Nền tảng của chúng tôi giúp đơn giản hóa quá trình tạo đề thi, cho phép bạn thiết kế các bài kiểm tra trắc nghiệm tùy chỉnh một cách dễ dàng và hiệu quả.</p>
 				</div>
-				<div class="col-lg-4 ps-lg-2">
-					<div class="mb-5">
-						<h2 class="text-black h4">Tạo Đề Thi Dễ Dàng Và Nhanh Chóng</h2>
-						<p>Nền tảng của chúng tôi giúp đơn giản hóa quá trình tạo đề thi, cho phép bạn thiết kế các bài kiểm tra trắc nghiệm tùy chỉnh một cách dễ dàng và hiệu quả.</p>
+
+				<!-- Tạo Đề Thi / Cuộc Thi -->
+				<div class="d-flex mb-3 service-alt">
+					<div>
+						<span class="bi-pencil-square me-4"></span>
 					</div>
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<span class="bi-pencil-square me-4"></span>
-						</div>
-						<div>
-							<h3>Tùy Chỉnh Câu Hỏi</h3>
-							<p>Tạo ra các câu hỏi phù hợp với lĩnh vực của bạn, với các tùy chọn về độ khó và hình thức đa dạng.</p>
-						</div>
+					<div>
+						<h3>Tạo Đề Thi / Cuộc Thi</h3>
+						<p>Tạo ra các đề thi hoặc cuộc thi mới với các tính năng linh hoạt và dễ dàng tùy chỉnh.</p>
 					</div>
-	
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<span class="bi-gear-fill me-4"></span>
-						</div>
-						<div>
-							<h3>Chấm Điểm Tự Động</h3>
-							<p>Tiết kiệm thời gian với hệ thống chấm điểm tự động, giúp bạn ngay lập tức đánh giá bài kiểm tra và cung cấp phản hồi cho học sinh.</p>
-						</div>
-					</div>
-	
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<span class="bi-people-fill me-4"></span>
-						</div>
-						<div>
-							<h3>Quản Lý Học Sinh</h3>
-							<p>Dễ dàng quản lý học sinh, theo dõi tiến độ và phân tích kết quả để nâng cao hiệu quả học tập.</p>
-						</div>	
-					</div>
-	
 				</div>
+
+				<!-- Quản Lý Đề Thi -->
+				<div class="d-flex mb-3 service-alt">
+					<div>
+						<span class="bi-file-earmark-text-fill me-4"></span>
+					</div>
+					<div>
+						<h3>Quản Lý Đề Thi</h3>
+						<p>Quản lý các đề thi đã tạo, chỉnh sửa và cập nhật nội dung một cách thuận tiện.</p>
+					</div>
+				</div>
+
+				<!-- Quản Lý Thư Viện Đề Thi -->
+				<div class="d-flex mb-3 service-alt">
+					<div>
+						<span class="bi-bookmark-fill me-4"></span>
+					</div>
+					<div>
+						<h3>Quản Lý Thư Viện Đề Thi</h3>
+						<p>Quản lý và lưu trữ các đề thi trong thư viện, dễ dàng tìm kiếm và tái sử dụng các đề thi cũ.</p>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
+</div>
+
 
 	<div class="section sec-features">
 		<div class="container">
@@ -260,108 +174,133 @@
 	</div>
 	
 	
+	<?php
+		// Kiểm tra đăng nhập và vai trò
+		session_start();
+		if (!isset($_SESSION['user_id'])) {
+			// Nếu chưa đăng nhập, chuyển hướng tới trang đăng nhập
+			$redirect_url = "login.php"; // Trang đăng nhập
+			$role = '';
+		} else {
+			// Nếu đã đăng nhập, lấy vai trò từ session
+			$role = $_SESSION['role']; // Vai trò người dùng (admin, teacher, student)
+		}
 
+		// Hàm để hiển thị các dịch vụ theo vai trò
+		function displayService($role, $service) {
+			// Kiểm tra và hiển thị dịch vụ phù hợp
+			$servicesForTeacher = ['create_exam', 'library_management', 'manage_exam', 'history_exam'];
+			$servicesForStudent = ['history_exam', 'join_exam'];
+			$servicesForAdmin = ['create_exam', 'library_management', 'manage_exam', 'history_exam', 'join_exam'];
 
-	<div class="section sec-services">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-lg-5 mx-auto text-center" data-aos="fade-up">
-					<h2 class="heading text-primary">Dịch Vụ Tạo Đề Thi Trắc Nghiệm</h2>
-					<p>Hệ thống cho phép tạo đề thi trắc nghiệm nhanh chóng và dễ dàng với các tính năng linh hoạt.</p>
-				</div>
-			</div>
-	
-			<div class="row">
-				<!-- Mô tả câu hỏi và đáp án -->
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up">
-					<div class="service text-center">
-						<span class="bi-pencil-square"></span>
-						<div>
-							<h3>Mô Tả Câu Hỏi và Đáp Án</h3>
-							<p class="mb-4">Nhập câu hỏi và các đáp án để tạo câu hỏi trắc nghiệm.</p>
-							<p><a href="#" class="btn btn-outline-primary py-2 px-3">Xem Thêm</a></p>
-						</div>
+			if ($role == 'admin') {
+				return in_array($service, $servicesForAdmin);
+			} elseif ($role == 'teacher') {
+				return in_array($service, $servicesForTeacher);
+			} elseif ($role == 'student') {
+				return in_array($service, $servicesForStudent);
+			}
+			return false; // Nếu không phải là một vai trò hợp lệ
+		}
+	?>
+
+		<div class="section sec-services">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-lg-5 mx-auto text-center" data-aos="fade-up">
+						<h2 class="heading text-primary">Dịch Vụ Quản Lý Đề Thi Trắc Nghiệm</h2>
+						<p>Hệ thống cung cấp các tính năng quản lý và tạo đề thi trắc nghiệm một cách nhanh chóng và dễ dàng.</p>
 					</div>
 				</div>
-	
-				<!-- Chọn môn học -->
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-					<div class="service text-center">
-						<span class="bi-bookmark-fill"></span>
-						<div>
-							<h3>Chọn Môn Học</h3>
-							<p class="mb-4">Chọn môn học mà bạn muốn tạo đề thi trắc nghiệm.</p>
-							<p><a href="#" class="btn btn-outline-primary py-2 px-3">Xem Thêm</a></p>
+
+				<div class="row">
+					<!-- Tạo Đề Thi / Cuộc Thi -->
+					<?php if (displayService($role, 'create_exam')): ?>
+					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up">
+						<div class="service text-center">
+							<span class="bi-pencil-square"></span>
+							<div>
+								<h3>Tạo Đề Thi / Cuộc Thi</h3>
+								<p class="mb-4">Tạo đề thi hoặc cuộc thi mới với các tính năng linh hoạt.</p>
+								<p><a href="TaoDeThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
+							</div>
 						</div>
 					</div>
-				</div>
-	
-				<!-- Chọn dạng câu hỏi -->
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-					<div class="service text-center">
-						<span class="bi-file-earmark-text-fill"></span>
-						<div>
-							<h3>Chọn Dạng Câu Hỏi</h3>
-							<p class="mb-4">Chọn dạng câu hỏi: Trắc nghiệm, Điền khuyết, hoặc Tự luận.</p>
-							<p><a href="#" class="btn btn-outline-primary py-2 px-3">Xem Thêm</a></p>
+					<?php endif; ?>
+
+					<!-- Quản Lý Người Dùng -->
+					<?php if ($role == 'admin' && displayService($role, 'manage_user')): ?>
+					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+						<div class="service text-center">
+							<span class="bi-person-fill"></span>
+							<div>
+								<h3>Quản Lý Người Dùng</h3>
+								<p class="mb-4">Quản lý thông tin người dùng trong hệ thống.</p>
+								<p><a href="QuanLyNguoiDung.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
+							</div>
 						</div>
 					</div>
-				</div>
-	
-				<!-- Chọn độ khó -->
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-					<div class="service text-center">
-						<span class="bi-bar-chart-fill"></span>
-						<div>
-							<h3>Chọn Độ Khó</h3>
-							<p class="mb-4">Đặt độ khó cho đề thi, từ dễ đến khó để phù hợp với trình độ học sinh.</p>
-							<p><a href="#" class="btn btn-outline-primary py-2 px-3">Xem Thêm</a></p>
+					<?php endif; ?>
+
+					<!-- Quản Lý Thư Viện Đề Thi -->
+					<?php if (displayService($role, 'library_management')): ?>
+					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+						<div class="service text-center">
+							<span class="bi-bookmark-fill"></span>
+							<div>
+								<h3>Quản Lý Thư Viện Đề Thi</h3>
+								<p class="mb-4">Quản lý các đề thi trong thư viện.</p>
+								<p><a href="QuanLyThuVienDeThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
+							</div>
 						</div>
 					</div>
-				</div>
-	
-				<!-- Tạo đề thi -->
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-					<div class="service text-center">
-						<span class="bi-file-earmark-check-fill"></span>
-						<div>
-							<h3>Tạo Đề Thi</h3>
-							<p class="mb-4">Tạo đề thi trắc nghiệm sau khi lựa chọn các thông tin trên.</p>
-							<p><a href="#" class="btn btn-outline-primary py-2 px-3">Xem Thêm</a></p>
+					<?php endif; ?>
+
+					<!-- Quản Lý Đề Thi -->
+					<?php if (displayService($role, 'manage_exam')): ?>
+					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+						<div class="service text-center">
+							<span class="bi-file-earmark-text-fill"></span>
+							<div>
+								<h3>Quản Lý Đề Thi</h3>
+								<p class="mb-4">Quản lý và chỉnh sửa các đề thi đã tạo.</p>
+								<p><a href="QuanLyDeThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
+							</div>
 						</div>
 					</div>
-				</div>
-	
-				<!-- Lưu và xuất đề thi -->
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-					<div class="service text-center">
-						<span class="bi-save-fill"></span>
-						<div>
-							<h3>Lưu và Xuất Đề Thi</h3>
-							<p class="mb-4">Lưu lại đề thi hoặc xuất ra file để sử dụng cho các kỳ thi.</p>
-							<p><a href="#" class="btn btn-outline-primary py-2 px-3">Xem Thêm</a></p>
+					<?php endif; ?>
+
+					<!-- Lịch Sử Cuộc Thi -->
+					<?php if (displayService($role, 'history_exam')): ?>
+					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+						<div class="service text-center">
+							<span class="bi-clock-history"></span>
+							<div>
+								<h3>Lịch Sử Cuộc Thi</h3>
+								<p class="mb-4">Xem lại lịch sử các cuộc thi đã diễn ra.</p>
+								<p><a href="LichSuCuocThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
+							</div>
 						</div>
 					</div>
+					<?php endif; ?>
+
+					<!-- Tham Gia Cuộc Thi -->
+					<?php if (displayService($role, 'join_exam')): ?>
+					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+						<div class="service text-center">
+							<span class="bi-person-check-fill"></span>
+							<div>
+								<h3>Tham Gia Cuộc Thi</h3>
+								<p class="mb-4">Tham gia các cuộc thi trắc nghiệm.</p>
+								<p><a href="ThamGiaThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
+							</div>
+						</div>
+					</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>
-	</div>
-	
 
-
-	<div class="section sec-cta overlay" style="background-image: url('images/img-3.jpg')">
-		<div class="container">
-			<div class="row justify-content-between align-items-center">
-				<div class="col-lg-5" data-aos="fade-up" data-aos-delay="0">
-					<h2 class="heading">Sẵn Sàng Tạo Đề Thi Trắc Nghiệm?</h2>
-					<p>Hệ thống của chúng tôi giúp bạn tạo các đề thi trắc nghiệm dễ dàng, nhanh chóng và chính xác.</p>
-				</div>
-				<div class="col-lg-5 text-end" data-aos="fade-up" data-aos-delay="100">
-					<a href="TaoDeThi.php" class="btn btn-outline-white-reverse">Bắt Đầu Tạo Đề Thi</a>
-				</div>
-			</div>
-		</div>
-	</div>
 
 
 	<div class="section sec-portfolio bg-light pb-5">
