@@ -166,8 +166,8 @@
 
 				<!-- Mật khẩu -->
 				<div class="form-group position-relative">
-					<label for="mk">Mật khẩu</label>
-					<input type="password" class="form-control" name="password" id="mk" placeholder="Mật khẩu" required>
+					<label for="password">Mật khẩu</label>
+					<input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" required>
 					<span id="togglePassword">
 						<i class="bi bi-eye" id="eyeIcon"></i>
 					</span>
@@ -187,19 +187,19 @@
 
 	<script src="./js//signin.js">
 		// Chuyển đổi hiển thị mật khẩu
-		// const togglePassword = document.getElementById('togglePassword');
-		// const passwordField = document.getElementById('mk');
-		// const eyeIcon = document.getElementById('eyeIcon');
+		 const togglePassword = document.getElementById('togglePassword');
+		 const passwordField = document.getElementById('password');
+		 const eyeIcon = document.getElementById('eyeIcon');
 
-		// togglePassword.addEventListener('click', function () {
-		// 	// Chuyển đổi giữa loại mật khẩu và văn bản
-		// 	const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-		// 	passwordField.setAttribute('type', type);
+		 togglePassword.addEventListener('click', function () {
+		 	// Chuyển đổi giữa loại mật khẩu và văn bản
+		 	const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+		 	passwordField.setAttribute('type', type);
 			
-		// 	// Thay đổi biểu tượng mắt
-		// 	eyeIcon.classList.toggle('bi-eye');
-		// 	eyeIcon.classList.toggle('bi-eye-slash');
-		// });
+		 	// Thay đổi biểu tượng mắt
+		 	eyeIcon.classList.toggle('bi-eye');
+		 	eyeIcon.classList.toggle('bi-eye-slash');
+		 });
 	</script>
 
 	<!-- Bootstrap JavaScript -->
