@@ -33,8 +33,9 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			height: 100vh;
+			min-height: 100vh;
 			margin: 0;
+			padding: 20px;
 		}
 
 		.logo {
@@ -44,12 +45,11 @@
 			font-weight: bolder;
 			font-size: 30px;
 			color: #ffffff;
-			font-family: 'Work Sans', sans-serif;
 		}
 
 		.container {
 			width: 100%;
-			max-width: 500px;
+			max-width: 400px;
 		}
 
 		.form-container {
@@ -125,13 +125,32 @@
 		.text-primary:hover {
 			text-decoration: underline;
 		}
-	</style>
 
+		@media (max-width: 575px) {
+			.form-container {
+				padding: 20px;
+			}
+
+			h2 {
+				font-size: 24px;
+			}
+
+			.form-control {
+				padding: 10px;
+				font-size: 14px;
+			}
+
+			.btn-primary {
+				padding: 10px;
+				font-size: 14px;
+			}
+		}
+	</style>
 </head>
 <body>
 
-	<div class="logo logo m-0 float-start">
-		<a href="index.php" class="logo m-0 float-start"><span class="text-primary">ContestOnline</span></a>
+	<div class="logo">
+		<span>ContestOnline</span>
 	</div>
 
 	<div class="container">
@@ -149,7 +168,7 @@
 				<div class="form-group position-relative">
 					<label for="mk">Mật khẩu</label>
 					<input type="password" class="form-control" name="password" id="mk" placeholder="Mật khẩu" required>
-					<span class="position-absolute" id="togglePassword">
+					<span id="togglePassword">
 						<i class="bi bi-eye" id="eyeIcon"></i>
 					</span>
 				</div>
@@ -160,7 +179,7 @@
 				<!-- Đăng ký -->
 				<p class="text-center mt-3">
 					Bạn chưa có tài khoản? <a href="DangKy.php" class="text-primary">Đăng ký</a><br>
-					<a href="index.php" class="text-primary">Trang Chủ</a>
+					<a href="index.html" class="text-primary">Trang Chủ</a>
 				</p>
 			</form>
 		</div>

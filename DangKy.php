@@ -4,7 +4,6 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- <link rel="shortcut icon" href="favicon.png"> -->
-	
 		<meta name="description" content="" />
 		<meta name="keywords" content="bootstrap, bootstrap5" />
 	
@@ -86,12 +85,14 @@
 				position: relative;
 			}
 
-			#togglePassword {
+			#togglePassword, #togglePassword1 {
 				position: absolute;
 				right: 10px;
-				top: 38px;
+				top: 65%;
+				transform: translateY(-50%);
 				cursor: pointer;
 			}
+
 
 			.btn-primary {
 				width: 100%;
@@ -135,71 +136,58 @@
 				<form method="post" action="">
 					<h2>Đăng Ký</h2>
 	
-	
-						<!-- Tên đăng nhập -->
 						<div class="form-group">
 							<label for="username">Tên đăng nhập</label>
 							<input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập" required>
 						</div>
 	
-						<!-- Họ và tên -->
 						<div class="form-group">
 							<label for="fullname">Họ và tên</label>
 							<input type="text" class="form-control" name="fullname" id="fullname" placeholder="Họ và tên" required>
 						</div>
 	
-						<!-- Email -->
 						<div class="form-group">
 							<label for="email">Email</label>
 							<input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
 						</div>
 	
-						<!-- Mật khẩu -->
 						<div class="form-group position-relative">
 							<label for="password">Mật khẩu</label>
 							<input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" required>
-							<i id="eyeIcon" class="bi bi-eye position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
+							<i id="togglePassword" class="bi bi-eye"></i>
 						</div>
 	
-						<!-- Nhập lại mật khẩu -->
 						<div class="form-group position-relative">
 							<label for="password1">Nhập lại mật khẩu</label>
 							<input type="password" class="form-control" name="password1" id="password1" placeholder="Nhập lại mật khẩu" required>
-							<i id="eyeIcon1" class="bi bi-eye position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
+							<i id="togglePassword1" class="bi bi-eye"></i>
 						</div>
 	
-						<!-- Job (Combobox) -->
 						<div class="form-group">
 							<label for="job">Nghề nghiệp</label>
 							<select class="form-control" name="job" id="job" required>
-								<!-- <option value="">Chọn công việc</option> -->
 								<option value="student">Học sinh</option>
 								<option value="teacher">Giáo viên</option>
 							</select>
 						</div>
 	
-						<!-- Tải file hình ảnh minh chứng -->
 						<div class="form-group">
 							<label for="image">Tải ảnh minh chứng</label>
 							<input type="file" class="form-control" name="image" id="image" required>
 						</div>
 	
-						<!-- Số điện thoại -->
 						<div class="form-group">
 							<label for="phone">Số điện thoại</label>
 							<input type="tel" class="form-control" name="phone" id="phone" placeholder="Số điện thoại">
 						</div>
 	
-						<!-- Ngày sinh -->
 						<div class="form-group">
 							<label for="dob">Ngày sinh</label>
 							<input type="date" class="form-control" name="dob" id="dob">
 						</div>
 	
-						<!-- Nút đăng ký -->
 						<button type="submit" class="btn btn-primary btn-block" name="dangky">Đăng ký</button>
 	
-						<!-- Đăng nhập -->
 						<p class="text-center mt-3">
 							Bạn đã có tài khoản rồi? <a href="DangNhap.php" class="text-primary">Đăng nhập</a></br>
 							<a href="index.php" class="text-primary">Trang Chủ</a>
@@ -211,27 +199,21 @@
 
 		<script>
 			// Chuyển đổi hiển thị mật khẩu
-			const togglePassword = document.getElementById('eyeIcon');
-			const togglePassword1 = document.getElementById('eyeIcon1');
+			const togglePassword = document.getElementById('togglePassword');
+			const togglePassword1 = document.getElementById('togglePassword1');
 			const passwordField = document.getElementById('password');
 			const passwordField1 = document.getElementById('password1');
 
 			togglePassword.addEventListener('click', function () {
-				// Chuyển đổi giữa loại mật khẩu và văn bản
 				const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
 				passwordField.setAttribute('type', type);
-				
-				// Thay đổi biểu tượng mắt
 				togglePassword.classList.toggle('bi-eye');
 				togglePassword.classList.toggle('bi-eye-slash');
 			});
 
 			togglePassword1.addEventListener('click', function () {
-				// Chuyển đổi giữa loại mật khẩu và văn bản
 				const type = passwordField1.getAttribute('type') === 'password' ? 'text' : 'password';
 				passwordField1.setAttribute('type', type);
-				
-				// Thay đổi biểu tượng mắt
 				togglePassword1.classList.toggle('bi-eye');
 				togglePassword1.classList.toggle('bi-eye-slash');
 			});
