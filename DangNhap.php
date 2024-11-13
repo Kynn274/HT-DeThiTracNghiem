@@ -185,7 +185,7 @@
 		</div>
 	</div>
 
-	<script src="./js//signin.js">
+	<script src="./js/signin.js">
 		// // Chuyển đổi hiển thị mật khẩu
 		//  const togglePassword = document.getElementById('togglePassword');
 		//  const passwordField = document.getElementById('password');
