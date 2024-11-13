@@ -1,41 +1,41 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xem Lịch Sử Cuộc Thi</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
+<?php
+    include 'head.php';
+?>
+<style>
+    /* body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    } */
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+    body>.container {
+        width: 100%;
+        max-width: 800px;
+        min-height: 500px;
+        background-color: #ffffff;
+        padding: 20px;
+        /* border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+        margin: 15px auto;
+    }
 
-        h1 {
-            text-align: center;
-            color: #003366;
-        }
+    h1 {
+        margin-top: 50px;
+        text-align: center;
+        color: #003366;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
 
-        table, th, td {
+    table, th, td {
             border: 1px solid #cccccc;
             padding: 10px;
             text-align: center;
@@ -51,9 +51,13 @@
             color: #555;
             margin-top: 20px;
         }
-    </style>
-</head>
+</style>
 <body>
+    <?php
+        include 'header.php';
+    ?>
+    <div class="hero overlay" style="height: 100px !important; max-height: 150px !important; min-height: 100px !important">
+	</div>
     <div class="container">
         <h1>Lịch Sử Cuộc Thi</h1>
         
@@ -76,7 +80,7 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         // Lấy dữ liệu lịch sử cuộc thi từ localStorage
         const users = JSON.parse(localStorage.getItem("users")) || [];
         const historyTableBody = document.getElementById("historyTableBody");
@@ -109,6 +113,10 @@
                 noHistoryMessage.style.display = "block";
             }
         }
-    </script>
+    </script> -->
+    <?php
+        include 'footer.php';
+        include 'javascript.php';
+    ?>
 </body>
 </html>
