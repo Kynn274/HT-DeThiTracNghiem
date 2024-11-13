@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" href="favicon.png">
+		<!-- <link rel="shortcut icon" href="favicon.png"> -->
 	
 		<meta name="description" content="" />
 		<meta name="keywords" content="bootstrap, bootstrap5" />
@@ -164,7 +164,7 @@
 						<!-- Nhập lại mật khẩu -->
 						<div class="form-group position-relative">
 							<label for="password1">Nhập lại mật khẩu</label>
-							<input type="password" class="form-control" name="password" id="password1" placeholder="Nhập lại mật khẩu" required>
+							<input type="password" class="form-control" name="password1" id="password1" placeholder="Nhập lại mật khẩu" required>
 							<i id="eyeIcon1" class="bi bi-eye position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"></i>
 						</div>
 	
@@ -214,8 +214,8 @@
 			// Chuyển đổi hiển thị mật khẩu
 			const togglePassword = document.getElementById('eyeIcon');
 			const togglePassword1 = document.getElementById('eyeIcon1');
-			const passwordField = document.getElementById('mk');
-			const passwordField1 = document.getElementById('mk1');
+			const passwordField = document.getElementById('password');
+			const passwordField1 = document.getElementById('password1');
 
 			togglePassword.addEventListener('click', function () {
 				// Chuyển đổi giữa loại mật khẩu và văn bản
