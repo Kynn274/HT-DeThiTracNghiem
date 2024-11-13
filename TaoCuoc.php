@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tạo Cuộc Thi</title>
-    <style>
+<?php
+    include 'head.php';
+?>
+<style>
         body {
             font-family: Arial, sans-serif;
             background-color: #e6f2ff;
@@ -16,7 +13,7 @@
             align-items: center;
             min-height: 100vh;
         }
-        .container {
+        body>.container {
             width: 100%;
             max-width: 600px;
             background-color: #ffffff;
@@ -37,8 +34,13 @@
             cursor: pointer;
         }
     </style>
-</head>
 <body>
+    <?php
+        include 'header.php';
+    ?>
+     <div class="hero overlay" style="height: 100px !important; max-height: 150px !important; min-height: 100px !important">
+     </div>
+
     <div class="container">
         <h1>Tạo Cuộc Thi</h1>
         
