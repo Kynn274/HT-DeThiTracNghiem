@@ -14,11 +14,11 @@
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
 						<div class="col-2">
-							<a href="index.html" class="logo m-0 float-start"><span class="text-primary">ContestOnline</span></a>
+							<a href="index.php" class="logo m-0 float-start"><span class="text-primary">ContestOnline</span></a>
 						</div>
 						<div class="col-8 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto fw-bold">
-								<li class="active"><a href="index.html">Trang Chủ</a></li>
+								<li class="active"><a href="index.php">Trang Chủ</a></li>
 								<li class="has-children">
 									<a href="#">Chế độ</a>
 									<ul class="dropdown">

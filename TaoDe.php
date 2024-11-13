@@ -3,175 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ContestOnline</title>
+    <title>Tạo Đề Thi/Cuộc Thi</title>
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f0f9ff;
+            --text-color: #1e293b;
+            --border-color: #bfdbfe;
+            --error-color: #ef4444;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #e6f2ff;
-            color: #003366;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 20px;
             min-height: 100vh;
         }
 
         .container {
-            width: 100%;
-            max-width: 600px;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
 
         h1 {
             text-align: center;
-            color: #003366;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 2rem;
         }
 
-        .question-block {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #b3d1ff;
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row > * {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .difficulty-section {
+            background-color: #f8fafc;
+            padding: 1.5rem;
             border-radius: 8px;
-            background-color: #f0f8ff;
+            margin-bottom: 1.5rem;
         }
 
-        .question-block h3 {
-            color: #004080;
-            margin-bottom: 10px;
+        .difficulty-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
         }
 
-        .question-block input[type="text"] {
-            width: calc(100% - 10px);
-            padding: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #b3d1ff;
-            border-radius: 4px;
+        .password-section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
-        .add-option-btn {
-            background-color: #007acc;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .add-option-btn:hover {
-            background-color: #005999;
-        }
-
-        .remove-btn {
-            color: #cc0000;
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 0.9em;
-        }
-
-        .add-question-btn,
-        .submit-btn {
+        .btn {
             display: block;
             width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-            background-color: #007acc;
-            color: #ffffff;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s;
         }
 
-        .add-question-btn:hover,
-        .submit-btn:hover {
-            background-color: #005999;
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .error {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .total-questions {
+            text-align: right;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            color: var(--primary-color);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Tạo Đề Thi</h1>
-        <form id="quizForm">
-            <!-- Nơi thêm các câu hỏi -->
-            <div id="questionContainer"></div>
+        <h1>Tạo Đề Thi/Cuộc Thi</h1>
+        <form id="examForm" onsubmit="handleSubmit(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="examName">Tên đề thi:</label>
+                    <input type="text" id="examName" name="examName" required>
+                </div>
+                <div class="form-group">
+                    <label for="school">Trường:</label>
+                    <input type="text" id="school" name="school" required>
+                </div>
+            </div>
 
-            <!-- Nút thêm câu hỏi -->
-            <button type="button" class="add-question-btn" onclick="addQuestion()">Thêm Câu Hỏi</button>
-            <!-- Nút lưu đề thi -->
-            <button type="submit" class="submit-btn">Lưu Đề Thi</button>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="subject">Môn học:</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">-- Chọn môn học --</option>
+                        <option value="toan">Toán</option>
+                        <option value="ly">Vật lý</option>
+                        <option value="hoa">Hóa học</option>
+                        <option value="sinh">Sinh học</option>
+                        <option value="anh">Tiếng Anh</option>
+                        <option value="van">Ngữ văn</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Thời gian làm bài (phút):</label>
+                    <input type="number" id="duration" name="duration" min="15" max="180" value="60" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="examDate">Ngày làm bài:</label>
+                    <input type="datetime-local" id="examDate" name="examDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="questionBank">Thư viện đề thi:</label>
+                    <select id="questionBank" name="questionBank" required>
+                        <option value="">-- Chọn thư viện --</option>
+                        <option value="bank1">Đề thi THPT Quốc gia</option>
+                        <option value="bank2">Đề thi học kì</option>
+                        <option value="bank3">Đề thi thử nghiệm</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="totalQuestions">Tổng số câu hỏi:</label>
+                <input type="number" id="totalQuestions" name="totalQuestions" min="1" max="100" value="40" required onchange="updateDifficultyLimits()">
+            </div>
+
+            <div class="difficulty-section">
+                <div class="difficulty-title">Phân bố độ khó</div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="easyQuestions">Số câu dễ:</label>
+                        <input type="number" id="easyQuestions" name="easyQuestions" min="0" value="16" onchange="validateDifficultyDistribution()">
+                    </div>
+                    <div class="form-group">
+                        <label for="mediumQuestions">Số câu trung bình:</label>
+                        <input type="number" id="mediumQuestions" name="mediumQuestions" min="0" value="16" onchange="validateDifficultyDistribution()">
+                    </div>
+                    <div class="form-group">
+                        <label for="hardQuestions">Số câu khó:</label>
+                        <input type="number" id="hardQuestions" name="hardQuestions" min="0" value="8" onchange="validateDifficultyDistribution()">
+                    </div>
+                </div>
+                <div class="total-questions" id="questionDistributionTotal">
+                    Tổng: 40/40 câu
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="examMode">Chế độ tạo:</label>
+                    <select id="examMode" name="examMode" required onchange="togglePasswordField()">
+                        <option value="contest">Contest</option>
+                        <option value="pdf">PDF</option>
+                    </select>
+                </div>
+                <div class="form-group password-section" id="passwordSection">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Tạo đề thi</button>
         </form>
     </div>
 
     <script>
-        // Hàm thêm một câu hỏi mới
-        function addQuestion() {
-            const questionContainer = document.getElementById("questionContainer");
+        // Thiết lập giá trị mặc định cho ngày thi (ngày hiện tại)
+        document.getElementById('examDate').valueAsDate = new Date();
 
-            // Tạo một div cho mỗi câu hỏi
-            const questionBlock = document.createElement("div");
-            questionBlock.className = "question-block";
+        function togglePasswordField() {
+            const examMode = document.getElementById('examMode').value;
+            const passwordSection = document.getElementById('passwordSection');
+            const passwordInput = document.getElementById('password');
 
-            // Tạo trường nhập câu hỏi
-            const questionInput = document.createElement("input");
-            questionInput.type = "text";
-            questionInput.placeholder = "Nhập nội dung câu hỏi";
-            questionInput.name = "questions[]";
-            questionBlock.appendChild(questionInput);
-
-            // Tạo danh sách các đáp án
-            const optionsContainer = document.createElement("div");
-            optionsContainer.className = "options-container";
-            questionBlock.appendChild(optionsContainer);
-
-            // Hàm thêm một đáp án
-            function addOption() {
-                const optionDiv = document.createElement("div");
-
-                const optionInput = document.createElement("input");
-                optionInput.type = "text";
-                optionInput.placeholder = "Nhập đáp án";
-                optionInput.name = "options[]";
-
-                const correctOption = document.createElement("input");
-                correctOption.type = "radio";
-                correctOption.name = "correctOption";
-                correctOption.value = optionInput.value;
-
-                const removeBtn = document.createElement("span");
-                removeBtn.textContent = "Xóa";
-                removeBtn.className = "remove-btn";
-                removeBtn.onclick = function() {
-                    optionDiv.remove();
-                };
-
-                optionDiv.appendChild(optionInput);
-                optionDiv.appendChild(correctOption);
-                optionDiv.appendChild(removeBtn);
-                optionsContainer.appendChild(optionDiv);
+            if (examMode === 'contest') {
+                passwordSection.style.display = 'block';
+                passwordInput.required = true;
+            } else {
+                passwordSection.style.display = 'none';
+                passwordInput.required = false;
+                passwordInput.value = '';
             }
-
-            // Nút thêm đáp án
-            const addOptionBtn = document.createElement("button");
-            addOptionBtn.type = "button";
-            addOptionBtn.textContent = "Thêm đáp án";
-            addOptionBtn.className = "add-option-btn";
-            addOptionBtn.onclick = addOption;
-            questionBlock.appendChild(addOptionBtn);
-
-            // Thêm questionBlock vào questionContainer
-            questionContainer.appendChild(questionBlock);
         }
 
-        // Xử lý sự kiện submit để lưu đề thi
-        document.getElementById("quizForm").onsubmit = function(event) {
+        function updateDifficultyLimits() {
+            const total = parseInt(document.getElementById('totalQuestions').value);
+            const easy = document.getElementById('easyQuestions');
+            const medium = document.getElementById('mediumQuestions');
+            const hard = document.getElementById('hardQuestions');
+
+            // Cập nhật giới hạn cho từng loại
+            [easy, medium, hard].forEach(input => {
+                input.max = total;
+                const currentVal = parseInt(input.value);
+                if (currentVal > total) {
+                    input.value = Math.floor(total / 3);
+                }
+            });
+
+            validateDifficultyDistribution();
+        }
+
+        function validateDifficultyDistribution() {
+            const total = parseInt(document.getElementById('totalQuestions').value);
+            const easy = parseInt(document.getElementById('easyQuestions').value) || 0;
+            const medium = parseInt(document.getElementById('mediumQuestions').value) || 0;
+            const hard = parseInt(document.getElementById('hardQuestions').value) || 0;
+            const currentTotal = easy + medium + hard;
+
+            const distributionTotal = document.getElementById('questionDistributionTotal');
+            distributionTotal.textContent = `Tổng: ${currentTotal}/${total} câu`;
+            distributionTotal.style.color = currentTotal === total ? 'var(--primary-color)' : 'var(--error-color)';
+
+            return currentTotal === total;
+        }
+
+        function handleSubmit(event) {
             event.preventDefault();
-            alert("Đề thi đã được lưu!");
-        };
+
+            if (!validateDifficultyDistribution()) {
+                alert('Tổng số câu hỏi phân bố không khớp với tổng số câu hỏi yêu cầu!');
+                return;
+            }
+
+            // Thực hiện xử lý tạo đề thi
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Log dữ liệu để kiểm tra
+            console.log('Dữ liệu đề thi:', data);
+            
+            // Có thể thêm code gửi dữ liệu lên server tại đây
+            alert('Đề thi đã được tạo thành công!');
+        }
+
+        // Khởi tạo ban đầu
+        togglePasswordField();
+        validateDifficultyDistribution();
     </script>
 </body>
 </html>

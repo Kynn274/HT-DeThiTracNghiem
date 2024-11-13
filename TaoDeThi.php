@@ -1,103 +1,10 @@
-<!-- /*
-* Template Name: Financing
-* Template Author: Untree.co
-* Template URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="favicon.png">
-
-	<meta name="description" content="" />
-	<meta name="keywords" content="bootstrap, bootstrap5" />
-
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-
-
-	<link rel="stylesheet" href="fonts/icomoon/style.css">
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-
-	<link rel="stylesheet" href="css/tiny-slider.css">
-	<link rel="stylesheet" href="css/aos.css">
-	<link rel="stylesheet" href="css/glightbox.min.css">
-	<link rel="stylesheet" href="css/style.css">
-
-	<link rel="stylesheet" href="css/flatpickr.min.css">
-
-
-	<title>Hệ Thống Tạo Đề Thi Trắc Nghiệm &mdash; </title>
-</head>
+<?php
+	include 'head.php';
+?>
 <body>
-
-	<div class="site-mobile-menu site-navbar-target">
-		<div class="site-mobile-menu-header">
-			<div class="site-mobile-menu-close">
-				<span class="icofont-close js-menu-toggle"></span>
-			</div>
-		</div>
-		<div class="site-mobile-menu-body"></div>
-	</div>
-
-	<nav class="site-nav">
-		<div class="container">
-			<div class="menu-bg-wrap">
-				<div class="site-navigation">
-					<div class="row g-0 align-items-center">
-						<div class="col-2">
-							<a href="index.html" class="logo m-0 float-start">Tạo Đề Thi <span class="text-primary">.</span></a>
-						</div>
-						<div class="col-8 text-center ">
-							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
-								<li><a href="index.html">Trang Chủ</a></li>
-								<li class="has-children active">
-									<a href="TaoDeThi.html">Trang</a>
-									<ul class="dropdown">
-										<li class="active"><a href="TaoDeThi.html"> Tạo Đề Thi </a></li>
-										<li><a href="QuanLyNguoiDung.html">Quản Lý Người Dùng</a></li>
-										<li><a href="QuanLyDeThi.html">Quản Lý Đề Thi</a></li>
-										<li><a href="TimKiemCuocThi.html">Tìm Kiếm Cuộc Thi</a></li>
-										<li><a href="LichSuCuocThi.html">Lịch Sử Cuộc Thi</a></li>
-										<li class="has-children">
-											<a href="#">Khác</a>
-											<ul class="dropdown">
-												<li><a href="QuanLyThuVienDeThi.html"></a>Quản Lý Thư Viện Đề Thi</li>
-												<li><a href="CheDoThi.html">Chế Độ Thi</a></li>
-												<li><a href="ThamGiaThi.html">Tham Gia Thi</a></li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li><a href="TaoCuocThi.html">Tạo Cuộc Thi</a></li>
-								<li><a href="DangKy.html">Đăng ký</a></li>
-								<li><a href="DangNhap.html">Đăng Nhập</a></li>
-								<li><a href="HuongDan.html">Hướng Dẫn</a></li>
-								<li><a href="LienHe.html">Liên Hệ</a></li>
-							</ul>
-						</div>
-						<div class="col-2 text-end">
-							<a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
-								<span></span>
-							</a>
-
-							<a href="#" class="call-us d-flex align-items-center">
-								<span class="icon-phone"></span>
-								<span></span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</nav>
-
+	<?php
+		include 'header.php';
+	?>
 	<div class="hero overlay inner-page">
 		<img src="images/blob.svg" alt="" class="img-fluid blob">
 		<div class="container">
@@ -105,7 +12,7 @@
 				<div class="col-lg-6 text-center pe-lg-5">
 					<h1 class="heading text-white mb-3" data-aos="fade-up">Tạo Đề Thi</h1>
 					<div class="align-items-center mb-4" data-aos="fade-up" data-aos-delay="200">
-						<a href="TaoDe.html" class="btn btn-outline-white-reverse me-4">Bắt Đầu</a>
+						<a href="TaoDe.php" class="btn btn-outline-white-reverse me-4">Bắt Đầu</a>
 					</div>
 				</div>
 			</div>
@@ -547,5 +454,4 @@
     <script src="js/navbar.js"></script>
     <script src="js/counter.js"></script>
     <script src="js/custom.js"></script>
-  </body>
   </html>
