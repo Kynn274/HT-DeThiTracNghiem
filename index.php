@@ -67,7 +67,7 @@
 						<span class="bi-bookmark-fill me-4"></span>
 					</div>
 					<div>
-						<h3>Quản Lý Thư Viện Đề Thi</h3>
+						<h3>Quản Lý Ngân Hàng Câu hỏi</h3>
 						<p>Quản lý và lưu trữ các đề thi trong thư viện, dễ dàng tìm kiếm và tái sử dụng các đề thi cũ.</p>
 					</div>
 				</div>
