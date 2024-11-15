@@ -30,25 +30,25 @@
 							<p>280 An Dương Vương, Phường 4, Quận 5, <br> Thành phố Hồ Chí Minh</p>
 						</div>
 
-						<div class="open-hours mt-4">
+						<!-- <div class="open-hours mt-4">
 							<i class="icon-clock-o"></i>
 							<h4 class="mb-2">GIỜ HOẠT ĐỘNG:</h4>
 							<p>
 								Thứ Hai - Chủ Nhật:<br>
 								24/7
 							</p>
-						</div>
+						</div> -->
 
 						<div class="email mt-4">
 							<i class="icon-envelope"></i>
-							<h4 class="mb-2">Email:</h4>
-							<p>info@Untree.co</p>
+							<h4 class="mb-2">EMAIL:</h4>
+							<p>4801103042@student.edu.vn</p>
 						</div>
 
 						<div class="phone mt-4">
 							<i class="icon-phone"></i>
-							<h4 class="mb-2">Call:</h4>
-							<p>+1 1234 55488 55</p>
+							<h4 class="mb-2">SỐ ĐIỆN THOẠI:</h4>
+							<p>0967785209</p>
 						</div>
 
 					</div>
@@ -57,14 +57,14 @@
 					<form action="#">
 						<div class="row">
 							<div class="col-6 mb-3">
-								<input type="text" class="form-control" placeholder="Your Name">
+								<input type="text" class="form-control" placeholder="Họ và Tên">
 							</div>
 							<div class="col-6 mb-3">
-								<input type="email" class="form-control" placeholder="Your Email">
+								<input type="email" class="form-control" placeholder="Email">
 							</div>
-							<div class="col-12 mb-3">
+							<!-- <div class="col-12 mb-3">
 								<input type="text" class="form-control" placeholder="Subject">
-							</div>
+							</div> -->
 							<div class="col-12 mb-3">
 								<textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
 							</div>
