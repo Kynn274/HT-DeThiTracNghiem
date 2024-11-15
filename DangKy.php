@@ -1,29 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- <link rel="shortcut icon" href="favicon.png"> -->
-		<meta name="description" content="" />
-		<meta name="keywords" content="bootstrap, bootstrap5" />
-	
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-	
-		<link rel="stylesheet" href="fonts/icomoon/style.css">
-		<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-	
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-	
-		<link rel="stylesheet" href="css/tiny-slider.css">
-		<link rel="stylesheet" href="css/aos.css">
-		<link rel="stylesheet" href="css/glightbox.min.css">
-		<link rel="stylesheet" href="css/style.css">
-	
-		<link rel="stylesheet" href="css/flatpickr.min.css">
-		
-		<style>
+<?php
+	include 'head.php';
+?>
+	<style>
 			body {
 				background: linear-gradient(to right, #6a11cb, #2575fc);
 				font-family: 'Work Sans', sans-serif;
@@ -123,17 +101,86 @@
 			.text-primary:hover {
 				text-decoration: underline;
 			}
+			.error {
+            color: red;
+            text-align: center;
+            margin: 10px 0;
+        }
 		</style>
-	</head>
 	<body>
-		
-		<div class="logo">
-			<span>ContestOnline</span>
-		</div>
+	<?php
+  require_once("database.php");
+  $message = '';
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $username = $_POST['username'];
+      $fullname = $_POST['fullname'];
+      $email = $_POST['email'];
+      $phone = $_POST['phone'];
+      $password = $_POST['password'];
+      $confirm_password = $_POST['password1'];
+	  $job = $_POST['job'];
+      $gender = $_POST['gender'];
+      if ($password !== $confirm_password) {
+          $message = "<div class='error'>Mật khẩu không khớp!</div>";
+      } else {
+          $stmt = $conn->prepare("SELECT UserLogName FROM UserTbl WHERE UserLogName = ?");
+          $stmt->bind_param("s", $username);
+          $stmt->execute();
+          $stmt->store_result();
+          if ($stmt->num_rows > 0) {
+              $message = "<div class='error'>Tên tài khoản đã tồn tại!</div>";
+              $stmt->close();
+          } else {
+              $stmt = $conn->prepare("SELECT UserEmail FROM UserDetailTbl WHERE UserEmail = ?");
+              $stmt->bind_param("s", $email);
+              $stmt->execute();
+              $stmt->store_result();
+              if ($stmt->num_rows > 0) {
+                  $message = "<div class='error'>Email đã tồn tại!</div>";
+                  $stmt->close();
+              } else {
+                  $stmt = $conn->prepare("SELECT UserPhone FROM UserDetailTbl WHERE UserPhone = ?");
+                  $stmt->bind_param("s", $phone);
+                  $stmt->execute();
+                  $stmt->store_result();
+                  if ($stmt->num_rows > 0) {
+                      $message = "<div class='error'>Số điện thoại đã tồn tại!</div>";
+                      $stmt->close();
+                  } else {
+                      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                      $stmt = $conn->prepare("INSERT INTO UserTbl (UserLogName, UserPass, UserType) VALUES (?, ?, 'user')");
+                      $stmt->bind_param("ss", $username, $hashed_password);
+
+                      if ($stmt->execute()) {
+                          $userId = $stmt->insert_id;
+
+                          $stmt_detail = $conn->prepare("INSERT INTO UserDetailTbl (UserId, UserName, UserPhone, UserEmail, UserGender, UserLevel) VALUES (?, ?, ?, ?, ?, 'Bạc')");
+                          $stmt_detail->bind_param("issss", $userId, $fullname, $phone, $email, $gender);
+
+                          if ($stmt_detail->execute()) {
+                              $message = "<div class='success'>Đăng ký thành công!</div>";
+                          } else {
+                              $message = "<div class='error'>Lỗi khi thêm thông tin chi tiết: " . $stmt_detail->error . "</div>";
+                          }
+                          $stmt_detail->close();
+                      } else {
+                          $message = "<div class='error'>Lỗi khi thêm người dùng: " . $stmt->error . "</div>";
+                      }
+                      $stmt->close();
+                  }
+              }
+          }
+      }
+  }
+  $conn->close();
+  ?>
+	<div class="logo">
+		<a href="index.php" class="logo m-0 float-start"><span class="text-primary">ContestOnline</span></a>
+	</div>
 
 		<div class="container">
 			<div class="form-container">
-				<form method="post" action="">
+				<form method="post" action="" enctype="multipart/form-data">
 					<h2>Đăng Ký</h2>
 	
 						<div class="form-group">
