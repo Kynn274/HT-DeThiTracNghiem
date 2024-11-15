@@ -42,8 +42,8 @@
 									<ul class="dropdown">
 										<li class="fw-normal" style="width:fit-content;" ><a href="TaoDeThi.php">Tạo đề thi / cuộc thi</a></li>
 										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
-										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyThuVienDeThi.php">Quản lý thư viện đề thi</a></li>
-										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyDeThi.php">Quản lý đề thi/ cuộc thi</a></li>
+										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyThuVienDeThi.php">Quản lý ngân hàng câu hỏi</a></li>
+										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyDeThi.php">Quản lý đề thi / cuộc thi</a></li>
 										<li class="fw-normal" style="width:fit-content;"><a href="LichSuCuocThi.php">Lịch sử cuộc thi</a></li>
 										<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'ThamGiaThi.php' : 'DangNhap.php' ?>">Tham gian cuộc thi</a></li>
 									</ul>

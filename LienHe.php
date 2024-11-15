@@ -11,7 +11,7 @@
 		<div class="container">
 			<div class="row align-items-center justify-content-center text-center pt-5">
 				<div class="col-lg-6">
-					<h1 class="heading text-white mb-3" data-aos="fade-up">Contact Us</h1>
+					<h1 class="heading text-white mb-3" data-aos="fade-up">CONTACT US</h1>
 				</div>
 			</div>
 		</div>
@@ -26,16 +26,16 @@
 
 						<div class="address mt-2">
 							<i class="icon-room"></i>
-							<h4 class="mb-2">Location:</h4>
-							<p>43 Raymouth Rd. Baltemoer,<br> London 3910</p>
+							<h4 class="mb-2">ĐỊA CHỈ:</h4>
+							<p>280 An Dương Vương, Phường 4, Quận 5, <br> Thành phố Hồ Chí Minh</p>
 						</div>
 
 						<div class="open-hours mt-4">
 							<i class="icon-clock-o"></i>
-							<h4 class="mb-2">Open Hours:</h4>
+							<h4 class="mb-2">GIỜ HOẠT ĐỘNG:</h4>
 							<p>
-								Sunday-Friday:<br>
-								11:00 AM - 2300 PM
+								Thứ Hai - Chủ Nhật:<br>
+								24/7
 							</p>
 						</div>
 

@@ -47,7 +47,7 @@
 						<span class="bi-pencil-square me-4"></span>
 					</div>
 					<div>
-						<h3>TẠO ĐỀ THI</h3>
+						<h3>TẠO ĐỀ THI / CUỘC THI</h3>
 						<p>Tạo ra các đề thi hoặc cuộc thi mới với các tính năng linh hoạt và dễ dàng tùy chỉnh.</p>
 					</div>
 				</div>
