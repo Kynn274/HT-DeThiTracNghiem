@@ -16314,10 +16314,14 @@ textarea.form-control-lg {
           visibility: visible;
           opacity: 1; }
 .site-nav img {
-  width: 100px;
+  width: 80px;
   margin-left: 10px;
   display: flex;
   align-items: center;
+  float: left;
+}
+.site-nav .logo span{
+  line-height: 1;
 }
 
 .site-mobile-menu-close {
