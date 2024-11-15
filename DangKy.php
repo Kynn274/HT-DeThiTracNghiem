@@ -1,186 +1,197 @@
 <?php
 	include 'head.php';
 ?>
-	<style>
-			body {
-				background: linear-gradient(to right, #6a11cb, #2575fc);
-				font-family: 'Work Sans', sans-serif;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 150vh;
-				margin: 0;
-			}
-			.logo {
-				position: absolute;
-				top: 10px;
-				left: 10px;
-				font-weight: bolder;
-				font-size: 30px;
-				color: #ffffff;
-				font-family: 'Work Sans', sans-serif;
-			}
-			.container {
-				width: 100%;
-				max-width: 700px; 
-				padding: 40px; 
-			}
+<style>
+body {
+	background: linear-gradient(to right, #6a11cb, #2575fc);
+	font-family: 'Work Sans', sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 150vh;
+	margin: 0;
+}
+.logo {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font-weight: bolder;
+	font-size: 30px;
+	color: #ffffff;
+	font-family: 'Work Sans', sans-serif;
+}
+.container {
+	width: 100%;
+	max-width: 700px; 
+	padding: 40px; 
+}
 
-			.form-container {
-				background: #ffffff;
-				border-radius: 12px;
-				padding: 30px;
-				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-				border: 1px solid #ddd;
-			}
+.form-container {
+	background: #ffffff;
+	border-radius: 12px;
+	padding: 30px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	border: 1px solid #ddd;
+}
 
-			h2 {
-				text-align: center;
-				font-weight: 700;
-				color: #333;
-				margin-bottom: 20px;
-			}
+h2 {
+	text-align: center;
+	font-weight: 700;
+	color: #333;
+	margin-bottom: 20px;
+}
 
-			.form-group {
-				margin-bottom: 15px; 
-			}
+.form-group {
+	margin-bottom: 15px; 
+}
 
-			.form-control {
-				border-radius: 8px;	
-				border: 1px solid #ccc;
-				padding: 15px;
-				font-size: 18px;
-				width: 100%; 
-				transition: all 0.3s ease;
-			}
+.form-control {
+	border-radius: 8px;	
+	border: 1px solid #ccc;
+	padding: 15px;
+	font-size: 18px;
+	width: 100%; 
+	transition: all 0.3s ease;
+}
 
-			.form-control:focus {
-				border-color: #2575fc;
-				box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
-			}
+.form-control:focus {
+	border-color: #2575fc;
+	box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+}
 
-			.position-relative {
-				position: relative;
-			}
+.position-relative {
+	position: relative;
+}
 
-			#togglePassword, #togglePassword1 {
-				position: absolute;
-				right: 10px;
-				top: 65%;
-				transform: translateY(-50%);
-				cursor: pointer;
-			}
+#togglePassword, #togglePassword1 {
+	position: absolute;
+	right: 10px;
+	top: 65%;
+	transform: translateY(-50%);
+	cursor: pointer;
+}
+.btn-primary {
+	width: 100%;
+	background-color: #2575fc;
+	border: none;
+	padding: 12px;
+	border-radius: 8px;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
+}
 
+.btn-primary:hover {
+	background-color: #6a11cb;
+	transform: translateY(-2px);
+}
 
-			.btn-primary {
-				width: 100%;
-				background-color: #2575fc;
-				border: none;
-				padding: 12px;
-				border-radius: 8px;
-				color: white;
-				font-size: 16px;
-				font-weight: bold;
-				cursor: pointer;
-				transition: background-color 0.3s, transform 0.3s;
-			}
+.text-center {
+	text-align: center;
+}
 
-			.btn-primary:hover {
-				background-color: #6a11cb;
-				transform: translateY(-2px);
-			}
+.text-primary {
+	color: #2575fc;
+}
 
-			.text-center {
-				text-align: center;
-			}
-
-			.text-primary {
-				color: #2575fc;
-			}
-
-			.text-primary:hover {
-				text-decoration: underline;
-			}
-			.error {
-            color: red;
-            text-align: center;
-            margin: 10px 0;
-        }
-		</style>
-	<body>
+.text-primary:hover {
+	text-decoration: underline;
+}
+.error {
+    color: red;
+    text-align: center;
+    margin: 10px 0;
+}
+</style>
+<body>
 	<?php
-  require_once("database.php");
-  $message = '';
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $username = $_POST['username'];
-      $fullname = $_POST['fullname'];
-      $email = $_POST['email'];
-      $phone = $_POST['phone'];
-      $password = $_POST['password'];
-      $confirm_password = $_POST['password1'];
-	  $job = $_POST['job'];
-      $gender = $_POST['gender'];
-      if ($password !== $confirm_password) {
-          $message = "<div class='error'>Mật khẩu không khớp!</div>";
-      } else {
-          $stmt = $conn->prepare("SELECT UserLogName FROM UserTbl WHERE UserLogName = ?");
-          $stmt->bind_param("s", $username);
-          $stmt->execute();
-          $stmt->store_result();
-          if ($stmt->num_rows > 0) {
-              $message = "<div class='error'>Tên tài khoản đã tồn tại!</div>";
-              $stmt->close();
-          } else {
-              $stmt = $conn->prepare("SELECT UserEmail FROM UserDetailTbl WHERE UserEmail = ?");
-              $stmt->bind_param("s", $email);
-              $stmt->execute();
-              $stmt->store_result();
-              if ($stmt->num_rows > 0) {
-                  $message = "<div class='error'>Email đã tồn tại!</div>";
-                  $stmt->close();
-              } else {
-                  $stmt = $conn->prepare("SELECT UserPhone FROM UserDetailTbl WHERE UserPhone = ?");
-                  $stmt->bind_param("s", $phone);
-                  $stmt->execute();
-                  $stmt->store_result();
-                  if ($stmt->num_rows > 0) {
-                      $message = "<div class='error'>Số điện thoại đã tồn tại!</div>";
-                      $stmt->close();
-                  } else {
-                      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                      $stmt = $conn->prepare("INSERT INTO UserTbl (UserLogName, UserPass, UserType) VALUES (?, ?, 'user')");
-                      $stmt->bind_param("ss", $username, $hashed_password);
+  		require_once("method/database.php");
+  		$message = '';
+ 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      		$username = $_POST['username'];
+      		$fullname = $_POST['fullname'];
+      		$email = $_POST['email'];
+      		$phone = $_POST['phone'];
+      		$password = $_POST['password'];
+      		$confirm_password = $_POST['password1'];
+	  		$job = $_POST['job'];
+			$dob = $_POST['dob'];
+			$image = $_FILES['image']['name'];
+            $image_tmp = $_FILES['image']['tmp_name'];
+			$joiningDate = date("Y-m-d");
 
-                      if ($stmt->execute()) {
-                          $userId = $stmt->insert_id;
+      		if ($password !== $confirm_password) {
+          		$message = "<div class='error'>Mật khẩu không khớp!</div>";
+      		} else {
+          		$stmt = $conn->prepare("SELECT Username FROM Users WHERE Username = ?");
+          		$stmt->bind_param("s", $username);
+          		$stmt->execute();
+          		$stmt->store_result();
+          		if ($stmt->num_rows > 0) {
+              		$message = "<div class='error'>Tên tài khoản đã tồn tại!</div>";
+              		$stmt->close();
+          		} else {
+              		$stmt = $conn->prepare("SELECT Email FROM UserDetails WHERE Email = ?");
+              		$stmt->bind_param("s", $email);
+              		$stmt->execute();
+             		$stmt->store_result();
+              		if ($stmt->num_rows > 0) {
+                  		$message = "<div class='error'>Email đã tồn tại!</div>";
+                 		$stmt->close();
+              		} else {
+                  		$stmt = $conn->prepare("SELECT PhoneNumber FROM UserDetails WHERE PhoneNumber = ?");
+                  		$stmt->bind_param("s", $phone);
+                  		$stmt->execute();
+                  		$stmt->store_result();
+                  		if ($stmt->num_rows > 0) {
+                      		$message = "<div class='error'>Số điện thoại đã tồn tại!</div>";
 
-                          $stmt_detail = $conn->prepare("INSERT INTO UserDetailTbl (UserId, UserName, UserPhone, UserEmail, UserGender, UserLevel) VALUES (?, ?, ?, ?, ?, 'Bạc')");
-                          $stmt_detail->bind_param("issss", $userId, $fullname, $phone, $email, $gender);
+                      		$stmt->close();
+                  		} else {
+                      		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                      		$stmt = $conn->prepare("INSERT INTO Users (Username, Password, Type, JoiningDate) VALUES (?, ?, ?, ?)");
+                      		$stmt->bind_param("ssis", $username, $hashed_password, $job, $joiningDate);
 
-                          if ($stmt_detail->execute()) {
-                              $message = "<div class='success'>Đăng ký thành công!</div>";
-                          } else {
-                              $message = "<div class='error'>Lỗi khi thêm thông tin chi tiết: " . $stmt_detail->error . "</div>";
-                          }
-                          $stmt_detail->close();
-                      } else {
-                          $message = "<div class='error'>Lỗi khi thêm người dùng: " . $stmt->error . "</div>";
-                      }
-                      $stmt->close();
-                  }
-              }
-          }
-      }
-  }
-  $conn->close();
-  ?>
+                      		if ($stmt->execute()) {
+                          		$userId = $stmt->insert_id;
+                          		$stmt_detail = $conn->prepare("INSERT INTO UserDetails (UserId, Fullname, PhoneNumber, Email, DateOfBirth, Evidence) VALUES (?, ?, ?, ?, ?, ?)");
+                          		$stmt_detail->bind_param("isssss", $userId, $fullname, $phone, $email, $dob, $image);
+
+								if (!move_uploaded_file($image_tmp, "images/$image")) {
+									$message = "<div class='error'>Failed to upload image!</div>";
+									$stmt->close();
+								}else{
+									if ($stmt_detail->execute()) {
+										$message = "<div class='success'>Đăng ký thành công!</div>";
+										header("Location: DangNhap.php");
+									} else {
+										$stmt = $conn->prepare("DELETE FROM Users WHERE UserID = ?");
+										$stmt->bind_param('i', $userId);
+										$stmt->execute();
+										$message = "<div class='error'>Lỗi khi thêm thông tin chi tiết: " . $stmt_detail->error . "</div>";
+									}
+									$stmt_detail->close();
+								} 
+							}else {
+								$message = "<div class='error'>Lỗi khi thêm người dùng: " . $stmt->error . "</div>";
+							}                          
+                      		$stmt->close();
+                  		}
+              		}
+          		}
+      		}
+		}
+  		$conn->close();
+  	?>
 	<div class="logo">
 		<a href="index.php" class="logo m-0 float-start"><span class="text-primary">MindBridgeInstitute</span></a>
 	</div>
 
 		<div class="container">
 			<div class="form-container">
-				<form method="post" action="" enctype="multipart/form-data">
+				<form method="post" action="DangKy.php" enctype="multipart/form-data">
 					<h2>ĐĂNG KÝ</h2>
 	
 						<div class="form-group">
@@ -213,8 +224,8 @@
 						<div class="form-group">
 							<label for="job">Nghề nghiệp</label>
 							<select class="form-control" name="job" id="job" required>
-								<option value="student">Học sinh</option>
-								<option value="teacher">Giáo viên</option>
+								<option value="1">Học sinh</option>
+								<option value="2">Giáo viên</option>
 							</select>
 						</div>
 	
@@ -232,7 +243,7 @@
 							<label for="dob">Ngày sinh</label>
 							<input type="date" class="form-control" name="dob" id="dob">
 						</div>
-	
+						<?php if (!empty($message)) echo $message; ?>
 						<button type="submit" class="btn btn-primary btn-block" name="dangky">Đăng ký</button>
 	
 						<p class="text-center mt-3">

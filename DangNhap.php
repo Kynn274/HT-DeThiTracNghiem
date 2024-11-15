@@ -21,7 +21,7 @@
         	$stmt->bind_result($user_id, $hashed_password, $user_type, $user_name, $user_fullname);
         	$stmt->fetch();
 
-        	if ($password_input === $hashed_password) {
+        	if ($user_type === 0 && $password_input === $hashed_password || $user_type !== 0 && password_verify($password_input, $hashed_password)) {
             	$_SESSION['user_id'] = $user_id;
             	$_SESSION['username'] = $user_name; 
             	$_SESSION['user_type'] = $user_type;
