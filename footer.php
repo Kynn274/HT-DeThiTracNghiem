@@ -23,7 +23,7 @@
 							<ul class="dropdown">
 								<li class="fw-normal"><a href="TaoDeThi.php">Tạo Đề Thi</a></li>
 								<li class="fw-normal"><a href="QuanLyNguoiDung.php">Quản lý Người Dùng</a></li>
-								<li class="fw-normal"><a href="QuanLyThuVienDeThi.php">Quản Lý Thư Viện Đề Thi</a></li>
+								<li class="fw-normal"><a href="QuanLyNganHangCauHoi.php">Quản Lý Thư Viện Đề Thi</a></li>
 								<li class="fw-normal"><a href="QuanLyDeThi.php">Quản Lý Đề Thi</a></li>
 								<li class="fw-normal"><a href="LichSuCuocThi.php">Lịch Sử Cuộc Thi</a></li>
 								<li class="fw-normal"><a href="ThamGiaThi.php">Tham Gia Cuộc Thi</a></li>

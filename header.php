@@ -24,7 +24,7 @@
 									<ul class="dropdown">
 										<li class="fw-normal" style="width:fit-content;" ><a href="TaoDeThi.php">Tạo Đề Thi / Cuộc Thi</a></li>
 										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyNguoiDung.php">Quản lý Người Dùng</a></li>
-										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyThuVienDeThi.php">Quản Lý Thư Viện Đề Thi</a></li>
+										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyNganHangCauHoi.php">Quản Lý Ngân Hàng Câu Hỏi</a></li>
 										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyDeThi.php">Quản Lý Đề Thi</a></li>
 										<li class="fw-normal" style="width:fit-content;"><a href="LichSuCuocThi.php">Lịch Sử Cuộc Thi</a></li>
 										<li class="fw-normal" style="width:fit-content;"><a href="ThamGiaThi.php">Tham Gia Cuộc Thi</a></li>
