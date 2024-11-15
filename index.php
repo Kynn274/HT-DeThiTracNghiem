@@ -172,7 +172,7 @@
 		// Kiểm tra đăng nhập và vai trò
 		// session_start();
 		// if (!isset($_SESSION['user_id'])) {
-			// Nếu chưa đăng nhập, chuyển hướng tới trang đăng nhập
+		// 	// Nếu chưa đăng nhập, chuyển hướng tới trang đăng nhập
 		// 	$redirect_url = "login.php"; // Trang đăng nhập
 		// 	$role = '';
 		// } else {
@@ -181,7 +181,7 @@
 		// }
 
 		// // Hàm để hiển thị các dịch vụ theo vai trò
-		// // function displayService($role, $service) {
+		// function displayService($role, $service) {
 		// 	// Kiểm tra và hiển thị dịch vụ phù hợp
 		// 	$servicesForTeacher = ['create_exam', 'library_management', 'manage_exam', 'history_exam'];
 		// 	$servicesForStudent = ['history_exam', 'join_exam'];
@@ -209,7 +209,7 @@
 
 				<div class="row">
 					<!-- Tạo Đề Thi / Cuộc Thi -->
-					 <?php //if (displayService($role, 'create_exam')): ?> 
+					<?php //if (displayService($role, 'create_exam')): ?>
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up">
 						<div class="service text-center">
 							<span class="bi-pencil-square"></span>
@@ -223,7 +223,7 @@
 					<?php //endif; ?>
 
 					<!-- Quản Lý Người Dùng -->
-					<?php // if ($role == 'admin' && displayService($role, 'manage_user')): ?>
+					<?php //if ($role == 'admin' && displayService($role, 'manage_user')): ?>
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
 						<div class="service text-center">
 							<span class="bi-person-fill"></span>
@@ -234,10 +234,10 @@
 							</div>
 						</div>
 					</div>
-					<?php // endif; ?>
+					<?php //endif; ?>
 
 					<!-- Quản Lý Thư Viện Đề Thi -->
-					<?php // if (displayService($role, 'library_management')): ?>
+					<?php //if (displayService($role, 'library_management')): ?>
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
 						<div class="service text-center">
 							<span class="bi-bookmark-fill"></span>
@@ -248,10 +248,10 @@
 							</div>
 						</div>
 					</div>
-					<?php // endif; ?>
+					<?php //endif; ?>
 
 					<!-- Quản Lý Đề Thi -->
-					<?php // if (displayService($role, 'manage_exam')): ?>
+					<?php //if (displayService($role, 'manage_exam')): ?>
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
 						<div class="service text-center">
 							<span class="bi-file-earmark-text-fill"></span>
@@ -262,10 +262,10 @@
 							</div>
 						</div>
 					</div>
-					<?php // endif; ?>
+					<?php //endif; ?>
 
 					<!-- Lịch Sử Cuộc Thi -->
-					<?php // if (displayService($role, 'history_exam')): ?>
+					<?php //if (displayService($role, 'history_exam')): ?>
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
 						<div class="service text-center">
 							<span class="bi-clock-history"></span>
@@ -276,10 +276,10 @@
 							</div>
 						</div>
 					</div>
-					<?php // endif; ?>
+					<?php //endif; ?>
 
 					<!-- Tham Gia Cuộc Thi -->
-					<?php // if (displayService($role, 'join_exam')): ?>
+					<?php //if (displayService($role, 'join_exam')): ?>
 					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
 						<div class="service text-center">
 							<span class="bi-person-check-fill"></span>
@@ -290,7 +290,7 @@
 							</div>
 						</div>
 					</div>
-					<?php // endif; ?>
+					<?php //endif; ?>
 				</div>
 			</div>
 		</div>

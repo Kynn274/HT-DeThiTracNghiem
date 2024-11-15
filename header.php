@@ -30,21 +30,27 @@
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
-						<div class="col-2">
+						<div class="col-4 logo">
 							<img src="images/logo.png">
-							<a href="index.php" class="logo m-0 float-start"><span class="text-primary">MindBridgeInstitute</span></a>
+							<a href="index.php" class="logo m-0 float-start"><span class="text-primary">MindBridge <br> Institute</span></a>
 						</div>
-						<div class="col-8 text-center">
+						<div class="col-4 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto fw-bold">
 								<li class="active"><a href="index.php">TRANG CHỦ</a></li>
 								<li class="has-children">
 									<a href="#">CHẾ ĐỘ</a>
 									<ul class="dropdown">
-										<li class="fw-normal" style="width:fit-content;" ><a href="TaoDeThi.php">Tạo đề thi / cuộc thi</a></li>
-										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
-										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyThuVienDeThi.php">Quản lý ngân hàng câu hỏi</a></li>
-										<li class="fw-normal" style="width:fit-content;"><a href="QuanLyDeThi.php">Quản lý đề thi / cuộc thi</a></li>
-										<li class="fw-normal" style="width:fit-content;"><a href="LichSuCuocThi.php">Lịch sử cuộc thi</a></li>
+										<?php if($is_logged_in): 
+											if($user_type == 0): ?>
+												<li class="fw-normal" style="width:fit-content;"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
+											<?php endif; ?>
+											<?php if($user_type == 2 || $user_type == 0): ?>
+												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'TaoDeThi.php' : 'DangNhap.php' ?>">Tạo đề thi / cuộc thi</a></li>
+												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'QuanLyThuVienDeThi.php' : 'DangNhap.php' ?>">Quản lý ngân hàng câu hỏi</a></li>
+												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'QuanLyDeThi.php' : 'DangNhap.php' ?>">Quản lý đề thi / cuộc thi</a></li>
+											<?php endif; ?>
+										<?php endif; ?>
+										<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'LichSuCuocThi.php' : 'DangNhap.php' ?>">Lịch sử cuộc thi</a></li>
 										<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'ThamGiaThi.php' : 'DangNhap.php' ?>">Tham gian cuộc thi</a></li>
 									</ul>
 								</li>
@@ -52,7 +58,7 @@
 							
 						</div>
 						<?php if(!$is_logged_in): ?>
-						<div class="col-2 text-end">
+						<div class="col-4 text-end">
 							<div class="d-flex justify-content-end align-items-center">
 								<a href="DangNhap.php" class="auth-btn login-btn text-decoration-none fw-bold">
 									<i class="bi bi-box-arrow-in-right me-1"></i>
@@ -69,7 +75,7 @@
 						</div>
 						<?php endif; ?>
 						<?php if($is_logged_in): ?>
-							<div class="col-2 text-end">
+							<div class="col-4 text-end">
 							<div class="d-flex justify-content-end align-items-center">
 								<a href="DangNhap.php" class="auth-btn userInfo-btn text-decoration-none fw-bold">
 									<?php echo htmlspecialchars($user_fullname); ?>

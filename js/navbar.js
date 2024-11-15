@@ -20,10 +20,22 @@
 		var CloneButtons = document.createElement('li');
 			CloneButtons.classList.add('mobile-auth-buttons');
 
-		var loginBtn = document.querySelector('.auth-btn.login-btn').cloneNode(true);
-		CloneButtons.appendChild(loginBtn);
-		var registerBtn = document.querySelector('.auth-btn.register-btn').cloneNode(true);
-		CloneButtons.appendChild(registerBtn);
+		var loginBtn = document.querySelector('.auth-btn.login-btn');
+		if(loginBtn){
+			loginBtnClone = loginBtn.cloneNode(true);
+			CloneButtons.appendChild(loginBtn);
+			var registerBtn = document.querySelector('.auth-btn.register-btn').cloneNode(true);
+			CloneButtons.appendChild(registerBtn);
+		}else{
+			var userInfoBtn = document.querySelector('.auth-btn.userInfo-btn').cloneNode(true);
+			CloneButtons.appendChild(userInfoBtn);
+			var logoutBtn = document.querySelector('.auth-btn.logout-btn').cloneNode(true);
+			CloneButtons.appendChild(logoutBtn);
+		}
+		// var loginBtn = document.querySelector('.auth-btn.login-btn').cloneNode(true);
+		// CloneButtons.appendChild(loginBtn);
+		// var registerBtn = document.querySelector('.auth-btn.register-btn').cloneNode(true);
+		// CloneButtons.appendChild(registerBtn);
 		
 		newNavWrap.appendChild(CloneButtons);
 		siteMobileMenuBody.appendChild(newNavWrap);
