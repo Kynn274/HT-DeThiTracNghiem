@@ -175,13 +175,13 @@
   $conn->close();
   ?>
 	<div class="logo">
-		<a href="index.php" class="logo m-0 float-start"><span class="text-primary">ContestOnline</span></a>
+		<a href="index.php" class="logo m-0 float-start"><span class="text-primary">MindBridgeInstitute</span></a>
 	</div>
 
 		<div class="container">
 			<div class="form-container">
 				<form method="post" action="" enctype="multipart/form-data">
-					<h2>Đăng Ký</h2>
+					<h2>ĐĂNG KÝ</h2>
 	
 						<div class="form-group">
 							<label for="username">Tên đăng nhập</label>

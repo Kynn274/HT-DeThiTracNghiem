@@ -13,7 +13,7 @@
 		<div class="container">
 			<div class="row align-items-center justify-content-between pt-5">
 				<div class="col-lg-6 text-center text-lg-start pe-lg-5">
-					<h1 class="heading text-white mb-3" data-aos="fade-up">ContestOnline</h1>
+					<h1 class="heading text-white mb-3" data-aos="fade-up">MindBridgeInstitute</h1>
 					<!-- <div class="align-items-center mb-5 mm" data-aos="fade-up" data-aos-delay="200">
 						<a href="LienHe.php" class="btn btn-outline-white-reverse me-4">Liên Hệ</a>
 						<a href="#" class="text-white glightbox">Watch the video</a>
@@ -37,7 +37,7 @@
 			</div>
 			<div class="col-lg-4 ps-lg-2">
 				<div class="mb-5">
-					<h2 class="text-black h4">Tạo Đề Thi Dễ Dàng Và Nhanh Chóng</h2>
+					<h2 class="text-black h4">TẠO ĐỀ THI DỄ DÀNG VÀ NHANH CHÓNG</h2>
 					<p>Nền tảng của chúng tôi giúp đơn giản hóa quá trình tạo đề thi, cho phép bạn thiết kế các bài kiểm tra trắc nghiệm tùy chỉnh một cách dễ dàng và hiệu quả.</p>
 				</div>
 
