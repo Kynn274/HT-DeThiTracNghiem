@@ -16313,6 +16313,12 @@ textarea.form-control-lg {
           margin-top: 0px;
           visibility: visible;
           opacity: 1; }
+.site-nav img {
+  width: 100px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
 
 .site-mobile-menu-close {
   display: block;

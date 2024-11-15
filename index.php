@@ -37,7 +37,7 @@
 			</div>
 			<div class="col-lg-4 ps-lg-2">
 				<div class="mb-5">
-					<h2 class="text-black h4">TẠO ĐỀ THI DỄ DÀNG VÀ NHANH CHÓNG</h2>
+					<h2 class="text-black h4">BẮT ĐẦU NGAY</h2>
 					<p>Nền tảng của chúng tôi giúp đơn giản hóa quá trình tạo đề thi, cho phép bạn thiết kế các bài kiểm tra trắc nghiệm tùy chỉnh một cách dễ dàng và hiệu quả.</p>
 				</div>
 
@@ -47,7 +47,7 @@
 						<span class="bi-pencil-square me-4"></span>
 					</div>
 					<div>
-						<h3>Tạo Đề Thi / Cuộc Thi</h3>
+						<h3>TẠO ĐỀ THI</h3>
 						<p>Tạo ra các đề thi hoặc cuộc thi mới với các tính năng linh hoạt và dễ dàng tùy chỉnh.</p>
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 						<span class="bi-file-earmark-text-fill me-4"></span>
 					</div>
 					<div>
-						<h3>Quản Lý Đề Thi</h3>
+						<h3>QUẢN LÝ ĐỀ THI</h3>
 						<p>Quản lý các đề thi đã tạo, chỉnh sửa và cập nhật nội dung một cách thuận tiện.</p>
 					</div>
 				</div>
@@ -69,8 +69,8 @@
 						<span class="bi-bookmark-fill me-4"></span>
 					</div>
 					<div>
-						<h3>Quản Lý Ngân Hàng Câu hỏi</h3>
-						<p>Quản lý và lưu trữ các đề thi trong thư viện, dễ dàng tìm kiếm và tái sử dụng các đề thi cũ.</p>
+						<h3>QUẢN LÝ NGÂN HÀNG CÂU HÒI</h3>
+						<p>Quản lý và lưu trữ các câu hỏi trong ngân hàng, dễ dàng tìm kiếm và tái sử dụng các câu hỏi cũ.</p>
 					</div>
 				</div>
 
@@ -87,8 +87,8 @@
 					<div class="feature d-flex">
 						<span class="bi-clipboard-check"></span>
 						<div>
-							<h3>Quản Lý Câu Hỏi</h3>
-							<p>Thêm, sửa, xóa câu hỏi một cách dễ dàng và nhanh chóng để đảm bảo đề thi luôn được cập nhật.</p>
+							<h3>HỌC SINH</h3>
+							<p>Học sinh có thể dễ dàng tự luyện tập với nhiều dạng câu hỏi và bài thi mô phỏng, từ đó đánh giá năng lực của mình, xác định được điểm mạnh và những phần cần cải thiện.</p>
 						</div>
 					</div>
 				</div>
@@ -96,20 +96,12 @@
 					<div class="feature d-flex">
 						<span class="bi-calendar-check-fill"></span>
 						<div>
-							<h3>Chọn Thời Gian Làm Bài</h3>
-							<p>Đặt thời gian cho mỗi bài kiểm tra, giúp học sinh làm bài trong giới hạn thời gian quy định.</p>
+							<h3>GIÁO VIÊN</h3>
+							<p>Thao tác tạo đề đơn giản, chính xác cùng phương pháp đánh giá hiệu quả, giúp giáo viên dễ dàng quản lý chất lượng giảng dạy.</p>
 						</div>
 					</div>
 				</div>
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-					<div class="feature d-flex">
-						<span class="bi-person-lines-fill"></span>
-						<div>
-							<h3>Quản Lý Người Dùng</h3>
-							<p>Quản lý tài khoản học sinh, giáo viên và giám sát viên để đảm bảo hệ thống hoạt động suôn sẻ.</p>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -124,7 +116,7 @@
 				</div>
 				<div class="col-lg-5 pe-lg-5">
 					<div class="mb-5">
-						<h2 class="text-black h4">Cách Đơn Giản Để Tạo Đề Thi</h2>
+						<h2 class="text-black h4">CÁCH TẠO ĐỀ THI ĐƠN GIẢN</h2>
 					</div>
 	
 					<!-- Mô tả câu hỏi và đáp án -->
@@ -133,7 +125,7 @@
 							<span class="bi-pencil-square me-4"></span>
 						</div>
 						<div>
-							<h3>Mô Tả Câu Hỏi và Đáp Án</h3>
+							<h3>MÔ TẢ CÂU HỎI VÀ ĐÁP ÁN</h3>
 							<p>Nhập câu hỏi và đưa ra các đáp án để tạo đề thi.</p>
 						</div>
 					</div>
@@ -144,7 +136,7 @@
 							<s class="bi-bookmark-fill me-4"></s	pan>
 						</div>
 						<div>
-							<h3>Chọn Đáp Án Đúng</h3>
+							<h3>CHỌN ĐÁP ÁN ĐÚNG</h3>
 							<p>Chọn đáp án đúng của câu hỏi.</p>
 						</div>
 					</div>
@@ -166,7 +158,7 @@
 							<span class="bi-bar-chart-fill me-4"></span>
 						</div>
 						<div>
-							<h3>Chọn Độ Khó</h3>
+							<h3>CHỌN ĐỘ KHÓ</h3>
 							<p>Đặt độ khó cho đề thi, từ dễ đến khó để phù hợp với trình độ học sinh.</p>
 						</div>
 					</div>
@@ -210,7 +202,7 @@
 			<div class="container">
 				<div class="row mb-5">
 					<div class="col-lg-5 mx-auto text-center" data-aos="fade-up">
-						<h2 class="heading text-primary">Dịch Vụ Quản Lý Đề Thi Trắc Nghiệm</h2>
+						<h2 class="heading text-primary">DỊCH VỤ QUẢN LÝ ĐỀ THI TRẮC NGHIỆM</h2>
 						<p>Hệ thống cung cấp các tính năng quản lý và tạo đề thi trắc nghiệm một cách nhanh chóng và dễ dàng.</p>
 					</div>
 				</div>
@@ -222,7 +214,7 @@
 						<div class="service text-center">
 							<span class="bi-pencil-square"></span>
 							<div>
-								<h3>Tạo Đề Thi / Cuộc Thi</h3>
+								<h3>TẠO ĐỀ THI</h3>
 								<p class="mb-4">Tạo đề thi hoặc cuộc thi mới với các tính năng linh hoạt.</p>
 								<p><a href="TaoDeThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
 							</div>
@@ -236,7 +228,7 @@
 						<div class="service text-center">
 							<span class="bi-person-fill"></span>
 							<div>
-								<h3>Quản Lý Người Dùng</h3>
+								<h3>QUẢN LÝ NGƯỜI DÙNG</h3>
 								<p class="mb-4">Quản lý thông tin người dùng trong hệ thống.</p>
 								<p><a href="QuanLyNguoiDung.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
 							</div>
@@ -250,7 +242,7 @@
 						<div class="service text-center">
 							<span class="bi-bookmark-fill"></span>
 							<div>
-								<h3>Quản Lý Thư Viện Đề Thi</h3>
+								<h3>QUẢN LÝ THƯ VIỆN ĐỀ THI</h3>
 								<p class="mb-4">Quản lý các đề thi trong thư viện.</p>
 								<p><a href="QuanLyThuVienDeThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
 							</div>
@@ -264,7 +256,7 @@
 						<div class="service text-center">
 							<span class="bi-file-earmark-text-fill"></span>
 							<div>
-								<h3>Quản Lý Đề Thi</h3>
+								<h3>QUẢN LÝ ĐỀ THI</h3>
 								<p class="mb-4">Quản lý và chỉnh sửa các đề thi đã tạo.</p>
 								<p><a href="QuanLyDeThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
 							</div>
@@ -278,7 +270,7 @@
 						<div class="service text-center">
 							<span class="bi-clock-history"></span>
 							<div>
-								<h3>Lịch Sử Cuộc Thi</h3>
+								<h3>LỊCH SỬ CUỘC THI</h3>
 								<p class="mb-4">Xem lại lịch sử các cuộc thi đã diễn ra.</p>
 								<p><a href="LichSuCuocThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
 							</div>
@@ -292,7 +284,7 @@
 						<div class="service text-center">
 							<span class="bi-person-check-fill"></span>
 							<div>
-								<h3>Tham Gia Cuộc Thi</h3>
+								<h3>THAM GIA CUỘC THI</h3>
 								<p class="mb-4">Tham gia các cuộc thi trắc nghiệm.</p>
 								<p><a href="ThamGiaThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
 							</div>
@@ -309,12 +301,12 @@
 		<div class="container">
 			<div class="row mb-5">
 				<div class="col-lg-5 mx-auto text-center">
-					<h2 class="heading text-primary mb-3" data-aos="fade-up" data-aos-delay="0">Các Đề Thi Trắc Nghiệm</h2>
+					<h2 class="heading text-primary mb-3" data-aos="fade-up" data-aos-delay="0">CÁC ĐỀ THI TRẮC NGHIỆM</h2>
 					<p class="mb-4" data-aos="fade-up" data-aos-delay="100">Khám phá và tạo các đề thi trắc nghiệm phù hợp với yêu cầu của bạn. Chọn môn học, loại câu hỏi, và mức độ khó để bắt đầu tạo đề thi ngay.</p>
 	
 					<div id="post-slider-nav" data-aos="fade-up" data-aos-delay="200">
-						<button class="btn btn-primary py-2" class="prev" data-controls="prev">Trở Lại</button>
-						<button class="btn btn-primary py-2" class="next" data-controls="next">Tiếp Theo</button>
+						<button class="btn btn-primary py-2" class="prev" data-controls="prev">Trở lại</button>
+						<button class="btn btn-primary py-2" class="next" data-controls="next">Tiếp theo</button>
 					</div>
 				</div>
 			</div>
@@ -326,7 +318,7 @@
 					<a href="TaoDeThi.php" class="card d-block">
 						<img src="images/img_10.jpg" class="card-img-top" alt="Image">
 						<div class="card-body">
-							<h5 class="card-title">Tạo Đề Thi Mới</h5>
+							<h5 class="card-title">TẠO ĐỀ THI MỚI</h5>
 							<p>Chọn môn học và loại câu hỏi để tạo một đề thi trắc nghiệm hoàn chỉnh.</p>
 						</div>
 					</a>
@@ -336,7 +328,7 @@
 					<a href="TaoDeThi.php" class="card">
 						<img src="images/img_1.jpeg" class="card-img-top" alt="Image">
 						<div class="card-body">
-							<h5 class="card-title">Chỉnh Sửa Đề Thi</h5>
+							<h5 class="card-title">CHỈNH SỬA ĐỀ THI</h5>
 							<p>Chỉnh sửa các câu hỏi hoặc thay đổi cấu trúc đề thi trắc nghiệm đã tạo.</p>
 						</div>
 					</a>
@@ -346,7 +338,7 @@
 					<a href="XemDanhSachDeThi.php" class="card">
 						<img src="images/img_2.jpg" class="card-img-top" alt="Image">
 						<div class="card-body">
-							<h5 class="card-title">Danh Sách Đề Thi</h5>
+							<h5 class="card-title">DANH SÁCH ĐỀ THI</h5>
 							<p>Xem lại các đề thi trắc nghiệm đã được tạo và quản lý chúng.</p>
 						</div>
 					</a>
@@ -356,7 +348,7 @@
 					<a href="XemDanhSachDeThi.php" class="card">
 						<img src="images/img_11.jpg" class="card-img-top" alt="Image">
 						<div class="card-body">
-							<h5 class="card-title">Quản Lý Đề Thi</h5>
+							<h5 class="card-title">QUẢN LÝ ĐỀ THI</h5>
 							<p>Quản lý, chỉnh sửa và xóa các đề thi trắc nghiệm trong hệ thống.</p>
 						</div>
 					</a>
