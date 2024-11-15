@@ -37,7 +37,8 @@
 			</div>
 			<div class="col-lg-4 ps-lg-2">
 				<div class="mb-5">
-					<h2 class="text-black h4">TẠO ĐỀ THI DỄ DÀNG VÀ NHANH CHÓNG</h2>
+					<h2 class="text-black h4">TẠO ĐỀ THI
+						DỄ DÀNG VÀ NHANH CHÓNG</h2>
 					<p>Nền tảng của chúng tôi giúp đơn giản hóa quá trình tạo đề thi, cho phép bạn thiết kế các bài kiểm tra trắc nghiệm tùy chỉnh một cách dễ dàng và hiệu quả.</p>
 				</div>
 
