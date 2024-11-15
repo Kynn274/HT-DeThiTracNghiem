@@ -82,29 +82,29 @@
 
 	<div class="section sec-features">
 		<div class="container">
-			<div class="row g-5">
+			<div class="row g-5 justify-content-center">
 				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
-					<div class="feature d-flex">
-						<span class="bi-clipboard-check"></span>
+					<div class="feature d-flex align-items-start">
+						<span class="bi-clipboard-check me-3"></span>
 						<div>
-							<h3>HỌC SINH</h3>
+							<h3 class="mb-2">HỌC SINH</h3>
 							<p>Học sinh có thể dễ dàng tự luyện tập với nhiều dạng câu hỏi và bài thi mô phỏng, từ đó đánh giá năng lực của mình, xác định được điểm mạnh và những phần cần cải thiện.</p>
 						</div>
 					</div>
 				</div>
 				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-					<div class="feature d-flex">
-						<span class="bi-calendar-check-fill"></span>
+					<div class="feature d-flex align-items-start">
+						<span class="bi-calendar-check-fill me-3"></span>
 						<div>
-							<h3>GIÁO VIÊN</h3>
+							<h3 class="mb-2">GIÁO VIÊN</h3>
 							<p>Thao tác tạo đề đơn giản, chính xác cùng phương pháp đánh giá hiệu quả, giúp giáo viên dễ dàng quản lý chất lượng giảng dạy.</p>
 						</div>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>
+
 	
 	
 
