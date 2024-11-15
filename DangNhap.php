@@ -1,178 +1,201 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="favicon.png">
+<?php
+	if (session_status() == PHP_SESSION_NONE) {
+   		session_start();
+	}
+	require_once("method/database.php");
+	$message = '';
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    	$username_input = trim($_POST['username']);
+    	$password_input = trim($_POST['password']);
+    	// $remember = isset($_POST['remember']);
+		$remember = false;
+    	$stmt = $conn->prepare("SELECT u.UserID, u.Password, u.Type, u.Username, d.Fullname FROM Users u, UserDetails d WHERE u.UserID = d.UserID AND u.Username = ?");
+    	if ($stmt === false) {
+        	die("Lỗi trong việc chuẩn bị câu truy vấn: " . htmlspecialchars($conn->error));
+    	}
 
-	<meta name="description" content="" />
-	<meta name="keywords" content="bootstrap, bootstrap5" />
+    	$stmt->bind_param("s", $username_input);
+    	$stmt->execute();
+    	$stmt->store_result();
+    	if ($stmt->num_rows > 0) {
+        	$stmt->bind_result($user_id, $hashed_password, $user_type, $user_name, $user_fullname);
+        	$stmt->fetch();
 
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+        	if ($user_type === 0 && $password_input === $hashed_password || $user_type !== 0 && password_verify($password_input, $hashed_password)) {
+            	$_SESSION['user_id'] = $user_id;
+            	$_SESSION['username'] = $user_name; 
+            	$_SESSION['user_type'] = $user_type;
+				$_SESSION['user_fullname'] = $user_fullname;
+            	session_regenerate_id(true);
+            	
+				if ($remember) {
+                	setcookie('username', $username_input, time() + (86400 * 30), "/"); 
+                	setcookie('password', $password_input, time() + (86400 * 30), "/");
+            	} else {
+                	setcookie('username', '', time() - 3600, "/");
+                	setcookie('password', '', time() - 3600, "/");
+            	}
+            	header("Location: index.php");
+            	exit();
+        	} else {
+            	$message = "<div class='error'>Mật khẩu không đúng!</div>";
+        	}
+    	} else {
+        	$message = "<div class='error'>Tên tài khoản không tồn tại!</div>";
+    	}
+    	$stmt->close();
+	}
+	$conn->close();
+	$saved_username = isset($_COOKIE['username']) ? $_COOKIE['username'] : '';
+	$saved_password = isset($_COOKIE['password']) ? $_COOKIE['password'] : '';
+?>
+<?php
+	include 'head.php';
+?>
+<style>
+	body {
+		background: linear-gradient(to right, #6a11cb, #2575fc);
+		font-family: 'Work Sans', sans-serif;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+		margin: 0;
+		padding: 20px;
+	}
 
-	<link rel="stylesheet" href="fonts/icomoon/style.css">
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+	.logo {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		font-weight: bolder;
+		font-size: 30px;
+		color: #ffffff;
+	}
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+	.container {
+		width: 100%;
+		max-width: 400px;
+	}
 
-	<link rel="stylesheet" href="css/tiny-slider.css">
-	<link rel="stylesheet" href="css/aos.css">
-	<link rel="stylesheet" href="css/glightbox.min.css">
-	<link rel="stylesheet" href="css/style.css">
+	.form-container {
+		background: #ffffff;
+		border-radius: 12px;
+		padding: 30px;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		border: 1px solid #ddd;
+	}
 
-	<link rel="stylesheet" href="css/flatpickr.min.css">
+	h2 {
+		text-align: center;
+		font-weight: 700;
+		color: #333;
+		margin-bottom: 20px;
+	}
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+	.form-group {
+		margin-bottom: 20px;
+	}
 
-	<style>
-		body {
-			background: linear-gradient(to right, #6a11cb, #2575fc);
-			font-family: 'Work Sans', sans-serif;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			min-height: 100vh;
-			margin: 0;
+	.form-control {
+		border-radius: 8px;
+		border: 1px solid #ccc;
+		padding: 12px;
+		font-size: 16px;
+		width: 100%;
+		transition: all 0.3s ease;
+	}
+
+	.form-control:focus {
+		border-color: #2575fc;
+		box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+	}
+
+	.position-relative {
+		position: relative;
+	}
+
+	#togglePassword {
+		position: absolute;
+		right: 10px;
+		top: 38px;
+		cursor: pointer;
+	}
+
+	.btn-primary {
+		width: 100%;
+		background-color: #2575fc;
+		border: none;
+		padding: 12px;
+		border-radius: 8px;
+		color: white;
+		font-size: 16px;
+		font-weight: bold;
+		cursor: pointer;
+		transition: background-color 0.3s, transform 0.3s;
+	}
+
+	.btn-primary:hover {
+		background-color: #6a11cb;
+		transform: translateY(-2px);
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	.text-primary {
+		color: #2575fc;
+	}
+
+	.text-primary:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 575px) {
+		.form-container {
 			padding: 20px;
 		}
-
-		.logo {
-			position: absolute;
-			top: 10px;
-			left: 10px;
-			font-weight: bolder;
-			font-size: 30px;
-			color: #ffffff;
-		}
-
-		.container {
-			width: 100%;
-			max-width: 400px;
-		}
-
-		.form-container {
-			background: #ffffff;
-			border-radius: 12px;
-			padding: 30px;
-			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-			border: 1px solid #ddd;
-		}
-
 		h2 {
-			text-align: center;
-			font-weight: 700;
-			color: #333;
-			margin-bottom: 20px;
+			font-size: 24px;
 		}
-
-		.form-group {
-			margin-bottom: 20px;
-		}
-
 		.form-control {
-			border-radius: 8px;
-			border: 1px solid #ccc;
-			padding: 12px;
-			font-size: 16px;
-			width: 100%;
-			transition: all 0.3s ease;
+			padding: 10px;
+			font-size: 14px;
 		}
-
-		.form-control:focus {
-			border-color: #2575fc;
-			box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
-		}
-
-		.position-relative {
-			position: relative;
-		}
-
-		#togglePassword {
-			position: absolute;
-			right: 10px;
-			top: 38px;
-			cursor: pointer;
-		}
-
 		.btn-primary {
-			width: 100%;
-			background-color: #2575fc;
-			border: none;
-			padding: 12px;
-			border-radius: 8px;
-			color: white;
-			font-size: 16px;
-			font-weight: bold;
-			cursor: pointer;
-			transition: background-color 0.3s, transform 0.3s;
+			padding: 10px;
+			font-size: 14px;
 		}
-
-		.btn-primary:hover {
-			background-color: #6a11cb;
-			transform: translateY(-2px);
-		}
-
-		.text-center {
-			text-align: center;
-		}
-
-		.text-primary {
-			color: #2575fc;
-		}
-
-		.text-primary:hover {
-			text-decoration: underline;
-		}
-
-		@media (max-width: 575px) {
-			.form-container {
-				padding: 20px;
-			}
-
-			h2 {
-				font-size: 24px;
-			}
-
-			.form-control {
-				padding: 10px;
-				font-size: 14px;
-			}
-
-			.btn-primary {
-				padding: 10px;
-				font-size: 14px;
-			}
-		}
-	</style>
-</head>
+	}
+</style>
 <body>
 
 	<div class="logo">
-		<span>ContestOnline</span>
+		<a href="index.php" class="logo m-0 float-start"><span class="text-primary">ContestOnline</span></a>
 	</div>
 
 	<div class="container">
 		<div class="form-container">
-			<form method="post" action="">
+			<form method="post" action="DangNhap.php">
 				<h2>Đăng Nhập</h2>
 
 				<!-- Tên đăng nhập -->
 				<div class="form-group">
 					<label for="username">Tên đăng nhập</label>
-					<input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập" required>
+					<input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập" value="<?php echo htmlspecialchars($saved_username); ?>" required>
 				</div>
 
 				<!-- Mật khẩu -->
 				<div class="form-group position-relative">
 					<label for="password">Mật khẩu</label>
-					<input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" required>
+					<input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" value="<?php echo htmlspecialchars($saved_password); ?>" required>
 					<span id="togglePassword">
 						<i class="bi bi-eye" id="eyeIcon"></i>
 					</span>
 				</div>
 
+				<?php if (!empty($message)) echo $message; ?>
 				<!-- Nút đăng nhập -->
 				<button type="submit" class="btn btn-primary" name="dangnhap">Đăng Nhập</button>
 
@@ -185,22 +208,7 @@
 		</div>
 	</div>
 
-	<script src="./js/signin.js">
-		// // Chuyển đổi hiển thị mật khẩu
-		//  const togglePassword = document.getElementById('togglePassword');
-		//  const passwordField = document.getElementById('password');
-		//  const eyeIcon = document.getElementById('eyeIcon');
-
-		//  togglePassword.addEventListener('click', function () {
-		//  	// Chuyển đổi giữa loại mật khẩu và văn bản
-		//  	const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-		//  	passwordField.setAttribute('type', type);
-			
-		//  	// Thay đổi biểu tượng mắt
-		//  	eyeIcon.classList.toggle('bi-eye');
-		//  	eyeIcon.classList.toggle('bi-eye-slash');
-		//  });
-	</script>
+	<script src="./js/signin.js"></script>
 
 	<!-- Bootstrap JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
