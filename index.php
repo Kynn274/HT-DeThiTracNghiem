@@ -1,5 +1,7 @@
 <?php
 	include 'head.php';
+	require_once 'method/init.php';
+	require_once 'method/database.php';
 ?>
 <body>
 	<?php
