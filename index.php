@@ -328,7 +328,7 @@
 					<a href="TaoDeThi.php" class="card">
 						<img src="images/img_1.jpeg" class="card-img-top" alt="Image">
 						<div class="card-body">
-							<h5 class="card-title">Chỉnh Sửa Đề Thi</h5>
+							<h5 class="card-title">CHỈNH SỬA ĐỀ THI</h5>
 							<p>Chỉnh sửa các câu hỏi hoặc thay đổi cấu trúc đề thi trắc nghiệm đã tạo.</p>
 						</div>
 					</a>
@@ -338,7 +338,7 @@
 					<a href="XemDanhSachDeThi.php" class="card">
 						<img src="images/img_2.jpg" class="card-img-top" alt="Image">
 						<div class="card-body">
-							<h5 class="card-title">Danh Sách Đề Thi</h5>
+							<h5 class="card-title">DANH SÁCH ĐỀ THI</h5>
 							<p>Xem lại các đề thi trắc nghiệm đã được tạo và quản lý chúng.</p>
 						</div>
 					</a>
@@ -348,7 +348,7 @@
 					<a href="XemDanhSachDeThi.php" class="card">
 						<img src="images/img_11.jpg" class="card-img-top" alt="Image">
 						<div class="card-body">
-							<h5 class="card-title">Quản Lý Đề Thi</h5>
+							<h5 class="card-title">QUẢN LÝ ĐỀ THI</h5>
 							<p>Quản lý, chỉnh sửa và xóa các đề thi trắc nghiệm trong hệ thống.</p>
 						</div>
 					</a>
