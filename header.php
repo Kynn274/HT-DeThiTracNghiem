@@ -46,7 +46,7 @@
 											<?php endif; ?>
 											<?php if($user_type == 2 || $user_type == 0): ?>
 												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'TaoDeThi.php' : 'DangNhap.php' ?>">Tạo đề thi / cuộc thi</a></li>
-												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'QuanLyThuVienDeThi.php' : 'DangNhap.php' ?>">Quản lý ngân hàng câu hỏi</a></li>
+												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'QuanLyNganHangCauHoi.php' : 'DangNhap.php' ?>">Quản lý ngân hàng câu hỏi</a></li>
 												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'QuanLyDeThi.php' : 'DangNhap.php' ?>">Quản lý đề thi / cuộc thi</a></li>
 											<?php endif; ?>
 										<?php endif; ?>

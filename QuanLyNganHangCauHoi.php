@@ -7,7 +7,7 @@
     ?>
 
     <!-- Add content here -->
-    <div class="hero overlay" style="height: 100px !important; max-height: 150px !important; min-height: 100px !important">
+    <div class="hero overlay" style="height: 150px !important; max-height: 150px !important; min-height: 100px !important">
     </div>
 
     <div class="container my-5">

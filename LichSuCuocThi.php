@@ -56,7 +56,7 @@
     <?php
         include 'header.php';
     ?>
-    <div class="hero overlay" style="height: 100px !important; max-height: 150px !important; min-height: 100px !important">
+    <div class="hero overlay" style="height: 150px !important; max-height: 150px !important; min-height: 100px !important">
 	</div>
     <div class="container">
         <h1>Lịch Sử Cuộc Thi</h1>

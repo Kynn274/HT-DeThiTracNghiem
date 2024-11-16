@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <meta name="author" content="Untree.co"> -->
-	<!-- <link rel="shortcut icon" href="favicon.png"> -->
+	<meta name="author" content="MindBridge.Institute">
+	<link rel="shortcut icon" href="./images/logo.png">
 
 	<meta name="description" content="" />
 	<meta name="keywords" content="bootstrap, bootstrap5" />
@@ -29,5 +29,5 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
 
-	<title>ContestOnline</title>
+	<title>MindBridgeInstitute</title>
 </head>
