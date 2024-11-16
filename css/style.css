@@ -16825,7 +16825,8 @@ textarea {
   padding: 40px;
   margin-bottom: 25px;
   border-radius: 4px;
-  background: #fff; }
+  background: #fff;
+  height: calc(100% - 25px); }
   .service [class^="bi-"] {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 60px;

@@ -285,7 +285,7 @@
 							<span class="bi-person-check-fill"></span>
 							<div>
 								<h3>THAM GIA CUỘC THI</h3>
-								<p class="mb-4">Tham gia các cuộc thi trắc nghiệm.</p>
+								<p class="mb-4">Tham gia các cuộc thi trắc nghiệm.<br></p>
 								<p><a href="ThamGiaThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
 							</div>
 						</div>
