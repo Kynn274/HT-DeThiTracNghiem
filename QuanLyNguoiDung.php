@@ -12,7 +12,7 @@
       <div class="row align-items-center justify-content-center text-center pt-5">
         <div class="col-lg-6">
           <p data-aos="fade-up" class="meta">by <a href="#">Admin</a> &bullet; on <a href="#">Apr 4th, 2022</a> </p>
-          <h1 class="heading text-white mb-3" data-aos="fade-up" data-aos-delay="100">US dollar at risk of losing dominance</h1>
+          <h1 class="heading text-white mb-3" data-aos="fade-up" data-aos-delay="100">QUẢN LÝ NGƯỜI DÙNG </h1>
         </div>
       </div>
     </div>

@@ -1,7 +1,11 @@
 <?php
 	include 'head.php';
 ?>
-<style>
+<body>
+	<?php
+		include 'header.php';
+	?>
+    <style>
         :root {
             --primary-color: #2563eb;
             --secondary-color: #1e40af;
@@ -126,10 +130,6 @@
             color: var(--primary-color);
         }
     </style>
-<body>
-	<?php
-		include 'header.php';
-	?>
 	<div class="hero overlay inner-page">
 		<img src="images/blob.svg" alt="" class="img-fluid blob">
 		<div class="container">

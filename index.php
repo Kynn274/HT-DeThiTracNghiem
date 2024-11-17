@@ -1,7 +1,6 @@
 <?php
 	include 'head.php';
 	require_once 'method/init.php';
-	require_once 'method/database.php';
 ?>
 <body>
 	<?php
@@ -166,37 +165,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	<?php 
-		// Kiểm tra đăng nhập và vai trò
-		// session_start();
-		// if (!isset($_SESSION['user_id'])) {
-		// 	// Nếu chưa đăng nhập, chuyển hướng tới trang đăng nhập
-		// 	$redirect_url = "login.php"; // Trang đăng nhập
-		// 	$role = '';
-		// } else {
-		// 	// Nếu đã đăng nhập, lấy vai trò từ session
-		// 	$role = $_SESSION['role']; // Vai trò người dùng (admin, teacher, student)
-		// }
-
-		// // Hàm để hiển thị các dịch vụ theo vai trò
-		// function displayService($role, $service) {
-		// 	// Kiểm tra và hiển thị dịch vụ phù hợp
-		// 	$servicesForTeacher = ['create_exam', 'library_management', 'manage_exam', 'history_exam'];
-		// 	$servicesForStudent = ['history_exam', 'join_exam'];
-		// 	$servicesForAdmin = ['create_exam', 'library_management', 'manage_exam', 'history_exam', 'join_exam'];
-
-		// 	if ($role == 'admin') {
-		// 		return in_array($service, $servicesForAdmin);
-		// 	} elseif ($role == 'teacher') {
-		// 		return in_array($service, $servicesForTeacher);
-		// 	} elseif ($role == 'student') {
-		// 		return in_array($service, $servicesForStudent);
-		// 	}
-		// 	return false; // Nếu không phải là một vai trò hợp lệ
-		// }
-	?>
 
 		<div class="section sec-services">
 			<div class="container">
