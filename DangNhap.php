@@ -9,7 +9,7 @@
     	$password_input = trim($_POST['password']);
     	// $remember = isset($_POST['remember']);
 		$remember = false;
-    	$stmt = $conn->prepare("SELECT u.UserID, u.Password, u.Type, u.Username, d.Fullname FROM Users u, UserDetails d WHERE u.UserID = d.UserID AND u.Username = ?");
+    	$stmt = $conn->prepare("SELECT u.UserID, u.Password, u.Type, u.Username, u.Status, d.Fullname FROM Users u, UserDetails d WHERE u.UserID = d.UserID AND u.Username = ?");
     	if ($stmt === false) {
         	die("Lỗi trong việc chuẩn bị câu truy vấn: " . htmlspecialchars($conn->error));
     	}
@@ -18,25 +18,29 @@
     	$stmt->execute();
     	$stmt->store_result();
     	if ($stmt->num_rows > 0) {
-        	$stmt->bind_result($user_id, $hashed_password, $user_type, $user_name, $user_fullname);
+        	$stmt->bind_result($user_id, $hashed_password, $user_type, $user_name, $user_status, $user_fullname);
         	$stmt->fetch();
 
-        	if ($user_type === 0 && $password_input === $hashed_password || $user_type !== 0 && password_verify($password_input, $hashed_password)) {
-            	$_SESSION['user_id'] = $user_id;
-            	$_SESSION['username'] = $user_name; 
-            	$_SESSION['user_type'] = $user_type;
-				$_SESSION['user_fullname'] = $user_fullname;
-            	session_regenerate_id(true);
-            	
-				if ($remember) {
-                	setcookie('username', $username_input, time() + (86400 * 30), "/"); 
-                	setcookie('password', $password_input, time() + (86400 * 30), "/");
-            	} else {
-                	setcookie('username', '', time() - 3600, "/");
-                	setcookie('password', '', time() - 3600, "/");
-            	}
-            	header("Location: index.php");
-            	exit();
+        	if (password_verify($password_input, $hashed_password)) {
+				if($user_status == 0){
+					$message = "<div class='error'>Tài khoản của bạn đã bị hạn chế!</div>";
+				}else{
+            		$_SESSION['user_id'] = $user_id;
+            		$_SESSION['username'] = $user_name; 
+            		$_SESSION['user_type'] = $user_type;
+					$_SESSION['user_fullname'] = $user_fullname;
+            		session_regenerate_id(true);
+            		
+					if ($remember) {
+						setcookie('username', $username_input, time() + (86400 * 30), "/"); 
+						setcookie('password', $password_input, time() + (86400 * 30), "/");
+					} else {
+						setcookie('username', '', time() - 3600, "/");
+						setcookie('password', '', time() - 3600, "/");
+					}
+            		header("Location: index.php");
+            		exit();
+				}
         	} else {
             	$message = "<div class='error'>Mật khẩu không đúng!</div>";
         	}

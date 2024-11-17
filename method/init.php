@@ -8,7 +8,8 @@
 	        Username NVARCHAR(100) NOT NULL, -- Tên đăng nhập người dùng
 	        Password NVARCHAR(100) NOT NULL, -- Mật khẩu người dùng
 	        Type INT NOT NULL DEFAULT 1, -- Loại người dùng (0: Admin, 1: Học sinh, 2: Giáo viên)
-	        JoiningDate DATE -- Ngày tham gia
+	        JoiningDate DATE, -- Ngày tham gia
+			Status INT NOT NULL DEFAULT 1 -- Trạng thái người dùng (0: Hạn chế, 1: Hoạt động)	
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 
         // Tạo bảng thông tin người dùng
