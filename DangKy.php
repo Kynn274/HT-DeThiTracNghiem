@@ -2,108 +2,108 @@
 	include 'head.php';
 ?>
 <style>
-body {
-	background: linear-gradient(to right, #6a11cb, #2575fc);
-	font-family: 'Work Sans', sans-serif;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 150vh;
-	margin: 0;
-}
-.logo {
-	position: absolute;
-	top: 10px;
-	left: 10px;
-	font-weight: bolder;
-	font-size: 30px;
-	color: #ffffff;
-	font-family: 'Work Sans', sans-serif;
-}
-.container {
-	width: 100%;
-	max-width: 700px; 
-	padding: 40px; 
-}
+	body {
+		background: linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 139, 0.85));
+		font-family: 'Work Sans', sans-serif;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 150vh;
+		margin: 0;
+	}
+	.logo {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		font-weight: bolder;
+		font-size: 30px;
+		color: #ffffff;
+		font-family: 'Work Sans', sans-serif;
+	}
+	.container {
+		width: 100%;
+		max-width: 700px; 
+		padding: 40px; 
+	}
 
-.form-container {
-	background: #ffffff;
-	border-radius: 12px;
-	padding: 30px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-	border: 1px solid #ddd;
-}
+	.form-container {
+		background: #ffffff;
+		border-radius: 12px;
+		padding: 30px;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		border: 1px solid #ddd;
+	}
 
-h2 {
-	text-align: center;
-	font-weight: 700;
-	color: #333;
-	margin-bottom: 20px;
-}
+	h2 {
+		text-align: center;
+		font-weight: 700;
+		color: #333;
+		margin-bottom: 20px;
+	}
 
-.form-group {
-	margin-bottom: 15px; 
-}
+	.form-group {
+		margin-bottom: 15px; 
+	}
 
-.form-control {
-	border-radius: 8px;	
-	border: 1px solid #ccc;
-	padding: 15px;
-	font-size: 18px;
-	width: 100%; 
-	transition: all 0.3s ease;
-}
+	.form-control {
+		border-radius: 8px;	
+		border: 1px solid #ccc;
+		padding: 15px;
+		font-size: 18px;
+		width: 100%; 
+		transition: all 0.3s ease;
+	}
 
-.form-control:focus {
-	border-color: #2575fc;
-	box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
-}
+	.form-control:focus {
+		border-color: #2575fc;
+		box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+	}
 
-.position-relative {
-	position: relative;
-}
+	.position-relative {
+		position: relative;
+	}
 
-#togglePassword, #togglePassword1 {
-	position: absolute;
-	right: 10px;
-	top: 65%;
-	transform: translateY(-50%);
-	cursor: pointer;
-}
-.btn-primary {
-	width: 100%;
-	background-color: #2575fc;
-	border: none;
-	padding: 12px;
-	border-radius: 8px;
-	color: white;
-	font-size: 16px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: background-color 0.3s, transform 0.3s;
-}
+	#togglePassword, #togglePassword1 {
+		position: absolute;
+		right: 10px;
+		top: 65%;
+		transform: translateY(-50%);
+		cursor: pointer;
+	}
+	.btn-primary {
+		width: 100%;
+		background-color: #2575fc;
+		border: none;
+		padding: 12px;
+		border-radius: 8px;
+		color: white;
+		font-size: 16px;
+		font-weight: bold;
+		cursor: pointer;
+		transition: background-color 0.3s, transform 0.3s;
+	}
 
-.btn-primary:hover {
-	background-color: #6a11cb;
-	transform: translateY(-2px);
-}
+	.btn-primary:hover {
+		background-color: #6a11cb;
+		transform: translateY(-2px);
+	}
 
-.text-center {
-	text-align: center;
-}
+	.text-center {
+		text-align: center;
+	}
 
-.text-primary {
-	color: #2575fc;
-}
+	.text-primary {
+		color: #2575fc;
+	}
 
-.text-primary:hover {
-	text-decoration: underline;
-}
-.error {
-    color: red;
-    text-align: center;
-    margin: 10px 0;
-}
+	.text-primary:hover {
+		text-decoration: underline;
+	}
+	.error {
+		color: red;
+		text-align: center;
+		margin: 10px 0;
+	}
 </style>
 <body>
 	<?php
@@ -185,8 +185,16 @@ h2 {
 		}
   		$conn->close();
   	?>
-	<div class="logo">
-		<a href="index.php" class="logo m-0 float-start"><span class="text-primary">MindBridgeInstitute</span></a>
+	<div class="logo text-center mb-4">
+		<div style="display: flex; align-items: center;">
+			<img src="images/logo.png" alt="Logo" style="width: 100px; height: auto;">
+			<div style="text-align: left;">
+				<a href="index.php" class="text-decoration-none">
+					<h1 class="m-0" style="font-size: 1.8rem; color: #ffffff; font-weight: bold;">MindBridge</h1>
+					<h1 class="m-0" style="font-size: 1.8rem; color: #ffffff; font-weight: bold;">Institute</h1>
+				</a>
+			</div>
+		</div>
 	</div>
 
 		<div class="container">

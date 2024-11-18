@@ -7,8 +7,7 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
     	$username_input = trim($_POST['username']);
     	$password_input = trim($_POST['password']);
-    	// $remember = isset($_POST['remember']);
-		$remember = false;
+    	$remember = false;
     	$stmt = $conn->prepare("SELECT u.UserID, u.Password, u.Type, u.Username, u.Status, d.Fullname FROM Users u, UserDetails d WHERE u.UserID = d.UserID AND u.Username = ?");
     	if ($stmt === false) {
         	die("Lỗi trong việc chuẩn bị câu truy vấn: " . htmlspecialchars($conn->error));
@@ -58,7 +57,7 @@
 ?>
 <style>
 	body {
-		background: linear-gradient(to right, #6a11cb, #2575fc);
+		background: linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 139, 0.85));
 		font-family: 'Work Sans', sans-serif;
 		display: flex;
 		justify-content: center;
@@ -174,23 +173,28 @@
 	}
 </style>
 <body>
-
-	<div class="logo">
-		<a href="index.php" class="logo m-0 float-start"><span class="text-primary">ContestOnline</span></a>
+	<div class="logo text-center mb-4">
+		<div style="display: flex; align-items: center;">
+			<img src="images/logo.png" alt="Logo" style="width: 100px; height: auto;">
+			<div style="text-align: left;">
+				<a href="index.php" class="text-decoration-none">
+					<h1 class="m-0" style="font-size: 1.8rem; color: #ffffff; font-weight: bold;">MindBridge</h1>
+					<h1 class="m-0" style="font-size: 1.8rem; color: #ffffff; font-weight: bold;">Institute</h1>
+				</a>
+			</div>
+		</div>
 	</div>
+
 
 	<div class="container">
 		<div class="form-container">
 			<form method="post" action="DangNhap.php">
 				<h2>Đăng Nhập</h2>
-
-				<!-- Tên đăng nhập -->
 				<div class="form-group">
 					<label for="username">Tên đăng nhập</label>
 					<input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập" value="<?php echo htmlspecialchars($saved_username); ?>" required>
 				</div>
 
-				<!-- Mật khẩu -->
 				<div class="form-group position-relative">
 					<label for="password">Mật khẩu</label>
 					<input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" value="<?php echo htmlspecialchars($saved_password); ?>" required>
@@ -200,10 +204,8 @@
 				</div>
 
 				<?php if (!empty($message)) echo $message; ?>
-				<!-- Nút đăng nhập -->
 				<button type="submit" class="btn btn-primary" name="dangnhap">Đăng Nhập</button>
 
-				<!-- Đăng ký -->
 				<p class="text-center mt-3">
 					Bạn chưa có tài khoản? <a href="DangKy.php" class="text-primary">Đăng ký</a><br>
 					<a href="index.php" class="text-primary">Trang Chủ</a>
@@ -213,11 +215,8 @@
 	</div>
 
 	<script src="./js/signin.js"></script>
-
-	<!-- Bootstrap JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
