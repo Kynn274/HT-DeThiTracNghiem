@@ -41,7 +41,7 @@
 									<a href="#">CHẾ ĐỘ</a>
 									<ul class="dropdown">
 										<?php if($is_logged_in): 
-											if($user_type == 0): ?>
+											if($user_type == 0 && $user_type != 2): ?>
 												<li class="fw-normal" style="width:fit-content;"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
 											<?php endif; ?>
 											<?php if($user_type == 2 || $user_type == 0): ?>
@@ -77,7 +77,7 @@
 						<?php if($is_logged_in): ?>
 							<div class="col-4 text-end">
 							<div class="d-flex justify-content-end align-items-center">
-								<a href="DangNhap.php" class="auth-btn userInfo-btn text-decoration-none fw-bold">
+								<a href="ChinhSuaThongTinCaNhan.php" class="auth-btn userInfo-btn text-decoration-none fw-bold" value="<?php echo $user_id; ?>">
 									<?php echo htmlspecialchars($user_fullname); ?>
 								</a>
 								<a href="logout.php" class="auth-btn logout-btn text-decoration-none fw-bold">

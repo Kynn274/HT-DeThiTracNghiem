@@ -36,7 +36,7 @@
 		// CloneButtons.appendChild(loginBtn);
 		// var registerBtn = document.querySelector('.auth-btn.register-btn').cloneNode(true);
 		// CloneButtons.appendChild(registerBtn);
-		
+		console.log(newNavWrap);
 		newNavWrap.appendChild(CloneButtons);
 		siteMobileMenuBody.appendChild(newNavWrap);
 
