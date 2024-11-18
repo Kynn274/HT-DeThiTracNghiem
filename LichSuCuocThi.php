@@ -18,8 +18,6 @@
         min-height: 500px;
         background-color: #ffffff;
         padding: 20px;
-        /* border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
         margin: 15px auto;
     }
 
@@ -36,28 +34,42 @@
     }
 
     table, th, td {
-            border: 1px solid #cccccc;
-            padding: 10px;
-            text-align: center;
-        }
+        border: 1px solid #cccccc;
+        padding: 10px;
+        text-align: center;
+    }
 
-        th {
-            background-color: #007acc;
-            color: white;
-        }
+    th {
+        background-color: #007acc;
+        color: white;
+    }
 
-        .no-history {
-            text-align: center;
-            color: #555;
-            margin-top: 20px;
-        }
+    .no-history {
+        text-align: center;
+        color: #555;
+        margin-top: 20px;
+    }
+
+    .export-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007acc;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .export-btn:hover {
+        background-color: #005f8c;
+    }
 </style>
 <body>
     <?php
         include 'header.php';
     ?>
     <div class="hero overlay" style="height: 150px !important; max-height: 150px !important; min-height: 100px !important">
-	</div>
+    </div>
     <div class="container">
         <h1>Lịch Sử Cuộc Thi</h1>
         
@@ -69,6 +81,7 @@
                     <th>Tên Cuộc Thi</th>
                     <th>Thời Gian Tham Gia</th>
                     <th>Kết Quả (Điểm)</th>
+                    <th>Xuất Excel</th>
                 </tr>
             </thead>
             <tbody id="historyTableBody"></tbody>
@@ -80,7 +93,15 @@
         </div>
     </div>
 
-    <!-- <script>
+
+    <?php
+        include 'footer.php';
+        include 'javascript.php';
+    ?>
+</body>
+</html>
+
+<!-- <script>
         // Lấy dữ liệu lịch sử cuộc thi từ localStorage
         const users = JSON.parse(localStorage.getItem("users")) || [];
         const historyTableBody = document.getElementById("historyTableBody");
@@ -114,9 +135,3 @@
             }
         }
     </script> -->
-    <?php
-        include 'footer.php';
-        include 'javascript.php';
-    ?>
-</body>
-</html>
