@@ -4,6 +4,15 @@
 <body>
     <?php 
         include 'header.php'; 
+        $user_id = $_SESSION['user_id'];
+        $sql = "SELECT * FROM UserDetails WHERE UserID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $userDetails = $result->fetch_assoc();
+
+        
     ?>
     <style>
         .avatar{
@@ -14,6 +23,7 @@
             float: left;
             margin-right: 20px;
             gap: 20px;
+            width: 250px;
         }
         .avatar img {
             width: 150px;
@@ -21,7 +31,7 @@
             border-radius: 50%;
         }
         form{
-            width: calc(100% - 190px);
+            width: calc(100% - 290px);
             margin-right: 20px;
         }
         form h4{
@@ -44,34 +54,42 @@
     <div class="section">
         <div class="container article">
             <div class="avatar">
-                <img src="images/no-avatar.jpg" alt="avatar">
-                <button type="button" class="btn btn-primary">Chỉnh sửa ảnh đại diện</button>
+                <img src="images/<?php echo $userDetails['Avatar'] ? $userDetails['Avatar'] : 'no-avatar.jpg'; ?>" alt="avatar">
+                <button type="button" class="btn btn-primary open-avatar-selector">Chỉnh sửa ảnh đại diện</button>
             </div>
-            <form action="" method="post">
+            <form action="process.php" method="post" enctype="multipart/form-data">
                 <h4>CHỈNH SỬA THÔNG TIN CÁ NHÂN</h4>
+                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                <input type="hidden" name="avatar" value="<?php echo $userDetails['Avatar']; ?>">
+                <div class="form-group">
+                    <input type="file" name="avatarInput" id="avatarInput" accept="image/*" style="display: none;">
+                </div>
                 <div class="form-group">
                     <label for="fullname">Họ và tên</label>
-                    <input type="text" class="form-control" id="fullname" name="fullname" value="">
+                    <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo $userDetails['Fullname']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="dob">Ngày sinh</label>
-                    <input type="date" class="form-control" id="dob" name="dob" value="">
+                    <input type="date" class="form-control" id="dob" name="dob" value="<?php echo $userDetails['DateOfBirth']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="">
+                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $userDetails['Email']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="phone">Số điện thoại</label>
-                    <input type="text" class="form-control" id="phone" name="phone" value="">
+                    <input type="text" class="form-control" id="phone" name="phone" value="<?php echo $userDetails['PhoneNumber']; ?>">
                 </div>
                 <div class="form-group buttons">
                     <button type="button" class="btn btn-secondary">Quay lại</button>
-                    <button type="submit" class="btn btn-success">Lưu thông tin</button>
+                    <button type="button" class="btn btn-danger">Đổi mật khẩu</button>
+                    <button name="action" value="updateUserDetails" class="btn btn-success">Lưu thông tin</button>
                 </div>
+
             </form>
         </div>
     </div>
+    <script src="js/InformationEdition.js"></script>
     <?php 
         include 'footer.php';
         include 'javascript.php';
