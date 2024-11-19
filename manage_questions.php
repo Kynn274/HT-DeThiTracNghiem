@@ -12,7 +12,6 @@
       width: fit-content;
       max-width: 100px;
     }
-    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;

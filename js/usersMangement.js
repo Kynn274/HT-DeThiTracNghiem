@@ -1,54 +1,49 @@
-const showEvidenceBtn = document.querySelectorAll('.show-evidence-btn');
-const showInfoBtn = document.querySelectorAll('.show-info-btn');
-const banBtn = document.querySelectorAll('.ban-btn');
-const activateBtn = document.querySelectorAll('.activate-btn');
-const resetBtn = document.querySelectorAll('.reset-btn');
+const resetBtn = $('.reset-btn');
 
 
-showEvidenceBtn.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const evidence = btn.value;
+$('.show-evidence-btn').click(function() {
+  const evidence = $(this).val();
     document.querySelector('.show-evidence').style.display = 'block';
     document.querySelector('.show-evidence img').src = 'images/' + evidence;
     console.log(evidence);
-  });
 });
 
-showInfoBtn.forEach(button => {
-    button.addEventListener('click', function() {
-        const userID = this.value;
-        
-        fetch('method/process.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `action=getUserInfo&userID=${userID}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Fill in the user info modal
+$('.show-info-btn').click(function() {
+    const userID = $(this).val();
+    $.ajax({
+        url: 'process.php',
+        type: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: {
+            action: 'getUserInfo',
+            userID: userID
+        },
+        success: function(data) {
+            // const data = JSON.parse(response);
+            console.log(data);
+            if(data.success){
                 if(data.data.Avatar != '' && data.data.Avatar != null){
-                    document.querySelector('.show-info .avatar img').src = 'images/' + data.data.Avatar;
+                    $('.show-info .avatar img').attr('src', 'images/' + data.data.Avatar);
                 }else{
-                    document.querySelector('.show-info .avatar img').src = 'images/no-avatar.jpg';
+                    $('.show-info .avatar img').attr('src', 'images/no-avatar.jpg');
                 }
-                document.getElementById('fullname').value = data.data.Fullname || '';
-                document.getElementById('email').value = data.data.Email || '';
-                document.getElementById('phone').value = data.data.PhoneNumber || '';
-                document.getElementById('birthday').value = data.data.DateOfBirth || '';
+                $('#fullname').attr('value', data.data.Fullname || '');
+                $('#email').attr('value', data.data.Email || '');
+                $('#phone').attr('value', data.data.PhoneNumber || '');
+                $('#birthday').attr('value', data.data.DateOfBirth || '');
                 
                 // Show the modal
-                document.querySelector('.show-info').style.display = 'block';
+                $('.show-info').css('display', 'block');
             } else {
                 alert('Could not fetch user information');
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+        },
+        error: function(error, textStatus) {
+            console.error('Error:', textStatus);
             alert('An error occurred while fetching user information');
-        });
+        }
     });
 });
 
@@ -102,38 +97,38 @@ style.textContent = `
 document.head.appendChild(style);
 
 // Update ban button click handler
-banBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const userID = btn.value;
-        const username = btn.closest('tr').querySelector('input[type="text"]').value;
-        const confirmationPanel = document.querySelector('.confirmation-panel');
-        const confirmBtn = confirmationPanel.querySelector('.confirm-btn');
-        const cancelBtn = confirmationPanel.querySelector('.cancel-btn');
+$('.ban-btn').click(function() {
+    const userID = $(this).val();
+    const username = $(this).closest('tr').find('input[type="text"]').val();
+    const confirmationPanel = $('.confirmation-panel');
+    const confirmBtn = confirmationPanel.find('.confirm-btn');
+    const cancelBtn = confirmationPanel.find('.cancel-btn');
 
-        // Update confirmation message with username
-        confirmationPanel.querySelector('p').textContent = 
-            `Bạn có chắc chắn muốn hạn chế tài khoản "${username}" không?`;
+    // Update confirmation message with username
+    confirmationPanel.find('p').text(`Bạn có chắc chắn muốn hạn chế tài khoản "${username}" không?`);
 
-        // Show confirmation panel
-        confirmationPanel.style.display = 'block';
+    // Show confirmation panel
+    confirmationPanel.css('display', 'block');
 
         // Handle cancel
-        cancelBtn.onclick = () => {
-            confirmationPanel.style.display = 'none';
-        };
+    cancelBtn.click(function() {
+        confirmationPanel.css('display', 'none');
+    });
 
-        // Handle confirm
-        confirmBtn.onclick = () => {
-            fetch('method/process.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `action=banUser&userID=${userID}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
+    // Handle confirm
+    confirmBtn.click(function() {
+        $.ajax({
+            url: 'process.php',
+            type: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            data: {
+                action: 'banUser',
+                userID: userID
+            },
+            success: function(response) {
+                const data = JSON.parse(response);
                 if (data.success) {
                     alert('Hạn chế tài khoản thành công');
                     // Reload page to reflect changes
@@ -141,31 +136,29 @@ banBtn.forEach(btn => {
                 } else {
                     alert('Không thể hạn chế tài khoản này');
                 }
-            })
-            .catch(textStatus => {
+            },
+            error: function(textStatus) {
                 console.error('Error:', textStatus);
                 alert('Đã xảy ra lỗi khi hạn chế tài khoản');
-            })
-            .finally(() => {
-                confirmationPanel.style.display = 'none';
-            });
-        };
+            }
+        });
     });
 });
 
-activateBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const userID = btn.value;
-        fetch('method/process.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+$('.activate-btn').click(function() {
+    const userID = $(this).val();
+    $.ajax({
+        url: 'process.php',
+        type: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `action=activateUser&userID=${userID}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
+        data: {
+            action: 'activateUser',
+            userID: userID
+        },
+        success: function(response) {
+            const data = JSON.parse(response);
             if(data.success){
                 alert('Kích hoạt tài khoản thành công');
                 // Reload page to reflect changes
@@ -173,26 +166,26 @@ activateBtn.forEach(btn => {
             }else{
                 alert('Không thể kích hoạt tài khoản này');
             }
-        })
-        .catch(textStatus => {
+        },
+        error: function(textStatus) {
             console.error('Error:', textStatus);
             alert('Đã xảy ra lỗi khi kích hoạt tài khoản');
-        });
+        }
     });
 });
 
 // Close confirmation panel when clicking outside
-document.querySelector('.confirmation-panel').addEventListener('click', (e) => {
-    if (e.target === document.querySelector('.confirmation-panel')) {
-        document.querySelector('.confirmation-panel').style.display = 'none';
+$('.confirmation-panel').click(function(e) {
+    if (e.target === $('.confirmation-panel')) {
+        $('.confirmation-panel').css('display', 'none');
     }
 });
 
 // Close buttons functionality
-document.querySelector('.close-info').addEventListener('click', function() {
-    document.querySelector('.show-info').style.display = 'none';
+$('.close-info').click(function() {
+    $('.show-info').css('display', 'none');
 });
 
-document.querySelector('.close-evidence').addEventListener('click', function() {
-    document.querySelector('.show-evidence').style.display = 'none';
+$('.close-evidence').click(function() {
+    $('.show-evidence').css('display', 'none');
 });

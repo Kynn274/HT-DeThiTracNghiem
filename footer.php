@@ -23,7 +23,7 @@
 							<ul class="dropdown">
 								<li class="fw-normal"><a href="TaoDeThi.php">Tạo đề thi / cuộc thi</a></li>
 								<li class="fw-normal"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
-								<li class="fw-normal"><a href="QuanLyNganHangCauHoi.php">Quản lý ngân hàng câu hỏi</a></li>
+								<li class="fw-normal"><a href="questionsBank.php">Quản lý ngân hàng câu hỏi</a></li>
 								<li class="fw-normal"><a href="QuanLyDeThi.php">Quản lý đề thi / cuộc thi</a></li>
 								<li class="fw-normal"><a href="LichSuCuocThi.php">Lịch sử cuộc thi</a></li>
 								<li class="fw-normal"><a href="ThamGiaThi.php">Tham gia cuộc thi</a></li>

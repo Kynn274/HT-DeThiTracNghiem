@@ -103,6 +103,7 @@ if(isset($_POST['action'])) {
         ]);
         exit;
     }
+    
 }
 
 // If no action matched, return an error

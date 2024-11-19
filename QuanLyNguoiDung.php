@@ -214,6 +214,7 @@
         </thead>
         <tbody>
           <?php
+            if(count($users) > 0){
             $i = 0;
             foreach ($users as $user) {
               $i++;
@@ -235,7 +236,12 @@
               <button class="btn btn-warning reset-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-key-fill"></i><p>Khôi phục<br>mật khẩu</p></button>
               <button class="btn btn-primary show-info-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-info-circle"></i><p>Thông tin<br>chi tiết</p></button>
             </td>
-          </tr>
+            </tr>
+            <?php } ?>
+          <?php }else{ ?>
+            <tr>
+              <td colspan="8" style="text-align: center;">Không tìm thấy người dùng nào</td>
+            </tr>
           <?php } ?>
         </tbody>
       </table>
@@ -275,7 +281,7 @@
       <img src="" alt="">
     </div>
   </div>
-  <script src="./js/usersMangement.js"></script>
+  <script src="js/usersMangement.js"></script>
   <?php
     include 'footer.php';
     include 'javascript.php';
