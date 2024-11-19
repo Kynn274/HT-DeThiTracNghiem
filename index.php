@@ -210,8 +210,8 @@
 						<div class="service text-center">
 							<span class="bi-bookmark-fill"></span>
 							<div>
-								<h3>QUẢN LÝ THƯ VIỆN ĐỀ THI</h3>
-								<p class="mb-4">Quản lý các đề thi trong thư viện.</p>
+								<h3>QUẢN LÝ Ngân Hàng Câu Hỏi</h3>
+								<p class="mb-4">Quản lý các câu hỏi trong ngân hàng.</p>
 								<p><a href="QuanLyNganHangCauHoi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
 							</div>
 						</div>
