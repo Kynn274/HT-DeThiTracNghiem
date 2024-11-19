@@ -10,7 +10,6 @@
     $users = $result->fetch_all(MYSQLI_ASSOC);
   ?>
   <style>
-    <style>
       input[type="text"], input[type="password"] {
       border: none;
       background-color: transparent;
