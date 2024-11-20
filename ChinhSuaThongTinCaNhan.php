@@ -81,7 +81,7 @@
                     <input type="text" class="form-control" id="phone" name="phone" value="<?php echo $userDetails['PhoneNumber']; ?>">
                 </div>
                 <div class="form-group buttons">
-                    <button type="button" class="btn btn-secondary">Quay lại</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='index.php'">Quay lại</button>
                     <button type="button" class="btn btn-danger" onclick="window.location.href='DoiMatKhau.php'">Đổi mật khẩu</button>
                     <button name="action" value="updateUserDetails" class="btn btn-success">Lưu thông tin</button>
                 </div>
