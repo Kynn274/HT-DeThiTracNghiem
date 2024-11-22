@@ -103,52 +103,117 @@ if(isset($_POST['action'])) {
         ]);
         exit;
     }
-    if($_POST['action'] == 'getQuestionsByQuestionBankID'){
-        $questionBankID = $_POST['questionBankID'];
-        if($questionBankID != ''){
-            $sql = "SELECT QuestionID, QuestionDescription, QuestionAnswerID, Level FROM Questions WHERE QuestionBankID = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $questionBankID);
-            if($stmt->execute()){
-                $result = $stmt->get_result();
-                $questions = [];
-                while($row = $result->fetch_assoc()){
-                    $questions[] = $row;
-                    $sql = "SELECT AnswerID, AnswerDescription FROM Answers WHERE QuestionID = ?";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("i", $row['QuestionID']);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $answers = [];
-                    while($answer = $result->fetch_assoc()){
-                        $answers[] = $answer;
-                    }
-                    $questions[$index]['answers'] = $answers;
-                }
-                echo json_encode([
-                    'success' => true,
-                    'data' => $questions
-                ]);
-                exit;
-            }else{
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Could not get questions'
-                ]);
-                exit;
-            }
-        }else{
+    // if($_POST['action'] == 'getQuestionsByQuestionBankID'){
+    //     $questionBankID = $_POST['questionBankID'];
+    //     if($questionBankID != ''){
+    //         $sql = "SELECT QuestionID, QuestionDescription, QuestionAnswerID, Level FROM Questions WHERE QuestionBankID = ?";
+    //         $stmt = $conn->prepare($sql);
+    //         $stmt->bind_param("i", $questionBankID);
+    //         if($stmt->execute()){
+    //             $result = $stmt->get_result();
+    //             $questions = [];
+    //             while($row = $result->fetch_assoc()){
+    //                 $questions[] = $row;
+    //                 $sql = "SELECT AnswerID, AnswerDescription FROM Answers WHERE QuestionID = ?";
+    //                 $stmt = $conn->prepare($sql);
+    //                 $stmt->bind_param("i", $row['QuestionID']);
+    //                 $stmt->execute();
+    //                 $result = $stmt->get_result();
+    //                 $answers = [];
+    //                 while($answer = $result->fetch_assoc()){
+    //                     $answers[] = $answer;
+    //                 }
+    //                 $questions[$index]['answers'] = $answers;
+    //             }
+    //             echo json_encode([
+    //                 'success' => true,
+    //                 'data' => $questions
+    //             ]);
+    //             exit;
+    //         }else{
+    //             echo json_encode([
+    //                 'success' => false,
+    //                 'message' => 'Could not get questions'
+    //             ]);
+    //             exit;
+    //         }
+    //     }else{
+    //         echo json_encode([
+    //             'success' => true,
+    //             'data' => []
+    //         ]);
+    //         exit;
+    //     }
+
+    // }
+    if($_POST['action'] == 'getBankInfoById'){
+        $bankID = $_POST['bankID'];
+        $sql = "SELECT * FROM QuestionsBank WHERE BankID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $bankID);
+        if($stmt->execute()){
+            $result = $stmt->get_result();
+            $bank = $result->fetch_assoc();
             echo json_encode([
-                'success' => false,
-                'data' => []
+                'success' => true,
+                'data' => $bank
             ]);
             exit;
         }
-
+        echo json_encode([
+            'success' => false,
+            'message' => 'Could not get bank info'
+        ]);
+        exit;
     }
-    
+    if($_POST['action'] == 'requestEditBank'){
+        $_SESSION['bankMode'] = 'edit';
+        $_SESSION['questionsBankId'] = $_POST['bankID'];
+        echo json_encode([
+            'success' => true,
+            'message' => 'Request edit bank'
+        ]);
+        exit;
+    }
+    if($_POST['action'] == 'saveQuestionsBank'){
+        $bankName = $_POST['quesBankName'];
+        $subject = $_POST['subject'];
+        $createdDate = date('Y-m-d');
+        $userID = $_SESSION['user_id'];
+        echo $bankName;
+        echo $subject;
+        echo $createdDate;
+        echo $userID;
+        $sql = "INSERT INTO QuestionBanks (QuestionBankName, Subject, CreateDate, UserID) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssi", $bankName, $subject, $createdDate, $userID);
+        if($stmt->execute()){
+            echo json_encode([
+                'success' => true,
+                'message' => 'Save questions bank'
+            ]);
+            header('Location: questionsBank.php');
+            exit;
+        }
+        echo json_encode([
+            'success' => false,
+            'message' => 'Could not save questions bank'
+        ]);
+        exit;
+    }
 }
+if(isset($_GET['action'])){
+    if($_GET['action'] == 'requestAddBank'){
+        $_SESSION['bankMode'] = 'add';
+        $_SESSION['questionsBankId'] = '';
 
+        echo json_encode([
+            'success' => true,
+            'message' => 'Request add bank'
+        ]);
+        exit;
+    }
+}
 // If no action matched, return an error
 echo json_encode([
     'success' => false,

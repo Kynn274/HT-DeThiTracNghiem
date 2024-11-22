@@ -40,6 +40,7 @@
 	        QuestionBankID INT AUTO_INCREMENT PRIMARY KEY, -- Mã ngân hàng câu hỏi
 	        UserID INT NOT NULL, -- Mã người tạo
 	        QuestionBankName NVARCHAR(500) NOT NULL, -- Tên ngân hàng câu hỏi
+	        Subject NVARCHAR(100), -- Môn học
 	        CreateDate DATE, -- Ngày tạo ngân hàng câu hỏi
 	        TotalNumber INT NOT NULL DEFAULT 0, -- Số lượng câu hỏi trong ngân hàng câu hỏi
             FOREIGN KEY (UserID) REFERENCES Users(UserId) ON DELETE CASCADE

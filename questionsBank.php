@@ -9,7 +9,15 @@
         $stmt->bind_param("i", $user_id);
     	  $stmt->execute();
         $questionsBanks = $stmt->get_result();
-
+        $subjects = [
+          'toan' => 'Toán',
+          'anh' => 'Tiếng Anh',
+          'ly' => 'Vật lý',
+          'hoa' => 'Hóa học',
+          'sinh' => 'Sinh học',
+          'van' => 'Ngữ văn'
+        ];
+       
     ?>
     <style>
     input {
@@ -72,7 +80,9 @@
         background-color: #f8f9fa;
         z-index: 1;
     }
-
+    td, th{
+      text-align: center;
+    }
     /* Custom scrollbar styling */
     .container.article::-webkit-scrollbar {
         width: 8px;
@@ -118,7 +128,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col" style="display: none;">Mã ngân hàng câu hỏi</th>
-                        <th scope="col">Tên ngân hàng câu hỏi</th>
+                        <th scope="col">Tên</th>
                         <th scope="col">Môn học</th>
                         <th scope="col">Ngày tạo</th>
                         <th scope="col">Số câu hỏi</th>
@@ -131,12 +141,14 @@
                         $i = 1;
                         while($questionBank = $questionsBanks->fetch_assoc()): ?>
                             <tr>
-                              <th scope="row" style="text-align: center;"><?php echo $i++; ?></th>
-                              <td style="display: none;"><input type="text" id="questionBankID" value="<?php echo $questionBank['QuestionBankID']; ?>" disabled></td>
-                              <td><input type="text" id="questionBankName" value="<?php echo $questionBank['QuestionBankName']; ?>" disabled></td>
-                              <td><input type="date" id="createdDate" value="<?php echo $questionBank['CreatedDate']; ?>" disabled></td>
-                              <td><input type="number" id="totalNumber" value="<?php echo $questionBank['TotalNumber']; ?>" disabled></td>
-                              <td>
+                              <th scope="col" style="text-align: center;"><?php echo $i++; ?></th>
+                              <td scope="col" style="display: none;"><input type="text" id="questionBankID" value="<?php echo $questionBank['QuestionBankID']; ?>" disabled></td>
+                              <td scope="col"><?php echo $questionBank['QuestionBankName']; ?></td>
+                              <td scope="col"><?php echo $subjects[$questionBank['Subject']] ?? 'Không xác định'; ?></td>
+                              <td scope="col"><?php echo $questionBank['CreateDate']; ?></td>
+                              <td scope="col"><?php echo $questionBank['TotalNumber']; ?></td>
+                              <td scope="col">
+                                <button class="btn btn-success addQuestion-btn" value=""><i class="bi bi-plus"></i><p>Thêm câu hỏi</p></button>
                                 <button class="btn btn-primary editQuestionsBank-btn" value=""><i class="bi bi-pen"></i><p>Sửa</p></button>
                                 <button class="btn btn-danger deleteQuestionsBank-btn" value=""><i class="bi bi-trash"></i><p>Xóa</p></button>
                               </td>
@@ -154,10 +166,10 @@
         <!-- Quản lý câu hỏi trong thư viện -->
         <div class="mb-4 container">
             <h4>Thêm Ngân Hàng Câu Hỏi</h4>
-            <a href="questionsBankForm.php" class="btn btn-info">Thêm Ngân Hàng Câu Hỏi</a>
+            <button class="btn btn-info" id="addQuestionsBank">Thêm Ngân Hàng Câu Hỏi</button>
         </div>
     </div>
-  
+    <script src="./js/questionsBank.js"></script>
     <?php
         include 'footer.php';
         include 'javascript.php';
