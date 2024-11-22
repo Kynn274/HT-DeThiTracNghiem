@@ -4,6 +4,12 @@
 <body>
     <?php
         include 'header.php';
+        $sql = "SELECT * FROM questionbanks WHERE UserID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+    	  $stmt->execute();
+        $questionsBanks = $stmt->get_result();
+
     ?>
     <style>
     input {
@@ -50,87 +56,7 @@
         display: none;
       }
     }
-    .show-info, .show-evidence{
-      background-color: rgba(0, 0, 0, 0.5);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: none;
-      z-index: 5;
-    }
-    .show-info .container, .show-evidence .container{
-      background-color: #fff;
-      width: fit-content;
-      height: fit-content;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px;
-    }   
-    .show-evidence img{
-      width: 600px;
-      height: 400px;
-    }
-    .show-info .container{
-      width: fit-content;
-      min-width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-      padding: 20px;
-    }
-    .show-info .container h1{
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin: 10px 0;
-      text-align: center;
-    }
-    .show-info .info-container label{
-      font-size: 1rem;
-      font-weight: bold;
-    }
-    .show-info .avatar img{
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-    }
-    .show-info .info-container{
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 10px;
-    }
-    .show-info .info-item{
-      width: 100%;
-      display: flex;
-      align-items: flex-start;
-      flex-direction: column;
-    }
-    .show-info .info-item input{
-      width: calc(100% - 20px);
-      padding: 5px;
-      background-color: transparent;
-      border: none;
-      margin: 0 10px;
-    }
-    .close-info, .close-evidence{
-      z-index: 5;
-      background-color: transparent;
-      border: none;
-      width: fit-content;
-      height: fit-content;
-      position: absolute;
-      top: 20px;
-      right: 20px;
-    }
-    .close-info i, .close-evidence i{
-      font-size: 1.5rem;
-      color: #fff;
-    }
-    /* Container for the table with scrolling */
+    
     .container.article {
         max-height: 600px;
         overflow-y: auto;
@@ -193,23 +119,34 @@
                         <th scope="col">#</th>
                         <th scope="col" style="display: none;">Mã ngân hàng câu hỏi</th>
                         <th scope="col">Tên ngân hàng câu hỏi</th>
+                        <th scope="col">Môn học</th>
                         <th scope="col">Ngày tạo</th>
                         <th scope="col">Số câu hỏi</th>
                         <th scope="col">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row" style="text-align: center;"></th>
-                        <td style="display: none;"><input type="text" value="" disabled></td>
-                        <td><input type="text" value="" disabled></td>
-                        <td><input type="date" value="" disabled></td>
-                        <td><input type="number" value="" disabled></td>
-                        <td>
-                            <button class="btn btn-primary editQuestionsBank-btn" value=""><i class="bi bi-pen"></i><p>Sửa</p></button>
-                            <button class="btn btn-danger deleteQuestionsBank-btn" value=""><i class="bi bi-trash"></i><p>Xóa</p></button>
-                        </td>
-                    </tr>
+                    <?php
+                      if($questionsBanks->num_rows > 0){
+                        $i = 1;
+                        while($questionBank = $questionsBanks->fetch_assoc()): ?>
+                            <tr>
+                              <th scope="row" style="text-align: center;"><?php echo $i++; ?></th>
+                              <td style="display: none;"><input type="text" id="questionBankID" value="<?php echo $questionBank['QuestionBankID']; ?>" disabled></td>
+                              <td><input type="text" id="questionBankName" value="<?php echo $questionBank['QuestionBankName']; ?>" disabled></td>
+                              <td><input type="date" id="createdDate" value="<?php echo $questionBank['CreatedDate']; ?>" disabled></td>
+                              <td><input type="number" id="totalNumber" value="<?php echo $questionBank['TotalNumber']; ?>" disabled></td>
+                              <td>
+                                <button class="btn btn-primary editQuestionsBank-btn" value=""><i class="bi bi-pen"></i><p>Sửa</p></button>
+                                <button class="btn btn-danger deleteQuestionsBank-btn" value=""><i class="bi bi-trash"></i><p>Xóa</p></button>
+                              </td>
+                            </tr>
+                        <?php endwhile;
+                      }else{
+                        echo "<tr><td colspan='7' style='text-align: center;'>Không có ngân hàng câu hỏi nào</td></tr>";
+                      }
+                    ?>
+                    
                 </tbody>
             </table>
             
@@ -217,7 +154,7 @@
         <!-- Quản lý câu hỏi trong thư viện -->
         <div class="mb-4 container">
             <h4>Thêm Ngân Hàng Câu Hỏi</h4>
-            <a href="manage_questions.php" class="btn btn-info">Thêm Ngân Hàng Câu Hỏi</a>
+            <a href="questionsBankForm.php" class="btn btn-info">Thêm Ngân Hàng Câu Hỏi</a>
         </div>
     </div>
   

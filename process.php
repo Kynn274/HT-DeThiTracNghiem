@@ -103,6 +103,49 @@ if(isset($_POST['action'])) {
         ]);
         exit;
     }
+    if($_POST['action'] == 'getQuestionsByQuestionBankID'){
+        $questionBankID = $_POST['questionBankID'];
+        if($questionBankID != ''){
+            $sql = "SELECT QuestionID, QuestionDescription, QuestionAnswerID, Level FROM Questions WHERE QuestionBankID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $questionBankID);
+            if($stmt->execute()){
+                $result = $stmt->get_result();
+                $questions = [];
+                while($row = $result->fetch_assoc()){
+                    $questions[] = $row;
+                    $sql = "SELECT AnswerID, AnswerDescription FROM Answers WHERE QuestionID = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $row['QuestionID']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $answers = [];
+                    while($answer = $result->fetch_assoc()){
+                        $answers[] = $answer;
+                    }
+                    $questions[$index]['answers'] = $answers;
+                }
+                echo json_encode([
+                    'success' => true,
+                    'data' => $questions
+                ]);
+                exit;
+            }else{
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Could not get questions'
+                ]);
+                exit;
+            }
+        }else{
+            echo json_encode([
+                'success' => false,
+                'data' => []
+            ]);
+            exit;
+        }
+
+    }
     
 }
 
