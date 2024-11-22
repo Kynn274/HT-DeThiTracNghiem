@@ -93,24 +93,9 @@ $(document).ready(function(){
             }
         });
     }
-
-    $('#addQuestionsBank').click(function(){
-        $.ajax({
-            url: 'process.php',
-            type: 'GET',
-            dataType: 'json',
-            data: {
-                action: 'requestAddBank',
-            },
-            success: function(data){
-                console.log(data);
-            },
-            error: function(xhr, status, error){
-                console.log(error);
-            }
-        });
-        window.location.href = 'questionsBankForm.php';
-    });
+    function addQuestionRequest(bankID){
+        window.location.href = 'questionsAddition.php?bankID=' + bankID;
+    };
     $('.editQuestionsBank-btn').click(function(){
         let row = $(this).closest('tr');
         questionsBankId = $(row).find('#questionBankID').val();
@@ -139,5 +124,30 @@ $(document).ready(function(){
             $('#subject').val(newBank.Subject == '' ? '' : newBank.Subject);
         }
     });
-    
+    $(".deleteQuestionsBank-btn").click(function(){
+        let row = $(this).closest('tr');
+        questionsBankId = $(row).find('#questionBankID').val();
+        $.ajax({
+            url: 'process.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'deleteQuestionsBank',
+                bankID: questionsBankId
+            },
+            success: function(data){
+                if(data.success){
+                    window.location.reload();
+                }else{
+                    alert(data.message);
+                }
+            },
+            error: function(xhr, status, error){
+                console.log(error);
+            }
+        });
+    });
+    $('.addQuestion-btn').click(function(bankID){
+        addQuestionRequest(bankID);
+    });
 });

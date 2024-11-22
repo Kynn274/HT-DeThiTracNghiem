@@ -1,6 +1,31 @@
 <?php
   include 'head.php';
 ?>
+<body>
+    <?php
+        include 'header.php';
+        $bankID = $_GET['bankID'];
+        $sql = "SELECT * FROM Questions WHERE QuestionBankID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $bankID);
+        if($stmt->execute()){
+            $result = $stmt->get_result();
+        }
+        $questions = [];
+        while($row = $result->fetch_assoc()){
+            $questions[] = $row;
+            $questionID = $row['QuestionID'];
+            $sql = "SELECT * FROM Answers WHERE QuestionID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $questionID);
+            if($stmt->execute()){
+                $answers = $stmt->get_result();
+                while($answer = $answers->fetch_assoc()){
+                    $questions[$questionID]['answers'][] = $answer;
+                }
+            }
+        }
+    ?>
 <style>
     /* Hiệu ứng hover cho các hàng trong bảng */
     .table-hover tbody tr:hover {
@@ -76,12 +101,6 @@
     }
 </style>
 
-
-<body>
-    <?php
-        include 'header.php';
-    ?>
-
     <div class="hero overlay" style="height: 150px !important; max-height: 150px !important; min-height: 100px !important">
     </div>
 
@@ -92,6 +111,7 @@
         <div class="card mb-5">
             <div class="card-body">
                 <form method="POST" action="#">
+                    <input type="hidden" name="bankID" value="<?php echo $bankID; ?>">
                     <div class="mb-3">
                         <label for="question" class="form-label fw-semibold">Câu Hỏi</label>
                         <textarea class="form-control" id="question" name="question" rows="3" required></textarea>
@@ -157,6 +177,27 @@
                 </tr>
             </thead>
             <tbody>
+                <?php
+                if(count($questions) > 0){
+                    $i = 1;
+                    foreach($questions as $question){
+                        echo '<tr>';
+                        echo '<td>' . $i++ . '</td>';
+                        echo '<td>' . $question['QuestionDescription'] . '</td>';
+                        echo '<td>' . $question['Level'] . '</td>';
+                        foreach($question['answers'] as $answer){
+                            echo '<td>' . $answer['AnswerID'] == $question['CorrectAnswer'] ? '<span class="badge bg-success">Đúng</span>' : $answer['AnswerDescription'] . '</td>';
+                        }
+                        echo '<td>';
+                        echo '<button class="btn btn-warning" onclick="editQuestion(' . $question['QuestionID'] . ')"><i class="fa-solid fa-pen"></i></button>';
+                        echo '<button class="btn btn-danger" onclick="deleteQuestion(' . $question['QuestionID'] . ')"><i class="fa-solid fa-trash"></i></button>';
+                        echo '</td>';
+                        echo '</tr>';
+                    }
+                }else{
+                    echo '<tr><td colspan="8" class="text-center">Không có câu hỏi nào</td></tr>';
+                }
+                ?>
             </tbody>
             </table>
         </div>
