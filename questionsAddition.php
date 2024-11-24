@@ -4,16 +4,29 @@
 <body>
     <?php
         include 'header.php';
-        $bankID = $_GET['bankID'];
-        $sql = "SELECT * FROM Questions WHERE QuestionBankID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $bankID);
-        if($stmt->execute()){
-            $result = $stmt->get_result();
+        $bankID = $_SESSION['currentBankId'];
+        function deleteQuestionByQuestionID($questionID){
+            global $conn;
+            $sql = "DELETE FROM Questions WHERE QuestionID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $questionID);
+            $stmt->execute();
+        }
+        
+        if(!isset($bankID)){
+            header('Location: questionsBank.php');
+            exit;
+        }else{
+            $sql = "SELECT * FROM Questions WHERE QuestionBankID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $bankID);
+            if($stmt->execute()){
+                $result = $stmt->get_result();
+            }
         }
         $questions = [];
         while($row = $result->fetch_assoc()){
-            $questions[] = $row;
+            $question = $row;
             $questionID = $row['QuestionID'];
             $sql = "SELECT * FROM Answers WHERE QuestionID = ?";
             $stmt = $conn->prepare($sql);
@@ -21,9 +34,10 @@
             if($stmt->execute()){
                 $answers = $stmt->get_result();
                 while($answer = $answers->fetch_assoc()){
-                    $questions[$questionID]['answers'][] = $answer;
+                    $question['answers'][] = $answer;
                 }
             }
+            $questions[] = $question;
         }
     ?>
 <style>
@@ -110,7 +124,7 @@
         <!-- Form thêm câu hỏi -->
         <div class="card mb-5">
             <div class="card-body">
-                <form method="POST" action="#">
+                <form method="POST" action="process.php">
                     <input type="hidden" name="bankID" value="<?php echo $bankID; ?>">
                     <div class="mb-3">
                         <label for="question" class="form-label fw-semibold">Câu Hỏi</label>
@@ -139,22 +153,23 @@
                     <div class="mb-3">
                         <label for="correctAnswer" class="form-label fw-semibold">Đáp Án Đúng</label>
                         <select class="form-select" id="correctAnswer" name="correctAnswer" required>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
+                            <option value="A" selected>A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="level" class="form-label fw-semibold">Độ khó</label>
                         <select class="form-select" id="level" name="level" required>
-                            <option value="1">Dễ</option>
+                            <option value="1" selected>Dễ</option>
                             <option value="2">Trung bình</option>
                             <option value="3">Khó</option>
                         </select>
                     </div>
+
                     <div class="d-grid">
-                        <button type="submit" id="addQuestionBtn" class="btn btn-primary btn-lg">Thêm Câu Hỏi</button>
+                        <button type="submit" name="action" value="addQuestionToBank" id="addQuestionBtn" class="btn btn-primary btn-lg">Thêm Câu Hỏi</button>
                     </div>
                 </form>
             </div>
@@ -166,44 +181,92 @@
             <caption>DANH SÁCH CÂU HỎI</caption>
             <thead>
                 <tr>
-                    <th scope="col" width="5%">#</th>
-                    <th scope="col" width="25%">Câu hỏi</th>
-                    <th scope="col" width="10%">Độ khó</th>
-                    <th scope="col" width="10%">A</th>
-                    <th scope="col" width="10%">B</th>
-                    <th scope="col" width="10%">C</th>
-                    <th scope="col" width="10%">D</th>
-                    <th scope="col" width="20%">Hành động</th>
+                    <th scope="col" width="5%" class="text-center align-middle">#</th>
+                    <th scope="col" width="25%" class="text-center align-middle">Câu hỏi</th>
+                    <th scope="col" width="10%" class="text-center align-middle">Độ khó</th>
+                    <th scope="col" width="10%" class="text-center align-middle">A</th>
+                    <th scope="col" width="10%" class="text-center align-middle">B</th>
+                    <th scope="col" width="10%" class="text-center align-middle">C</th>
+                    <th scope="col" width="10%" class="text-center align-middle">D</th>
+                    <th scope="col" width="10%" class="text-center align-middle">Đáp án đúng</th>
+                    <th scope="col" width="20%" class="text-center align-middle">Hành động</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="accordion accordion-flush">
                 <?php
-                if(count($questions) > 0){
+                if(count($questions) > 0):
                     $i = 1;
-                    foreach($questions as $question){
-                        echo '<tr>';
-                        echo '<td>' . $i++ . '</td>';
-                        echo '<td>' . $question['QuestionDescription'] . '</td>';
-                        echo '<td>' . $question['Level'] . '</td>';
-                        foreach($question['answers'] as $answer){
-                            echo '<td>' . $answer['AnswerID'] == $question['CorrectAnswer'] ? '<span class="badge bg-success">Đúng</span>' : $answer['AnswerDescription'] . '</td>';
-                        }
-                        echo '<td>';
-                        echo '<button class="btn btn-warning" onclick="editQuestion(' . $question['QuestionID'] . ')"><i class="fa-solid fa-pen"></i></button>';
-                        echo '<button class="btn btn-danger" onclick="deleteQuestion(' . $question['QuestionID'] . ')"><i class="fa-solid fa-trash"></i></button>';
-                        echo '</td>';
-                        echo '</tr>';
-                    }
-                }else{
-                    echo '<tr><td colspan="8" class="text-center">Không có câu hỏi nào</td></tr>';
-                }
-                ?>
+                    foreach($questions as $question): ?>
+                        <tr class="questionItem">
+                            <td class="text-center align-middle"><?php echo $i++; ?></td>
+                            <td style="display: none;"><input type="hidden" id="questionID" value="<?php echo $question['QuestionID']; ?>"></td>
+                            <td class="align-middle"><?php echo $question['QuestionDescription']; ?></td>
+                            <td class="text-center align-middle"><?php echo $question['Level'] == 1 ? 'Dễ' : ($question['Level'] == 2 ? 'Trung bình' : 'Khó'); ?></td>
+                            <?php $correctAnswer = '';
+                            foreach($question['answers'] as $answer): ?>
+                                <td class="text-center align-middle"><?php echo $answer['AnswerDescription']; ?></td>
+                                <?php if($answer['AnswerID'] == $question['QuestionAnswerID']){
+                                    $correctAnswer = $answer;
+                                } ?>
+                            <?php endforeach; ?>
+                            <td class="text-center align-middle"><?php echo $correctAnswer['AnswerDescription']; ?></td>
+                            <td class="text-center align-middle">
+                                <button class="btn btn-warning btn-sm editQuestionBtn"><i class="bi-solid bi-pen"></i></button>
+                                <button class="btn btn-danger btn-sm deleteQuestionBtn"><i class="bi-solid bi-trash"></i></button>
+                            </td>
+                            <tr style="display: none;" class="editQuestion">
+                                <td></td>
+                                <td style="display: none;">
+                                    <input type="hidden" id="editQuestionID" value="<?php echo $question['QuestionID']; ?>">
+                                </td>
+                                <td class="text-center align-middle">
+                                    <input type="text" class="form-control" id="editQuestionDescription" name="editQuestionDescription" value="<?php echo $question['QuestionDescription']; ?>" rows="3" required>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <select class="form-select form-control" id="editLevel" name="editLevel" required>
+                                        <option value="1" <?php echo $question['Level'] == 1 ? 'selected' : ''; ?>>Dễ</option>
+                                        <option value="2" <?php echo $question['Level'] == 2 ? 'selected' : ''; ?>>Trung bình</option>
+                                        <option value="3" <?php echo $question['Level'] == 3 ? 'selected' : ''; ?>>Khó</option>
+                                    </select>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <input type="hidden" id="editAnswerIDA" value="<?php echo $question['answers'][0]['AnswerID']; ?>">
+                                    <input type="text" class="form-control" id="editOptionA" name="editOptionA" value="<?php echo $question['answers'][0]['AnswerDescription']; ?>" required>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <input type="hidden" id="editAnswerIDB" value="<?php echo $question['answers'][1]['AnswerID']; ?>">
+                                    <input type="text" class="form-control" id="editOptionB" name="editOptionB" value="<?php echo $question['answers'][1]['AnswerDescription']; ?>" required>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <input type="hidden" id="editAnswerIDC" value="<?php echo $question['answers'][2]['AnswerID']; ?>">
+                                    <input type="text" class="form-control" id="editOptionC" name="editOptionC" value="<?php echo $question['answers'][2]['AnswerDescription']; ?>" required>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <input type="hidden" id="editAnswerIDD" value="<?php echo $question['answers'][3]['AnswerID']; ?>">
+                                    <input type="text" class="form-control" id="editOptionD" name="editOptionD" value="<?php echo $question['answers'][3]['AnswerDescription']; ?>" required>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <select class="form-select form-control" id="editCorrectAnswer" name="editCorrectAnswer" required>
+                                        <option value="A" selected>A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                </td>
+                                <td class="text-center align-middle">
+                                    <button class="btn btn-success btn-sm saveEditBtn"><i class="bi-solid bi-check"></i></button>
+                                </td>
+                            </tr>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr><td colspan="8" class="text-center">Không có câu hỏi nào</td></tr>
+                <?php endif; ?>
             </tbody>
             </table>
         </div>
         <div class="d-flex justify-content-end gap-2 mb-3 mt-3">
-            <button class="btn btn-primary" id="backToQuestionsBankForm">Quay lại</button>
-            <button class="btn btn-success" id="saveQuestion">Lưu câu hỏi</button>
+            <button class="btn btn-primary" id="backToQuestionsBank">Quay lại</button>
         </div>
     </div>
     <script src="./js/questionsBank.js"></script>

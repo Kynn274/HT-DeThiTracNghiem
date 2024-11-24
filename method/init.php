@@ -51,7 +51,7 @@
 	        QuestionID INT AUTO_INCREMENT PRIMARY KEY, -- Mã câu hỏi
 	        QuestionBankID INT NOT NULL, -- Mã ngân hàng câu hỏi thuộc về
 	        QuestionDescription NVARCHAR(1000) NOT NULL, -- Mô tả câu hỏi
-			QuestionAnswerID INT NOT NULL, -- Mã đáp án đúng
+			QuestionAnswerID INT NOT NULL DEFAULT 0, -- Mã đáp án đúng
 	        Level NVARCHAR(100) NOT NULL, -- Độ khó của câu hỏi (Dễ, Trung bình, Khó) 
             FOREIGN KEY (QuestionBankID) REFERENCES QuestionBanks(QuestionBankID) ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",

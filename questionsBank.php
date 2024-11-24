@@ -142,7 +142,7 @@
                         while($questionBank = $questionsBanks->fetch_assoc()): ?>
                             <tr>
                               <th scope="col" style="text-align: center;"><?php echo $i++; ?></th>
-                              <td scope="col" style="display: none;"><input type="text" id="questionBankID" value="<?php echo $questionBank['QuestionBankID']; ?>" disabled></td>
+                              <td scope="col" style="display: none;"><input type="hidden" id="questionBankID" value="<?php echo $questionBank['QuestionBankID']; ?>" disabled></td>
                               <td scope="col"><?php echo $questionBank['QuestionBankName']; ?></td>
                               <td scope="col"><?php echo $subjects[$questionBank['Subject']] ?? 'Không xác định'; ?></td>
                               <td scope="col"><?php echo $questionBank['CreateDate']; ?></td>
