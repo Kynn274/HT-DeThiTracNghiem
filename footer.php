@@ -21,7 +21,7 @@
 						<li class="has-children">
 							<a href="#">CHẾ ĐỘ</a>
 							<ul class="dropdown">
-								<li class="fw-normal"><a href="TaoDeThi.php">Tạo đề thi / cuộc thi</a></li>
+								<li class="fw-normal"><a href="contest.php">Tạo đề thi / cuộc thi</a></li>
 								<li class="fw-normal"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
 								<li class="fw-normal"><a href="questionsBank.php">Quản lý ngân hàng câu hỏi</a></li>
 								<li class="fw-normal"><a href="QuanLyDeThi.php">Quản lý đề thi / cuộc thi</a></li>
