@@ -124,8 +124,8 @@
         <!-- Form thêm câu hỏi -->
         <div class="card mb-5">
             <div class="card-body">
-                <form method="POST" action="process.php">
-                    <input type="hidden" name="bankID" value="<?php echo $bankID; ?>">
+                <form>
+                    <input type="hidden" id="questionBankID_add" value="<?php echo $bankID; ?>">
                     <div class="mb-3">
                         <label for="question" class="form-label fw-semibold">Câu Hỏi</label>
                         <textarea class="form-control" id="question" name="question" rows="3" required></textarea>
@@ -168,10 +168,11 @@
                         </select>
                     </div>
 
-                    <div class="d-grid">
-                        <button type="submit" name="action" value="addQuestionToBank" id="addQuestionBtn" class="btn btn-primary btn-lg">Thêm Câu Hỏi</button>
-                    </div>
+                    
                 </form>
+                <div class="d-grid">
+                    <button id="addQuestionBtn" class="btn btn-primary btn-lg">Thêm Câu Hỏi</button>
+                </div>
             </div>
         </div>    
 

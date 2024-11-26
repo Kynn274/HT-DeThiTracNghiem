@@ -144,11 +144,10 @@
 		</div>
 	</div>
 
-
 	<div class="section" id="content">
 		<div class="container">
 		<h1>Tạo Đề Thi/Cuộc Thi</h1>
-        <form id="examForm" onsubmit="handleSubmit(event)">
+        <form id="contestForm">
             <div class="form-row">
                 <div class="form-group">
                     <label for="examName">Tên đề thi:</label>
@@ -182,22 +181,29 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="examDate">Ngày làm bài:</label>
-                    <input type="datetime-local" id="examDate" name="examDate" required>
+                    <input type="date" id="examDate" name="examDate" required>
                 </div>
                 <div class="form-group">
                     <label for="questionBank">Thư viện đề thi:</label>
                     <select id="questionBank" name="questionBank" required>
                         <option value="">-- Chọn thư viện --</option>
-                        <option value="bank1">Đề thi THPT Quốc gia</option>
-                        <option value="bank2">Đề thi học kì</option>
-                        <option value="bank3">Đề thi thử nghiệm</option>
+                        <?php
+                            $sql = "SELECT * FROM QuestionBanks WHERE UserID = ?";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("i", $_SESSION['user_id']);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            while($row = $result->fetch_assoc()):
+                        ?>
+                            <option value="<?php echo $row['QuestionBankID']; ?>" data-total-questions="<?php echo $row['TotalNumber']; ?>"><?php echo $row['QuestionBankName']; ?></option>
+                        <?php endwhile; ?>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="totalQuestions">Tổng số câu hỏi:</label>
-                <input type="number" id="totalQuestions" name="totalQuestions" min="1" max="100" value="40" required onchange="updateDifficultyLimits()">
+                <input type="number" id="totalQuestions" name="totalQuestions" min="0" max="100" value="40" required onchange="updateDifficultyLimits()">
             </div>
 
             <div class="difficulty-section">
@@ -217,7 +223,6 @@
                     </div>
                 </div>
                 <div class="total-questions" id="questionDistributionTotal" max-value="" value="">
-                    Tổng: 40/40 câu
                 </div>
             </div>
 
@@ -225,8 +230,8 @@
                 <div class="form-group">
                     <label for="examMode">Chế độ tạo:</label>
                     <select id="examMode" name="examMode" required onchange="togglePasswordField()">
-                        <option value="contest">Contest</option>
-                        <option value="pdf">PDF</option>
+                        <option value="contest" selected>Cuộc thi</option>
+                        <option value="pdf">Đề thi</option>
                     </select>
                 </div>
                 <div class="form-group password-section" id="passwordSection">
@@ -234,13 +239,13 @@
                     <input type="password" id="password" name="password">
                 </div>
             </div>
-
-            <button type="submit" class="btn">Tạo đề thi</button>
         </form>
+        <button class="btn" id="contestCreateSubmit">Tạo đề thi</button>
+
 		</div>
 	</div>
     <script src="./js/createExam.js"></script>
-
+    <script src="./js/contest.js"></script>                            
 	<?php
 		include 'footer.php';
 		include 'javascript.php';

@@ -35,36 +35,17 @@ function updateDifficultyLimits() {
 }
 
 function validateDifficultyDistribution() {
-    const total = parseInt(document.getElementById('totalQuestions').value);
-    const easy = parseInt(document.getElementById('easyQuestions').value) || 0;
-    const medium = parseInt(document.getElementById('mediumQuestions').value) || 0;
-    const hard = parseInt(document.getElementById('hardQuestions').value) || 0;
+    const total = parseInt($('#totalQuestions').val());
+    const easy = parseInt($('#easyQuestions').val()) || 0;
+    const medium = parseInt($('#mediumQuestions').val()) || 0;
+    const hard = parseInt($('#hardQuestions').val()) || 0;
     const currentTotal = easy + medium + hard;
 
-    const distributionTotal = document.getElementById('questionDistributionTotal');
-    distributionTotal.textContent = `Tổng: ${currentTotal}/${total} câu`;
-    distributionTotal.style.color = currentTotal === total ? 'var(--primary-color)' : 'var(--error-color)';
+    const distributionTotal = $('#questionDistributionTotal');
+    distributionTotal.text(`Tổng: ${currentTotal}/${total} câu`);
+    distributionTotal.css('color', currentTotal === total ? 'var(--primary-color)' : 'var(--error-color)');
 
     return currentTotal === total;
-}
-
-function handleSubmit(event) {
-    event.preventDefault();
-
-    if (!validateDifficultyDistribution()) {
-        alert('Tổng số câu hỏi phân bố không khớp với tổng số câu hỏi yêu cầu!');
-        return;
-    }
-
-    // Thực hiện xử lý tạo đề thi
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    
-    // Log dữ liệu để kiểm tra
-    console.log('Dữ liệu đề thi:', data);
-    
-    // Có thể thêm code gửi dữ liệu lên server tại đây
-    alert('Đề thi đã được tạo thành công!');
 }
 
 // Khởi tạo ban đầu

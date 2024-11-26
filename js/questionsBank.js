@@ -104,6 +104,44 @@ $(document).ready(function(){
             }
         });
     });
+    $("#addQuestionBtn").click(function(){
+        const questionBankID = $('#questionBankID_add').val();
+        const question = $('#question').val();
+        const optionA = $('#optionA').val();
+        const optionB = $('#optionB').val();
+        const optionC = $('#optionC').val();
+        const optionD = $('#optionD').val();
+        const correctAnswer = $('#correctAnswer').val();
+        const level = $('#level').val();
+        console.log(questionBankID, question, optionA, optionB, optionC, optionD, correctAnswer, level);
+        $.ajax({
+            url: 'process.php',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'addQuestionToBank',
+                bankID: questionBankID,
+                question: question,
+                optionA: optionA,
+                optionB: optionB,
+                optionC: optionC,
+                optionD: optionD,
+                correctAnswer: correctAnswer,
+                level: level
+            },
+            success: function(data){
+                if(data.success){
+                    window.location.reload();
+                }else{
+                    alert(data.message);
+                }
+            },
+            error: function(xhr, status, error){
+                console.log(error, status, xhr);
+            }
+        });
+    });
+
     // Form questionsBank
     $('.editQuestionsBank-btn').click(function(){
         let row = $(this).closest('tr');

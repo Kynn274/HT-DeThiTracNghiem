@@ -89,6 +89,14 @@
             FOREIGN KEY (QuestionBankID) REFERENCES QuestionBanks(QuestionBankID) ON DELETE CASCADE
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 
+		// Tạo bảng câu hỏi đề thi
+		"CREATE TABLE IF NOT EXISTS ContestQuestions(
+			ContestID INT NOT NULL, -- Mã cuộc thi
+			QuestionID INT NOT NULL, -- Mã câu hỏi
+            FOREIGN KEY (ContestID) REFERENCES Contests(ContestID) ON DELETE CASCADE,
+            FOREIGN KEY (QuestionID) REFERENCES Questions(QuestionID) ON DELETE CASCADE
+		)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
         // Tạo bảng tham gia cuộc thi
         "CREATE TABLE IF NOT EXISTS JoiningContests(
 	        UserID INT NOT NULL, -- Mã người tham gia cuộc thi

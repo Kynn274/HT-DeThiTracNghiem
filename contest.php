@@ -151,9 +151,9 @@
                               <td scope="col"><?php echo $contest['Type'] == 1 ? 'Đề thi': 'Cuộc thi'; ?></td>
                               <td scope="col" type="password"><?php echo $contest['Password']; ?></td>
                               <td scope="col">
-                                <button class="btn btn-success more-btn" value=""><i class="bi bi-exclamation-lg"></i><p>Chi tiết</p></button>
-                                <button class="btn btn-primary editContest-btn" value=""><i class="bi bi-pen"></i><p>Sửa</p></button>
-                                <button class="btn btn-danger deleteContest-btn" value=""><i class="bi bi-trash"></i><p>Xóa</p></button>
+                                <button class="btn btn-success reviewContest-btn" ><i class="bi bi-eye-lg"></i><p>Xem trước</p></button>
+                                <button class="btn btn-primary editContest-btn" ><i class="bi bi-pen"></i><p>Sửa</p></button>
+                                <button class="btn btn-danger deleteContest-btn" ><i class="bi bi-trash"></i><p>Xóa</p></button>
                               </td>
                             </tr>
                         <?php endwhile;

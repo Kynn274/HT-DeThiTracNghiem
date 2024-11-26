@@ -176,60 +176,64 @@ if(isset($_POST['action'])) {
         $correctAnswer = $_POST['correctAnswer'];
         $level = $_POST['level'];
 
-        // Bắt đầu transaction
-        $conn->begin_transaction();
-        try {
-            // Thêm câu hỏi
-            $sql = "INSERT INTO Questions (QuestionBankID, QuestionDescription, Level) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("isi", $bankID, $question, $level);
+        // Thêm câu hỏi
+        $sql = "INSERT INTO Questions (QuestionBankID, QuestionDescription, Level) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("isi", $bankID, $question, $level);
+        $stmt->execute();
+        $questionID = $stmt->insert_id;
+
+        // Thêm các đáp án
+        $answers = [
+            'A' => $optionA,
+            'B' => $optionB,
+            'C' => $optionC,
+            'D' => $optionD
+        ];
+
+        $sql = "INSERT INTO Answers (QuestionID, AnswerDescription, AnswerStatus) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        
+        foreach($answers as $key => $value) {
+            $isCorrect = ($key == $correctAnswer) ? 1 : 0;
+            $stmt->bind_param("isi", $questionID, $value, $isCorrect);
             $stmt->execute();
-            $questionID = $stmt->insert_id;
-
-                // Thêm các đáp án
-            $answers = [
-                'A' => $optionA,
-                'B' => $optionB,
-                'C' => $optionC,
-                'D' => $optionD
-            ];
-
-            $sql = "INSERT INTO Answers (QuestionID, AnswerDescription, AnswerStatus) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
             
-            foreach($answers as $key => $value) {
-                $isCorrect = ($key == $correctAnswer) ? 1 : 0;
-                $stmt->bind_param("isi", $questionID, $value, $isCorrect);
-                $stmt->execute();
-                
-                if($isCorrect) {
-                    $answerID = $stmt->insert_id;
-                }
+            if($isCorrect) {
+                $answerID = $stmt->insert_id;
             }
+        }
 
-                // Cập nhật QuestionAnswerID
-            $sql = "UPDATE Questions SET QuestionAnswerID = ? WHERE QuestionID = ?";
+        // Cập nhật QuestionAnswerID
+        $sql = "UPDATE Questions SET QuestionAnswerID = ? WHERE QuestionID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $answerID, $questionID);
+        if($stmt->execute()){
+            $sql = "SELECT COUNT(*) FROM Questions WHERE QuestionBankID = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ii", $answerID, $questionID);
+            $stmt->bind_param("i", $bankID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $totalQuestions = $row['COUNT(*)'];
+            $sql = "UPDATE QuestionBanks SET TotalNumber = ? WHERE QuestionBankID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $totalQuestions, $bankID);
             if($stmt->execute()){
-                echo json_encode([
-                    'success' => true,
-                    'message' => 'Add question to bank'
-                ]);
-                header('Location: questionsAddition.php');
+                    echo json_encode([
+                        'success' => true,
+                        'message' => 'Add question to bank',
+                        'data' => ['totalQuestions' => $totalQuestions]
+                    ]);
                 exit;
             }
-
-            // Commit transaction
-            $conn->commit();
-            $_SESSION['currentBankId'] = $bankID;
-            
+            echo json_encode([
+                'success' => false,
+                'message' => 'Could not add question to bank'
+            ]);
             exit;
-        } catch(Exception $e) {
-            // Rollback nếu có lỗi
-            $conn->rollback();
-            echo "Có lỗi xảy ra: " . $e->getMessage();
         }
+        exit;
     }
     if($_POST['action'] == 'deleteQuestion'){
         $questionID = $_POST['questionID'];
@@ -312,6 +316,8 @@ if(isset($_POST['action'])) {
         }
     }
 }
+
+
 if(isset($_GET['action'])){
     if($_GET['action'] == 'requestAddBank'){
         $_SESSION['bankMode'] = 'add';
