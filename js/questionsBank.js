@@ -106,14 +106,17 @@ $(document).ready(function(){
     });
     $("#addQuestionBtn").click(function(){
         const questionBankID = $('#questionBankID_add').val();
-        const question = $('#question').val();
-        const optionA = $('#optionA').val();
-        const optionB = $('#optionB').val();
-        const optionC = $('#optionC').val();
-        const optionD = $('#optionD').val();
-        const correctAnswer = $('#correctAnswer').val();
+        const question = $('#question').val().trim();
+        const optionA = $('#optionA').val().trim();
+        const optionB = $('#optionB').val().trim();
+        const optionC = $('#optionC').val().trim();
+        const optionD = $('#optionD').val().trim();
+        const correctAnswer = $('#correctAnswer').val().trim();
         const level = $('#level').val();
-        console.log(questionBankID, question, optionA, optionB, optionC, optionD, correctAnswer, level);
+        if(question == '' || optionA == '' || optionB == '' || optionC == '' || optionD == '' || correctAnswer == '' || level == ''){
+            alert('Vui lòng điền đẩy đủ các trường!');
+            return;
+        }
         $.ajax({
             url: 'process.php',
             type: 'POST',

@@ -2,17 +2,20 @@
 document.getElementById('examDate').valueAsDate = new Date();
 
 function togglePasswordField() {
-    const examMode = document.getElementById('examMode').value;
-    const passwordSection = document.getElementById('passwordSection');
-    const passwordInput = document.getElementById('password');
+    const examMode = $('#examMode').val();
 
     if (examMode === 'contest') {
-        passwordSection.style.display = 'block';
-        passwordInput.required = true;
+        $('#passwordSection').css('display', 'block');
+        $('#testTimesSection').css('display', 'block');
+        $('#testTimes').prop('required', true);
+        $('#password').prop('required', true);
     } else {
-        passwordSection.style.display = 'none';
-        passwordInput.required = false;
-        passwordInput.value = '';
+        $('#passwordSection').css('display', 'none');
+        $('#password').prop('required', false);
+        $('#password').val('');
+        $('#testTimesSection').css('display', 'none');
+        $('#testTimes').prop('required', false);
+        $('#testTimes').val(1);
     }
 }
 

@@ -248,10 +248,10 @@
                                 </td>
                                 <td class="text-center align-middle">
                                     <select class="form-select form-control" id="editCorrectAnswer" name="editCorrectAnswer" required>
-                                        <option value="A" selected>A</option>
-                                        <option value="B">B</option>
-                                        <option value="C">C</option>
-                                        <option value="D">D</option>
+                                        <option value="<?php echo $question['answers'][0]['AnswerID']; ?>" <?php echo $question['answers'][0]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>A</option>
+                                        <option value="<?php echo $question['answers'][1]['AnswerID']; ?>" <?php echo $question['answers'][1]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>B</option>
+                                        <option value="<?php echo $question['answers'][2]['AnswerID']; ?>" <?php echo $question['answers'][2]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>C</option>
+                                        <option value="<?php echo $question['answers'][3]['AnswerID']; ?>" <?php echo $question['answers'][3]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>D</option>
                                     </select>
                                 </td>
                                 <td class="text-center align-middle">

@@ -143,17 +143,23 @@
                         while($contest = $contests->fetch_assoc()): ?>
                             <tr>
                               <th scope="col" style="text-align: center;"><?php echo $i++; ?></th>
-                              <td scope="col" style="display: none;"><input type="hidden" id="contestID" value="<?php echo $contest['ContestID']; ?>" disabled></td>
                               <td scope="col"><?php echo $contest['ContestName']; ?></td>
                               <td scope="col"><?php echo $subjects[$contest['Subject']] ?? 'Không xác định'; ?></td>
                               <td scope="col"><?php echo $contest['CreateDate']; ?></td>
                               <td scope="col"><?php echo $contest['Status'] == 1 ? 'Đang hoạt động' : 'Không hoạt động'; ?></td>
-                              <td scope="col"><?php echo $contest['Type'] == 1 ? 'Đề thi': 'Cuộc thi'; ?></td>
-                              <td scope="col" type="password"><?php echo $contest['Password']; ?></td>
+                              <td scope="col" value="<?php echo $contest['Type']; ?>"><?php echo $contest['Type'] == 'Contest' ? 'Cuộc thi': 'Đề thi'; ?></td>
+                              <td scope="col" type="password"><?php echo $contest['ContestPassword'] == '' ? 'Không có mật khẩu' : $contest['ContestPassword']; ?></td>
                               <td scope="col">
-                                <button class="btn btn-success reviewContest-btn" ><i class="bi bi-eye-lg"></i><p>Xem trước</p></button>
-                                <button class="btn btn-primary editContest-btn" ><i class="bi bi-pen"></i><p>Sửa</p></button>
-                                <button class="btn btn-danger deleteContest-btn" ><i class="bi bi-trash"></i><p>Xóa</p></button>
+                                <?php if($contest['Type'] == 'pdf'): ?>
+                                  <button class="btn btn-info" onclick="generatePDF(<?php echo $contest['ContestID']; ?>)">
+                                      <i class="bi bi-file-pdf"></i>
+                                    <p>Xem PDF</p>
+                                  </button>
+                                <?php else: ?>
+                                  <button class="btn btn-success reviewContest-btn" data-contest-id="<?php echo $contest['ContestID']; ?>"><i class="bi bi-eye"></i><p>Xem trước</p></button>
+                                <?php endif; ?>
+                                <button class="btn btn-primary editContest-btn" data-contest-id="<?php echo $contest['ContestID']; ?>"><i class="bi bi-pen"></i><p>Sửa</p></button>
+                                <button class="btn btn-danger deleteContest-btn" data-contest-id="<?php echo $contest['ContestID']; ?>"><i class="bi bi-trash"></i><p>Xóa</p></button>
                               </td>
                             </tr>
                         <?php endwhile;
@@ -173,6 +179,131 @@
         </div>
     </div>
     <script src="./js/contest.js"></script>
+    <script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
+    <script>
+      function generatePDF(contestID){
+        var pdfObject = jsPDFInvoiceTemplate.default(props);
+        console.log(pdfObject);
+      }
+
+      var props = {
+        outputType: jsPDFInvoiceTemplate.OutputType.Save,
+        // onJsPDFDocCreation?: (jsPDFDoc: jsPDF) => void, //Allows for additional configuration prior to writing among others, adds support for different languages and symbols
+        returnJsPDFDocObject: true,
+        fileName: "Invoice 2021",
+        orientationLandscape: false,
+        compress: true,
+        logo: {
+            src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
+            type: 'PNG', //optional, when src= data:uri (nodejs case)
+            width: 53.33, //aspect ratio = width/height
+            height: 26.66,
+            margin: {
+                top: 0, //negative or positive num, from the current position
+                left: 0 //negative or positive num, from the current position
+            }
+        },
+        stamp: {
+            inAllPages: true, //by default = false, just in the last page
+            src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
+            type: 'JPG', //optional, when src= data:uri (nodejs case)
+            width: 20, //aspect ratio = width/height
+            height: 20,
+            margin: {
+                top: 0, //negative or positive num, from the current position
+                left: 0 //negative or positive num, from the current position
+            }
+        },
+        business: {
+            name: "Business Name",
+            address: "Albania, Tirane ish-Dogana, Durres 2001",
+            phone: "(+355) 069 11 11 111",
+            email: "email@example.com",
+            email_1: "info@example.al",
+            website: "www.example.al",
+        },
+        contact: {
+            label: "Invoice issued for:",
+            name: "Client Name",
+            address: "Albania, Tirane, Astir",
+            phone: "(+355) 069 22 22 222",
+            email: "client@website.al",
+            otherInfo: "www.website.al",
+        },
+        invoice: {
+            label: "Invoice #: ",
+            num: 19,
+            invDate: "Payment Date: 01/01/2021 18:12",
+            invGenDate: "Invoice Date: 02/02/2021 10:17",
+            headerBorder: false,
+            tableBodyBorder: false,
+            header: [
+              {
+                title: "#", 
+                style: { 
+                  width: 10 
+                } 
+              }, 
+              { 
+                title: "Title",
+                style: {
+                  width: 30
+                } 
+              }, 
+              { 
+                title: "Description",
+                style: {
+                  width: 80
+                } 
+              }, 
+              { title: "Price"},
+              { title: "Quantity"},
+              { title: "Unit"},
+              { title: "Total"}
+            ],
+            table: Array.from(Array(10), (item, index)=>([
+                index + 1,
+                "There are many variations ",
+                "Lorem Ipsum is simply dummy text dummy text ",
+                200.5,
+                4.5,
+                "m2",
+                400.5
+            ])),
+            additionalRows: [{
+                col1: 'Total:',
+                col2: '145,250.50',
+                col3: 'ALL',
+                style: {
+                    fontSize: 14 //optional, default 12
+                }
+            },
+            {
+                col1: 'VAT:',
+                col2: '20',
+                col3: '%',
+                style: {
+                    fontSize: 10 //optional, default 12
+                }
+            },
+            {
+                col1: 'SubTotal:',
+                col2: '116,199.90',
+                col3: 'ALL',
+                style: {
+                    fontSize: 10 //optional, default 12
+                }
+            }],
+            invDescLabel: "Invoice Note",
+            invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+        },
+        footer: {
+            text: "The invoice is created on a computer and is valid without the signature and stamp.",
+        },
+        pageEnable: true,
+        pageLabel: "Page ",
+    };
+    </script>
     <?php
         include 'footer.php';
         include 'javascript.php';

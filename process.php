@@ -282,22 +282,23 @@ if(isset($_POST['action'])) {
 
             foreach($answers as $key => $answer) {
                 $isCorrect = ($key == $correctAnswer) ? 1 : 0;
-                $stmt->bind_param("sii", $answer['text'], $isCorrect, $answer['id']);
+                $answerText = $answer['text'];
+                $answerID = $answer['id'];
+                $stmt->bind_param("sii", $answerText, $isCorrect, $answerID);
                 $stmt->execute();
 
-                // Lưu ID của đáp án đúng
                 if($isCorrect) {
-                    $correctAnswerID = $answer['id'];
+                    $correctAnswerID = $answerID;
                 }
             }
 
-            // Cập nhật QuestionAnswerID trong bảng Questions
+            // Cập nhật QuestionAnswerID
             $sql = "UPDATE Questions SET QuestionAnswerID = ? WHERE QuestionID = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ii", $correctAnswerID, $questionID);
             $stmt->execute();
 
-            // Commit transaction nếu mọi thứ OK
+            // Commit transaction
             $conn->commit();
             
             echo json_encode([
@@ -305,6 +306,7 @@ if(isset($_POST['action'])) {
                 'message' => 'Edit question'
             ]);
             exit;
+
         } catch(Exception $e) {
             // Rollback nếu có lỗi
             $conn->rollback();
@@ -315,9 +317,124 @@ if(isset($_POST['action'])) {
             exit;
         }
     }
+    if($_POST['action'] == 'contestCreate'){
+        $userID = $_SESSION['user_id'];
+        $contestName = $_POST['contestName'];
+        $school = $_POST['school'];
+        $subject = $_POST['subject'];
+        $createDate = date('Y-m-d');
+        $duration = $_POST['duration'];
+        $testDate = $_POST['examDate'];
+        $questionBank = $_POST['questionBank'];
+        $totalQuestions = $_POST['totalQuestions'];
+        $easyQuestions = $_POST['easyQuestions'];
+        $mediumQuestions = $_POST['mediumQuestions'];
+        $hardQuestions = $_POST['hardQuestions'];
+        $scorePerQuestion = floatval(10 / $totalQuestions);
+        $testTimes = $_POST['testTimes'];
+        $examMode = $_POST['examMode'];
+        $password = $_POST['password'];
+
+        $sql = "INSERT INTO Contests (UserID, QuestionBankID, ContestName, School, Subject, CreateDate, TestDate, Longtime, TotalQuestions, EasyQuestions, MediumQuestions, HardQuestions, ScorePerQuestion, TestTimes, Type, ContestPassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iisssssiiiiidiss", $userID, $questionBank, $contestName, $school, $subject, $createDate, $testDate, $duration, $totalQuestions, $easyQuestions, $mediumQuestions, $hardQuestions, $scorePerQuestion, $testTimes, $examMode, $password);
+        if($stmt->execute()){
+            $contestID = $stmt->insert_id;
+            $sql = "SELECT * FROM Questions WHERE QuestionBankID = ? AND Level = ? ORDER BY RAND() LIMIT ?";
+            for($i = 1; $i <= 3; $i++){
+                $stmt = $conn->prepare($sql);
+                $limit = $i == 1 ? $easyQuestions : ($i == 2 ? $mediumQuestions : $hardQuestions);
+                if($limit == 0){
+                    continue;
+                }else{
+                    $check = "SELECT COUNT(*) FROM Questions WHERE QuestionBankID = ? AND Level = ?";
+                    $stmtCheck = $conn->prepare($check);
+                    $stmtCheck->bind_param("ii", $questionBank, $i);
+                    $stmtCheck->execute();
+                    $result = $stmtCheck->get_result();
+                    $row = $result->fetch_assoc();
+                    $total = $row['COUNT(*)'];
+                    if($total < $limit){
+                        echo json_encode([
+                            'success' => false,
+                            'message' => 'Không đủ câu hỏi'
+                        ]);
+                        exit;
+                    }
+                    $stmt->bind_param("iii", $questionBank, $i, $limit);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    while($row = $result->fetch_assoc()){
+                        $questionID = $row['QuestionID'];
+                        $sql = "INSERT INTO ContestQuestions (ContestID, QuestionID) VALUES (?, ?)";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("ii", $contestID, $questionID);
+                        $stmt->execute();
+                    }
+                }
+            }
+            echo json_encode([
+                'success' => true,
+                'message' => 'Create contest'
+            ]);
+            exit;
+        }
+        echo json_encode([
+            'success' => false,
+            'message' => 'Could not create contest'
+        ]);
+        exit;
+    }
+    if($_POST['action'] == 'reviewContest'){
+        $_SESSION['joinContest']['contestID'] = $_POST['contestID'];
+        $_SESSION['joinContest']['type'] = 'review';
+        echo json_encode([
+            'success' => true,
+            'message' => 'Review contest'
+        ]);
+        exit;
+    }
+    if($_POST['action'] == 'getContestQuestions'){
+        $contestID = $_POST['contestID'];
+        $sql = "SELECT * FROM ContestQuestions, Questions WHERE ContestQuestions.ContestID = ? AND ContestQuestions.QuestionID = Questions.QuestionID";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $contestID);
+        if($stmt->execute()){
+            $result = $stmt->get_result();
+            $questions = [];
+            while($row = $result->fetch_assoc()){
+                $question = $row;
+                $sql = "SELECT * FROM Answers WHERE QuestionID = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $question['QuestionID']);
+                if($stmt->execute()){
+                    $result = $stmt->get_result();
+                    $answers = [];
+                    while($row = $result->fetch_assoc()){
+                        $answers[] = $row;
+                    }
+                    $question['Answer'] = $answers;
+                    $questions[] = $question;
+                    echo json_encode([
+                        'success' => true,
+                        'questions' => $questions
+                    ]);
+                    exit;
+                }
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Could not get contest questions'
+                ]);
+                exit;
+            }
+        }
+        echo json_encode([
+            'success' => false,
+            'message' => 'Could not get contest questions'
+        ]);
+        exit;
+    }
 }
-
-
 if(isset($_GET['action'])){
     if($_GET['action'] == 'requestAddBank'){
         $_SESSION['bankMode'] = 'add';

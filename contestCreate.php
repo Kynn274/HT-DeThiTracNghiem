@@ -155,7 +155,7 @@
                 </div>
                 <div class="form-group">
                     <label for="school">Trường:</label>
-                    <input type="text" id="school" name="school" required>
+                    <input type="text" id="school" name="school">
                 </div>
             </div>
 
@@ -237,6 +237,10 @@
                 <div class="form-group password-section" id="passwordSection">
                     <label for="password">Mật khẩu:</label>
                     <input type="password" id="password" name="password">
+                </div>
+                <div class="form-group testTimes-section" id="testTimesSection">
+                    <label for="testTimes">Số lần thi:</label>
+                    <input type="number" id="testTimes" name="testTimes" min="0" value="1" required>
                 </div>
             </div>
         </form>
