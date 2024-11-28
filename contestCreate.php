@@ -150,7 +150,7 @@
         <form id="contestForm">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="examName">Tên đề thi:</label>
+                    <label for="examName">Tên cuộc thi:</label>
                     <input type="text" id="examName" name="examName" required>
                 </div>
                 <div class="form-group">

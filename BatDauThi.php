@@ -33,7 +33,7 @@
                 <div class="card shadow-lg rounded-lg border-0 mb-5" style="width: 70vw !important; max-width: 800px !important; min-width: 500px !important;"> <!-- Added mb-5 for margin-bottom -->
                     <div class="card-body">
                         <!-- Title Section -->
-                        <h2 class="card-title text-center text-primary text-uppercase fw-bold mb-3">Tên cuộc thi: <?php echo $contest['ContestName']; ?></h2>
+                        <h2 class="card-title text-center text-primary text-uppercase fw-bold mb-3"><?php echo $contest['ContestName']; ?></h2>
                         <p class="card-text text-muted text-center mb-4 fs-6 pt-2">
                             <i class="bi bi-calendar"></i><span class="fw-bold"> Ngày thi: </span>
                             <span><?php echo $contest['TestDate']; ?></span>

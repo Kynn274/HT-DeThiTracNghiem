@@ -151,7 +151,7 @@
             <input type="hidden" id="editContestID" name="editContestID" value="<?php echo $contest['ContestID']; ?>">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="editExamName">Tên đề thi:</label>
+                    <label for="editExamName">Tên cuộc thi:</label>
                     <input type="text" id="editExamName" name="editExamName" required value="<?php echo $contest['ContestName']; ?>">
                 </div>
                 <div class="form-group">

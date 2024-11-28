@@ -16,7 +16,7 @@ $(document).ready(function(){
             },
             success: function(data){
                 if(data.success){
-                    window.location.href = `ThamGiaThi.php`;
+                    window.location.href = `contestReview.php?contestID=${contestID}`;
                 }else{
                     alert(data.message);
                 }
