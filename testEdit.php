@@ -4,6 +4,15 @@
 <body>
 	<?php
 		include 'header.php';
+        if(isset($_GET['contestID'])){
+            $contestID = $_GET['contestID'];
+            $sql = "SELECT * FROM Contests WHERE ContestID = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $contestID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $contest = $result->fetch_assoc();
+        }
 	?>
     <style>
         :root {
@@ -14,15 +23,6 @@
             --border-color: #bfdbfe;
             --error-color: #ef4444;
         }
-
-        /* body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        } */
 
         body>.container {
             max-width: 800px;
@@ -90,7 +90,7 @@
         }
 
         .password-section {
-            display: block;
+            display: none;
             animation: fadeIn 0.3s ease-in-out;
         }
 
@@ -135,7 +135,7 @@
 		<div class="container">
 			<div class="row align-items-center justify-content-center pt-5">
 				<div class="col-lg-6 text-center pe-lg-5">
-					<h1 class="heading text-white mb-3" data-aos="fade-up">Tạo Cuộc Thi</h1>
+					<h1 class="heading text-white mb-3" data-aos="fade-up">Sửa Đề Thi</h1>
 					<div class="align-items-center mb-4" data-aos="fade-up" data-aos-delay="200">
 						<a href="#content" class="btn btn-outline-white-reverse me-4">Bắt Đầu</a>
 					</div>
@@ -146,46 +146,47 @@
 
 	<div class="section" id="content">
 		<div class="container">
-		<h1>Tạo Cuộc Thi</h1>
+		<h1>Sửa Đề Thi</h1>
         <form id="contestForm">
+            <input type="hidden" id="editContestID" name="editContestID" value="<?php echo $contest['ContestID']; ?>">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="examName">Tên đề thi:</label>
-                    <input type="text" id="examName" name="examName" required>
+                    <label for="editExamName">Tên đề thi:</label>
+                    <input type="text" id="editExamName" name="editExamName" required value="<?php echo $contest['ContestName']; ?>">
                 </div>
                 <div class="form-group">
-                    <label for="school">Trường:</label>
-                    <input type="text" id="school" name="school">
+                    <label for="editSchool">Trường:</label>
+                    <input type="text" id="editSchool" name="editSchool" value="<?php echo $contest['School']; ?>">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="subject">Môn học:</label>
-                    <select id="subject" name="subject" required>
+                    <label for="editSubject">Môn học:</label>
+                    <select id="editSubject" name="editSubject" required>
                         <option value="">-- Chọn môn học --</option>
-                        <option value="toan">Toán</option>
-                        <option value="ly">Vật lý</option>
-                        <option value="hoa">Hóa học</option>
-                        <option value="sinh">Sinh học</option>
-                        <option value="anh">Tiếng Anh</option>
-                        <option value="van">Ngữ văn</option>
+                        <option value="toan" <?php echo $contest['Subject'] == 'toan' ? 'selected' : ''; ?>>Toán</option>
+                        <option value="ly" <?php echo $contest['Subject'] == 'ly' ? 'selected' : ''; ?>>Vật lý</option>
+                        <option value="hoa" <?php echo $contest['Subject'] == 'hoa' ? 'selected' : ''; ?>>Hóa học</option>
+                        <option value="sinh" <?php echo $contest['Subject'] == 'sinh' ? 'selected' : ''; ?>>Sinh học</option>
+                        <option value="anh" <?php echo $contest['Subject'] == 'anh' ? 'selected' : ''; ?>>Tiếng Anh</option>
+                        <option value="van" <?php echo $contest['Subject'] == 'van' ? 'selected' : ''; ?>>Ngữ văn</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="duration">Thời gian làm bài (phút):</label>
-                    <input type="number" id="duration" name="duration" min="15" max="180" value="60" required>
+                    <label for="editDuration">Thời gian làm bài (phút):</label>
+                    <input type="number" id="editDuration" name="editDuration" min="15" max="180" value="<?php echo $contest['Longtime']; ?>" required>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="examDate">Ngày làm bài:</label>
-                    <input type="date" id="examDate" name="examDate" required>
+                    <label for="editExamDate">Ngày làm bài:</label>
+                    <input type="date" id="editExamDate" name="editExamDate" required value="<?php echo $contest['TestDate']; ?>">
                 </div>
                 <div class="form-group">
-                    <label for="questionBank">Thư viện đề thi:</label>
-                    <select id="questionBank" name="questionBank" required>
+                    <label for="editQuestionBank">Thư viện đề thi:</label>
+                    <select id="editQuestionBank" name="editQuestionBank" required>
                         <option value="">-- Chọn thư viện --</option>
                         <?php
                             $sql = "SELECT * FROM QuestionBanks WHERE UserID = ?";
@@ -195,60 +196,59 @@
                             $result = $stmt->get_result();
                             while($row = $result->fetch_assoc()):
                         ?>
-                            <option value="<?php echo $row['QuestionBankID']; ?>" data-total-questions="<?php echo $row['TotalNumber']; ?>"><?php echo $row['QuestionBankName']; ?></option>
+                            <option value="<?php echo $row['QuestionBankID']; ?>" data-total-questions="<?php echo $row['TotalNumber']; ?>" <?php echo $row['QuestionBankID'] == $contest['QuestionBankID'] ? 'selected' : ''; ?>><?php echo $row['QuestionBankName']; ?></option>
                         <?php endwhile; ?>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="totalQuestions">Tổng số câu hỏi:</label>
-                <input type="number" id="totalQuestions" name="totalQuestions" min="0" max="100" value="40" required onchange="updateDifficultyLimits()">
+                <label for="editTotalQuestions">Tổng số câu hỏi:</label>
+                <input type="number" id="editTotalQuestions" name="editTotalQuestions" min="0" max="100" value="<?php echo $contest['TotalQuestions']; ?>" required onchange="updateDifficultyLimits()">
             </div>
 
             <div class="difficulty-section">
                 <div class="difficulty-title">Phân bố độ khó</div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="easyQuestions">Số câu dễ:</label>
-                        <input type="number" id="easyQuestions" name="easyQuestions" min="0" value="16" onchange="validateDifficultyDistribution()">
+                        <label for="editEasyQuestions">Số câu dễ:</label>
+                        <input type="number" id="editEasyQuestions" name="editEasyQuestions" min="0" value="<?php echo $contest['EasyQuestions']; ?>" onchange="validateDifficultyDistribution()">
                     </div>
                     <div class="form-group">
-                        <label for="mediumQuestions">Số câu trung bình:</label>
-                        <input type="number" id="mediumQuestions" name="mediumQuestions" min="0" value="16" onchange="validateDifficultyDistribution()">
+                        <label for="editMediumQuestions">Số câu trung bình:</label>
+                        <input type="number" id="editMediumQuestions" name="editMediumQuestions" min="0" value="<?php echo $contest['MediumQuestions']; ?>" onchange="validateDifficultyDistribution()">
                     </div>
                     <div class="form-group">
-                        <label for="hardQuestions">Số câu khó:</label>
-                        <input type="number" id="hardQuestions" name="hardQuestions" min="0" value="8" onchange="validateDifficultyDistribution()">
+                        <label for="editHardQuestions">Số câu khó:</label>
+                        <input type="number" id="editHardQuestions" name="editHardQuestions" min="0" value="<?php echo $contest['HardQuestions']; ?>" onchange="validateDifficultyDistribution()">
                     </div>
                 </div>
-                <div class="total-questions" id="questionDistributionTotal" max-value="" value="">
+                <div class="total-questions" id="editQuestionDistributionTotal" max-value="" value="">         
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
-                    <label for="examMode">Chế độ tạo:</label>
-                    <select id="examMode" name="examMode">
-                        <option value="contest" selected>Cuộc thi</option>
+                    <label for="editExamMode">Chế độ tạo:</label>
+                    <select id="editExamMode" name="editExamMode">
+                        <option value="pdf" selected>Đề thi</option>
                     </select>
                 </div>
-                <div class="form-group password-section" id="passwordSection">
-                    <label for="password">Mật khẩu:</label>
-                    <input type="password" id="password" name="password">
+                <div class="form-group password-section" id="editPasswordSection">
+                    <label for="editPassword">Mật khẩu:</label>
+                    <input type="password" id="editPassword" name="editPassword" value="<?php echo $contest['ContestPassword']; ?>">
                 </div>
-                <div class="form-group testTimes-section" id="testTimesSection">
-                    <label for="testTimes">Số lần thi:</label>
-                    <input type="number" id="testTimes" name="testTimes" min="0" value="1" required>
+                <div class="form-group testTimes-section" id="editTestTimesSection">
+                    <label for="editTestTimes">Số lần thi:</label>
+                    <input type="number" id="editTestTimes" name="editTestTimes" min="0" value="<?php echo $contest['TestTimes']; ?>" required>
                 </div>
             </div>
         </form>
-        <button class="btn" id="contestCreateSubmit">Tạo cuộc thi</button>
+        <button class="btn" id="contestEditSubmit">Sửa đề thi</button>
 
 		</div>
 	</div>
-    <script src="./js/createExam.js"></script>
-    <script src="./js/contest.js"></script>                            
+    <script src="./js/testEdit.js"></script>
+    <script src="./js/test.js"></script>                            
 	<?php
 		include 'footer.php';
 		include 'javascript.php';

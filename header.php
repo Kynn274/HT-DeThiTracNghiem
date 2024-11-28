@@ -45,13 +45,13 @@
 												<li class="fw-normal" style="width:fit-content;"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
 											<?php endif; ?>
 											<?php if($user_type == 2 || $user_type == 0): ?>
-												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'contest.php' : 'DangNhap.php' ?>">Tạo đề thi / cuộc thi</a></li>
+												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'contest.php' : 'DangNhap.php' ?>">Tạo cuộc thi</a></li>
 												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'questionsBank.php' : 'DangNhap.php' ?>">Quản lý ngân hàng câu hỏi</a></li>
-												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'QuanLyDeThi.php' : 'DangNhap.php' ?>">Quản lý đề thi / cuộc thi</a></li>
+												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'test.php' : 'DangNhap.php' ?>">Tạo đề thi</a></li>
 											<?php endif; ?>
 										<?php endif; ?>
 										<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'LichSuCuocThi.php' : 'DangNhap.php' ?>">Lịch sử cuộc thi</a></li>
-										<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'ThamGiaThi.php' : 'DangNhap.php' ?>">Tham gian cuộc thi</a></li>
+										<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'contestZone.php' : 'DangNhap.php' ?>">Tham gian cuộc thi</a></li>
 									</ul>
 								</li>
 								<li><a href="LienHe.php">LIÊN HỆ</a></li>

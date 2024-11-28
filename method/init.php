@@ -85,6 +85,7 @@
 	        TestTimes INT NOT NULL DEFAULT 1, -- Số lần thi 
 	        Type NVARCHAR(100) NOT NULL DEFAULT N'Contest', -- Loại xuất (PDF, Contest)
 	        ContestPassword NVARCHAR(100), -- Mật khẩu cuộc thi
+	        ContestCode NVARCHAR(100), -- Mã cuộc thi
             FOREIGN KEY (UserID) REFERENCES Users(UserId) ON DELETE CASCADE,
             FOREIGN KEY (QuestionBankID) REFERENCES QuestionBanks(QuestionBankID) ON DELETE CASCADE
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",

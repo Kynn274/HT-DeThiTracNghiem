@@ -14,7 +14,9 @@
     <script>
         let contestID = '<?php echo $contestID; ?>';
         let type = '<?php echo $type; ?>';
+        let currentQuestion = 1;
         let questionsArray = [];
+        $('#previousQuestion').prop('disabled', true);
         $.ajax({
             url: 'process.php',
             type: 'POST',
@@ -26,7 +28,9 @@
                 console.log(data);
                 if(data.success){
                     questionsArray = data.questions;
+                    console.log(questionsArray);
                     loadQuestions(1);
+                    loadQuestionPanel();
                 }else{
                     alert(data.message);
                 }
@@ -36,6 +40,7 @@
             }
         });
         
+        //  Functions
         function loadQuestions(questionNumber){
             let number = questionNumber - 1;
             let question = questionsArray[number];
@@ -53,6 +58,57 @@
                 $('#questionBox').append(div);
             }
         }
+        function loadQuestionPanel(){
+            $('#questionPanel').empty();
+            console.log(questionsArray.length);
+            for(let j = 0; j < questionsArray.length; j++){
+                // console.log(i);    
+                // let start = i * 6 + 1;
+                // let end = start + 5;
+                // let div = $('<div>').addClass('');
+                // for(let j = start; j <= Math.min(end, questionsArray.length); j++){
+                    // let col = $('<div>').addClass('');
+                    let btn = $('<button>').addClass('btn btn-outline-primary rounded-circle questionNumber mx-auto').attr('id', `question${j + 1}`).attr('style', 'width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 22px;').attr('value', j + 1).text(j + 1);
+                    // col.append(btn);
+                    $('#questionPanel').append(btn);
+                    btn.click(function(){
+                        currentQuestion = parseInt($(this).attr('value'));
+                        loadQuestions(currentQuestion);
+                        if(currentQuestion <= 1){
+                            $('#previousQuestion').prop('disabled', true);
+                            $('#nextQuestion').prop('disabled', false);
+                        }else if(currentQuestion >= questionsArray.length){
+                            $('#nextQuestion').prop('disabled', true);
+                            $('#previousQuestion').prop('disabled', false);
+                        }else{
+                            $('#previousQuestion').prop('disabled', false);
+                            $('#nextQuestion').prop('disabled', false);
+                        }
+                    });
+                 }
+                // $('#questionPanel').append(div);
+            }
+        //}
+        function nextQuestion(){
+            if(currentQuestion < questionsArray.length){
+                currentQuestion += 1;
+                loadQuestions(currentQuestion);
+                $('#previousQuestion').prop('disabled', false);
+            }
+            if(currentQuestion >= questionsArray.length){
+                $('#nextQuestion').prop('disabled', true);
+            }
+        }
+        function previousQuestion(){
+            if(currentQuestion > 1){
+                currentQuestion -= 1;
+                loadQuestions(currentQuestion);
+                $('#nextQuestion').prop('disabled', false);
+            }
+            if(currentQuestion <= 1){
+                $('#previousQuestion').prop('disabled', true);
+            }
+        }
 
     </script>
     <!-- Add content here -->
@@ -60,28 +116,25 @@
     </div>
 
     <!-- Exam Participation Page -->
-    <div class="container mt-4">
-        <div class="row">
+    <div class="container mt-4" style="max-width: 1200px;">
+        <div class="d-flex flex-column">
             <!-- Question Navigation on the left side -->
-            <div class="col-md-3">
+            <div class="flex-shrink-0">
                 <div class="card shadow-lg rounded-lg border-0">
                     <div class="card-body">
                         <h4 class="text-primary text-center">Chọn Câu Hỏi:</h4>
 
                         <!-- Circle Buttons for Questions -->
-                        <div class="d-flex flex-column align-items-center">
-                            <a href="#question1" class="btn btn-outline-primary rounded-circle my-2" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 22px;">1</a>
-                            <a href="#question2" class="btn btn-outline-primary rounded-circle my-2" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 22px;">2</a>
-                            <a href="#question3" class="btn btn-outline-primary rounded-circle my-2" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 22px;">3</a>
-                            <a href="#question4" class="btn btn-outline-primary rounded-circle my-2" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 22px;">4</a>
-                            <!-- Add more circles for additional questions -->
+                        <div class="mx-auto d-flex justify-content-center align-items-center gap-2 flex-wrap mt-4 mb-2" id="questionPanel">
+                            <!-- Question buttons will be loaded here -->
+                            <h4 id="question1" class="text-danger fs-5">Cannot load question list</h4>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Question Content -->
-            <div class="col-md-9">
+            <div class="flex-grow-1">
                 <div class="card shadow-lg rounded-lg border-0">
                     <div class="card-body">
                         <!-- Timer Display -->
@@ -91,104 +144,28 @@
                             </div>
                         <?php endif; ?>
                         <div id="questionBox">
-                            <h4 id="question1" class="text-primary">Cannot load question</h4>
-                            <!-- Question 1 -->
-                            <!-- <h4 id="question1" class="text-primary">Câu hỏi 1:</h4>
-                            <p>[Nội Dung Câu Hỏi]</p>
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="question1" id="option1" value="A">
-                                <label class="form-check-label" for="option1">Đáp án A</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="question1" id="option2" value="B">
-                                <label class="form-check-label" for="option2">Đáp án B</label>
-                            </div>
-                            <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question1" id="option3" value="C">
-                                <label class="form-check-label" for="option3">Đáp án C</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="question1" id="option4" value="D">
-                                <label class="form-check-label" for="option4">Đáp án D</label>
-                            </div> -->
-
-                        
-
-                        <!-- Question 2 -->
-                        <!-- <h4 id="question2" class="mt-4 text-primary">Câu hỏi 2:</h4>
-                        <p>[Nội Dung Câu Hỏi]</p>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question2" id="option1" value="A">
-                            <label class="form-check-label" for="option1">Đáp án A</label>
+                            <h4 class="text-danger fs-5">Cannot load question</h4>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question2" id="option2" value="B">
-                            <label class="form-check-label" for="option2">Đáp án B</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question2" id="option3" value="C">
-                            <label class="form-check-label" for="option3">Đáp án C</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question2" id="option4" value="D">
-                            <label class="form-check-label" for="option4">Đáp án D</label>
-                        </div> -->
-
-                        <!-- Question 3 -->
-                        <!-- <h4 id="question3" class="mt-4 text-primary">Câu hỏi 3:</h4>
-                        <p>[Nội Dung Câu Hỏi]</p>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question3" id="option1" value="A">
-                            <label class="form-check-label" for="option1">Đáp án A</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question3" id="option2" value="B">
-                            <label class="form-check-label" for="option2">Đáp án B</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question3" id="option3" value="C">
-                            <label class="form-check-label" for="option3">Đáp án C</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question3" id="option4" value="D">
-                            <label class="form-check-label" for="option4">Đáp án D</label>
-                        </div> -->
-
-                        <!-- Question 4 -->
-                        <!-- <h4 id="question4" class="mt-4 text-primary">Câu hỏi 4:</h4>
-                        <p>[Nội Dung Câu Hỏi]</p>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question4" id="option1" value="A">
-                            <label class="form-check-label" for="option1">Đáp án A</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question4" id="option2" value="B">
-                            <label class="form-check-label" for="option2">Đáp án B</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question4" id="option3" value="C">
-                            <label class="form-check-label" for="option3">Đáp án C</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="question4" id="option4" value="D">
-                            <label class="form-check-label" for="option4">Đáp án D</label>
-                            </div>
-                        </div> -->
                         <!-- Navigation buttons -->
                         
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="previous_question.php?id=1" class="btn btn-outline-secondary px-4 py-2 rounded-pill">Quay lại</a>
-                        <a href="next_question.php?id=1" class="btn btn-primary px-4 py-2 rounded-pill">Tiếp theo</a>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button onclick="previousQuestion()" class="btn btn-outline-secondary px-4 py-2 rounded-pill">Câu trước</button>
+                            <button onclick="nextQuestion()" class="btn btn-primary px-4 py-2 rounded-pill">Câu tiếp</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <?php if($type == 'contest'): ?>
+            <button onclick="submitAnswer()" class="btn btn-success px-4 py-2 rounded-pill">Nộp bài</button>
+        <?php else: ?>
+            <div class="d-flex justify-content-end mt-4">
+                <button onclick="window.location.href='./contest.php'" class="btn btn-primary px-4 py-3 me-2 rounded-pill">Quay lại</button>
+                <button onclick="copyContestCode()" class="btn btn-primary px-4 py-3 rounded-pill">Lấy mã cuộc thi</button>
+            </div>
+        <?php endif; ?>
     </div>
+
 
     <div class="mt-5"></div> <!-- Add space between the form and footer -->
 

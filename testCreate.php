@@ -135,7 +135,7 @@
 		<div class="container">
 			<div class="row align-items-center justify-content-center pt-5">
 				<div class="col-lg-6 text-center pe-lg-5">
-					<h1 class="heading text-white mb-3" data-aos="fade-up">Tạo Cuộc Thi</h1>
+					<h1 class="heading text-white mb-3" data-aos="fade-up">Tạo Đề Thi</h1>
 					<div class="align-items-center mb-4" data-aos="fade-up" data-aos-delay="200">
 						<a href="#content" class="btn btn-outline-white-reverse me-4">Bắt Đầu</a>
 					</div>
@@ -146,12 +146,12 @@
 
 	<div class="section" id="content">
 		<div class="container">
-		<h1>Tạo Cuộc Thi</h1>
+		<h1>Tạo Đề Thi</h1>
         <form id="contestForm">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="examName">Tên đề thi:</label>
-                    <input type="text" id="examName" name="examName" required>
+                    <label for="testName">Tên đề thi:</label>
+                    <input type="text" id="testName" name="testName" required>
                 </div>
                 <div class="form-group">
                     <label for="school">Trường:</label>
@@ -180,8 +180,8 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="examDate">Ngày làm bài:</label>
-                    <input type="date" id="examDate" name="examDate" required>
+                    <label for="testDate">Ngày làm bài:</label>
+                    <input type="date" id="testDate" name="testDate" required>
                 </div>
                 <div class="form-group">
                     <label for="questionBank">Thư viện đề thi:</label>
@@ -228,27 +228,18 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="examMode">Chế độ tạo:</label>
-                    <select id="examMode" name="examMode">
-                        <option value="contest" selected>Cuộc thi</option>
+                    <label for="testMode">Chế độ tạo:</label>
+                    <select id="testMode" name="testMode">
+                        <option value="pdf" selected>Đề thi</option>
                     </select>
-                </div>
-                <div class="form-group password-section" id="passwordSection">
-                    <label for="password">Mật khẩu:</label>
-                    <input type="password" id="password" name="password">
-                </div>
-                <div class="form-group testTimes-section" id="testTimesSection">
-                    <label for="testTimes">Số lần thi:</label>
-                    <input type="number" id="testTimes" name="testTimes" min="0" value="1" required>
                 </div>
             </div>
         </form>
-        <button class="btn" id="contestCreateSubmit">Tạo cuộc thi</button>
+        <button class="btn" id="testCreateSubmit">Tạo đề thi</button>
 
 		</div>
 	</div>
-    <script src="./js/createExam.js"></script>
-    <script src="./js/contest.js"></script>                            
+    <script src="./js/test.js"></script>                            
 	<?php
 		include 'footer.php';
 		include 'javascript.php';

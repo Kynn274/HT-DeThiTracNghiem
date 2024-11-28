@@ -24,9 +24,9 @@
 								<li class="fw-normal"><a href="contest.php">Tạo đề thi / cuộc thi</a></li>
 								<li class="fw-normal"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
 								<li class="fw-normal"><a href="questionsBank.php">Quản lý ngân hàng câu hỏi</a></li>
-								<li class="fw-normal"><a href="QuanLyDeThi.php">Quản lý đề thi / cuộc thi</a></li>
+								<li class="fw-normal"><a href="test.php">Tạo đề thi</a></li>
 								<li class="fw-normal"><a href="LichSuCuocThi.php">Lịch sử cuộc thi</a></li>
-								<li class="fw-normal"><a href="ThamGiaThi.php">Tham gia cuộc thi</a></li>
+								<li class="fw-normal"><a href="contestZone.php">Tham gia cuộc thi</a></li>
 							</ul>
 						</li>
 						<li><a href="LienHe.php">LIÊN HỆ</a></li>

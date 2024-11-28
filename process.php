@@ -8,6 +8,20 @@ if (session_status() == PHP_SESSION_NONE) {
 // Ensure all responses are JSON
 header('Content-Type: application/json');
 
+function generateCode($length) {
+    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    $code = '';
+    $maxIndex = strlen($characters) - 1;
+
+    for ($i = 0; $i < $length; $i++) {
+        $index = random_int(0, $maxIndex);
+        $code .= $characters[$index];
+    }
+    $date = date('Y-m-d');
+    $code = $code . $date;
+    return $code;
+}
+
 if(isset($_POST['action'])) {
     if($_POST['action'] == 'getUserInfo') {
         $userID = $_POST['userID'];
@@ -282,23 +296,22 @@ if(isset($_POST['action'])) {
 
             foreach($answers as $key => $answer) {
                 $isCorrect = ($key == $correctAnswer) ? 1 : 0;
-                $answerText = $answer['text'];
-                $answerID = $answer['id'];
-                $stmt->bind_param("sii", $answerText, $isCorrect, $answerID);
+                $stmt->bind_param("sii", $answer['text'], $isCorrect, $answer['id']);
                 $stmt->execute();
 
+                // Lưu ID của đáp án đúng
                 if($isCorrect) {
-                    $correctAnswerID = $answerID;
+                    $correctAnswerID = $answer['id'];
                 }
             }
 
-            // Cập nhật QuestionAnswerID
+            // Cập nhật QuestionAnswerID trong bảng Questions
             $sql = "UPDATE Questions SET QuestionAnswerID = ? WHERE QuestionID = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ii", $correctAnswerID, $questionID);
             $stmt->execute();
 
-            // Commit transaction
+            // Commit transaction nếu mọi thứ OK
             $conn->commit();
             
             echo json_encode([
@@ -306,7 +319,6 @@ if(isset($_POST['action'])) {
                 'message' => 'Edit question'
             ]);
             exit;
-
         } catch(Exception $e) {
             // Rollback nếu có lỗi
             $conn->rollback();
@@ -323,21 +335,22 @@ if(isset($_POST['action'])) {
         $school = $_POST['school'];
         $subject = $_POST['subject'];
         $createDate = date('Y-m-d');
-        $duration = $_POST['duration'];
+        $duration = intval($_POST['duration']);
         $testDate = $_POST['examDate'];
-        $questionBank = $_POST['questionBank'];
-        $totalQuestions = $_POST['totalQuestions'];
-        $easyQuestions = $_POST['easyQuestions'];
-        $mediumQuestions = $_POST['mediumQuestions'];
-        $hardQuestions = $_POST['hardQuestions'];
+        $questionBank = intval($_POST['questionBank']);
+        $totalQuestions = intval($_POST['totalQuestions']);
+        $easyQuestions = intval($_POST['easyQuestions']);
+        $mediumQuestions = intval($_POST['mediumQuestions']);
+        $hardQuestions = intval($_POST['hardQuestions']);
         $scorePerQuestion = floatval(10 / $totalQuestions);
-        $testTimes = $_POST['testTimes'];
+        $testTimes = intval($_POST['testTimes']);
         $examMode = $_POST['examMode'];
         $password = $_POST['password'];
+        $contestCode = generateCode(10);
 
-        $sql = "INSERT INTO Contests (UserID, QuestionBankID, ContestName, School, Subject, CreateDate, TestDate, Longtime, TotalQuestions, EasyQuestions, MediumQuestions, HardQuestions, ScorePerQuestion, TestTimes, Type, ContestPassword) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO Contests (UserID, QuestionBankID, ContestName, School, Subject, CreateDate, TestDate, Longtime, TotalQuestions, EasyQuestions, MediumQuestions, HardQuestions, ScorePerQuestion, TestTimes, Type, ContestPassword, ContestCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iisssssiiiiidiss", $userID, $questionBank, $contestName, $school, $subject, $createDate, $testDate, $duration, $totalQuestions, $easyQuestions, $mediumQuestions, $hardQuestions, $scorePerQuestion, $testTimes, $examMode, $password);
+        $stmt->bind_param("iisssssiiiiidisss", $userID, $questionBank, $contestName, $school, $subject, $createDate, $testDate, $duration, $totalQuestions, $easyQuestions, $mediumQuestions, $hardQuestions, $scorePerQuestion, $testTimes, $examMode, $password, $contestCode);
         if($stmt->execute()){
             $contestID = $stmt->insert_id;
             $sql = "SELECT * FROM Questions WHERE QuestionBankID = ? AND Level = ? ORDER BY RAND() LIMIT ?";
@@ -408,30 +421,122 @@ if(isset($_POST['action'])) {
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("i", $question['QuestionID']);
                 if($stmt->execute()){
-                    $result = $stmt->get_result();
+                    $result1 = $stmt->get_result();
                     $answers = [];
-                    while($row = $result->fetch_assoc()){
-                        $answers[] = $row;
+                    while($row1 = $result1->fetch_assoc()){
+                        $answers[] = $row1;
                     }
                     $question['Answer'] = $answers;
                     $questions[] = $question;
+                }else{
                     echo json_encode([
-                        'success' => true,
-                        'questions' => $questions
+                        'success' => false,
+                        'message' => 'Could not get contest questions'
                     ]);
                     exit;
                 }
-                echo json_encode([
-                    'success' => false,
-                    'message' => 'Could not get contest questions'
-                ]);
-                exit;
             }
+            echo json_encode([
+                'success' => true,
+                'questions' => $questions
+            ]);
+            exit;
         }
         echo json_encode([
             'success' => false,
             'message' => 'Could not get contest questions'
         ]);
+        exit;
+    }
+    if($_POST['action'] == 'getContestInfo'){
+        $contestID = $_POST['contestID'];
+        $sql = "SELECT * FROM Contests WHERE ContestID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $contestID);
+        if($stmt->execute()){
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            echo json_encode([
+                'success' => true,
+                'contestInfo' => $row
+            ]);
+            exit;
+        }
+        echo json_encode([
+            'success' => false,
+            'message' => 'Could not get contest info'
+        ]);
+        exit;
+    }
+    if($_POST['action'] == 'contestEdit'){
+        $contestID = $_POST['contestID'];
+        $contestName = $_POST['contestName'];
+        $school = $_POST['school'];
+        $subject = $_POST['subject'];
+        $duration = $_POST['duration'];
+        $examDate = $_POST['examDate'];
+        $questionBank = $_POST['questionBank'];
+        $totalQuestions = $_POST['totalQuestions'];
+        $easyQuestions = $_POST['easyQuestions'];
+        $mediumQuestions = $_POST['mediumQuestions'];
+        $hardQuestions = $_POST['hardQuestions'];
+        $examMode = $_POST['examMode'];
+        $password = $_POST['password'];
+        $testTimes = $_POST['testTimes'];
+
+        $sql = "UPDATE Contests SET QuestionBankID = ?, ContestName = ?, School = ?, Subject = ?, Longtime = ?, TestDate = ?, TotalQuestions = ?, EasyQuestions = ?, MediumQuestions = ?, HardQuestions = ?, Type = ?, ContestPassword = ?, TestTimes = ? WHERE ContestID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("isssisiiiissii", $questionBank, $contestName, $school, $subject, $duration, $examDate, $totalQuestions, $easyQuestions, $mediumQuestions, $hardQuestions, $examMode, $password, $testTimes, $contestID);
+        $result = $stmt->execute();
+        if($result){
+            echo json_encode(['success' => true]);
+        }else{
+            echo json_encode(['success' => false, 'error' => $conn->error]);
+        }
+        exit;
+    }
+    if($_POST['action'] == 'deleteContest'){
+        $contestID = $_POST['contestID'];
+        $sql = "DELETE FROM Contests WHERE ContestID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $contestID);
+        $result = $stmt->execute();
+        if($result){
+            echo json_encode(['success' => true]);
+        }else{
+            echo json_encode(['success' => false, 'error' => $conn->error]);
+        }
+        exit;
+    }
+    if($_POST['action'] == 'loadJoinedContest'){
+        $userID = $_POST['userID'];
+        $sql = "SELECT * FROM JoiningContests, Contests WHERE JoiningContests.UserID = ? AND JoiningContests.ContestID = Contests.ContestID ORDER BY Contests.TestDate DESC";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        if($stmt->execute()){
+            $result = $stmt->get_result();
+            $contests = [];
+            while($row = $result->fetch_assoc()){
+                $contests[] = $row;
+            }
+            echo json_encode(['success' => true, 'contests' => $contests]);
+            exit;   
+        }
+        echo json_encode(['success' => false, 'error' => $conn->error]);
+        exit;
+    }
+    if($_POST['action'] == 'searchContest'){
+        $contestCode = $_POST['contestCode'];
+        $sql = "SELECT * FROM Contests WHERE ContestCode = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $contestCode);
+        if($stmt->execute()){
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            echo json_encode(['success' => true, 'contest' => $row]);
+            exit;
+        }
+        echo json_encode(['success' => false, 'error' => $conn->error]);
         exit;
     }
 }
