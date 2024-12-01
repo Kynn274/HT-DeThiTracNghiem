@@ -12,8 +12,9 @@
             'sinh' => 'Sinh học',
             'van' => 'Ngữ văn'
         ];
-        if(isset($_SESSION['joinContest'])){
-            $contestID = $_SESSION['joinContest']['contestID'];
+
+        if(isset($_GET['id'])){
+            $contestID = $_GET['id'];
             $stmt = $conn->prepare("SELECT * FROM Contests WHERE ContestID = ?");
             $stmt->bind_param("i", $contestID);
             $stmt->execute();
@@ -52,15 +53,40 @@
                         </p>
 
                         <!-- Start Exam Button Section -->
-                        <div class="d-flex justify-content-center">
-                            <a href="ThamGiaThi.php" class="btn btn-success rounded-pill px-5 py-3 btn-lg shadow-lg">Bắt đầu cuộc thi</a>
+                        <div class="d-flex justify-content-center ">
+                            <button id="startExamButton" class="btn btn-success rounded-pill px-5 py-3 btn-lg shadow-lg">Bắt đầu cuộc thi</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <script>
+        $(document).ready(function(){
+            $('#startExamButton').on('click', function(){
+                let userID = '<?php echo $_SESSION['user_id']; ?>';
+                let contestID = '<?php echo $contestID; ?>';
+                $.ajax({
+                    url: 'process.php',
+                    type: 'POST',
+                    data: {
+                    action: 'startExam',
+                    userID: userID,
+                        contestID: contestID
+                    },
+                    success: function(response){
+                        console.log(response);
+                        if(response.success){
+                            window.location.href = 'ThamGiaThi.php?id=' + contestID;
+                        }
+                    },
+                    error: function(response){
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
     <?php
         include 'footer.php';
         include 'javascript.php';

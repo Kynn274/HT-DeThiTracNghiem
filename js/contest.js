@@ -7,24 +7,8 @@ $(document).ready(function(){
     });
     $('.reviewContest-btn').click(function(){
         const contestID = $(this).data('contest-id');
-        $.ajax({
-            url: 'process.php',
-            type: 'POST',
-            data: {
-                action: 'reviewContest', 
-                contestID: contestID
-            },
-            success: function(data){
-                if(data.success){
-                    window.location.href = `contestReview.php?contestID=${contestID}`;
-                }else{
-                    alert(data.message);
-                }
-            },
-            error: function(xhr, status, error){
-                console.log(xhr.responseText);
-            }
-        });
+        const contestCode = $(this).closest('tr').find('.getContestCode-btn').data('contest-code');
+        window.location.href = `contestReview.php?contestID=${contestID}&contestCode=${contestCode}`;
     });
     $('.moreInfo-btn').click(function(){
         const contestID = $(this).data('contest-id');

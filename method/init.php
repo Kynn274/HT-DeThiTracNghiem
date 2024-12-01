@@ -100,14 +100,27 @@
 
         // Tạo bảng tham gia cuộc thi
         "CREATE TABLE IF NOT EXISTS JoiningContests(
+	        JoiningContestID INT AUTO_INCREMENT PRIMARY KEY, -- Mã tham gia cuộc thi
 	        UserID INT NOT NULL, -- Mã người tham gia cuộc thi
 	        ContestID INT NOT NULL, -- Mã cuộc thi
 	        TakingTime INT DEFAULT 0, -- Thời gian tiêu tốn để làm bài
+			CorrectAnswer INT DEFAULT 0, -- Số câu đúng
 	        Score DECIMAL(5,2) DEFAULT 0, -- Điểm thi
+			CreateDate DATE, -- Ngày tham gia
             FOREIGN KEY (UserID) REFERENCES Users(UserId) ON DELETE CASCADE,
             FOREIGN KEY (ContestID) REFERENCES Contests(ContestID) ON DELETE CASCADE
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
         
+		// Tạo bảng đáp án thi
+		"CREATE TABLE IF NOT EXISTS JoiningContestAnswers(
+			JoiningContestID INT NOT NULL, -- Mã tham gia cuộc thi
+			QuestionID INT NOT NULL, -- Mã câu hỏi
+			SelectedAnswer INT NOT NULL, -- Mã đáp án đã chọn
+			IsCorrect INT NOT NULL DEFAULT 0, -- Trạng thái đúng / sai
+            FOREIGN KEY (JoiningContestID) REFERENCES JoiningContests(JoiningContestID) ON DELETE CASCADE,
+            FOREIGN KEY (QuestionID) REFERENCES Questions(QuestionID) ON DELETE CASCADE
+		)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
         // Tạo bảng bảng điểm
         "CREATE TABLE IF NOT EXISTS ScoreTables(
 	        ScoreTableID INT AUTO_INCREMENT PRIMARY KEY, -- Mã bảng điểm

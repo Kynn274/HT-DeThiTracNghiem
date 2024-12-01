@@ -9,7 +9,6 @@
 		// Clone menu
 		jsCloneNavs.forEach(nav => {
 			var navCloned = nav.cloneNode(true);
-			console.log(navCloned);
 			newNavWrap.appendChild(navCloned);
 		});
 		var separator = document.createElement('hr');

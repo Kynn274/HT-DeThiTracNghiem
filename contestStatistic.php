@@ -4,19 +4,20 @@
 <body>
     <?php
         include 'header.php';
-        $sql = "SELECT * FROM Contests WHERE UserID = ? AND Type = 'contest'";
+        $contestID = '';
+        if(isset($_GET['contestID'])){
+            $contestID = $_GET['contestID'];
+        }
+        $sql = "SELECT JoiningContests.JoiningContestID, JoiningContests.UserID, 
+                UserDetails.FullName, JoiningContests.CreateDate, JoiningContests.CorrectAnswer, Contests.TotalQuestions,
+                COUNT(JoiningContests.JoiningContestID) AS SoLanThi
+                FROM JoiningContests, Users, UserDetails, Contests
+                WHERE JoiningContests.ContestID = ? AND JoiningContests.UserID = Users.UserID AND JoiningContests.UserID = UserDetails.UserID AND JoiningContests.ContestID = Contests.ContestID
+                GROUP BY JoiningContests.UserID, UserDetails.FullName, JoiningContests.CreateDate, JoiningContests.JoiningContestID";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $user_id);
-    	$stmt->execute();
-        $contests = $stmt->get_result();
-        $subjects = [
-            'toan' => 'Toán',
-            'anh' => 'Tiếng Anh',
-            'ly' => 'Vật lý',
-            'hoa' => 'Hóa học',
-            'sinh' => 'Sinh học',
-            'van' => 'Ngữ văn'
-        ];
+        $stmt->bind_param("i", $contestID);
+        $stmt->execute();
+        $contestStatistic = $stmt->get_result();
     ?>
     <style>
     input {
@@ -122,39 +123,35 @@
     <div class="section">
         <div class="container article">
             <table class="table table-hover caption-top">
-                <caption>DANH SÁCH CUỘC THI</caption>
+                <caption>DANH SÁCH THAM GIA CUỘC THI</caption>
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col" style="display: none;">Mã cuộc thi</th>
+                        <th scope="col" style="display: none;">Mã học sinh</th>
                         <th scope="col">Tên</th>
-                        <th scope="col">Môn học</th>
-                        <th scope="col">Ngày tạo</th>
-                        <th scope="col">Trạng thái</th>
+                        <th scope="col">Ngày thi</th>
+                        <th scope="col">Số lần thi</th>
+                        <th scope="col">Kết quả</th>
                         <th scope="col">Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                      if($contests->num_rows > 0){
+                      if($contestStatistic->num_rows > 0){
                         $i = 1;
-                        while($contest = $contests->fetch_assoc()): ?>
+                        while($contest = $contestStatistic->fetch_assoc()): ?>
                             <tr>
                               <th scope="col" style="text-align: center;"><?php echo $i++; ?></th>
-                              <td scope="col"><?php echo $contest['ContestName']; ?></td>
-                              <td scope="col"><?php echo $subjects[$contest['Subject']] ?? 'Không xác định'; ?></td>
+                              <td scope="col" style="display: none;"><?php echo $contest['UserID']; ?></td>
+                              <td scope="col"><?php echo $contest['FullName']; ?></td>
                               <td scope="col"><?php echo $contest['CreateDate']; ?></td>
-                              <td scope="col"><?php echo $contest['Status'] == 1 ? 'Đang hoạt động' : 'Không hoạt động'; ?></td>
+                              <td scope="col"><?php echo $contest['SoLanThi']; ?></td>
+                              <td scope="col"><?php echo $contest['CorrectAnswer']; ?> / <?php echo $contest['TotalQuestions']; ?></td>
                               <td scope="col">
                                 <div class="row d-flex justify-content-center flex-row">
-                                  <button class="btn btn-primary moreInfo-btn col-3 px-2" data-contest-id="<?php echo $contest['ContestID']; ?>"><i class="bi bi-info-circle"></i><p>Thông tin</p></button>
-                                  <button class="btn btn-warning editContest-btn col-3" data-contest-id="<?php echo $contest['ContestID']; ?>" onclick="window.location.href='contestEdit.php?contestID=<?php echo $contest['ContestID']; ?>'"><i class="bi bi-pen"></i><p>Sửa</p></button>
-                                  <button class="btn btn-danger deleteContest-btn col-3" data-contest-id="<?php echo $contest['ContestID']; ?>"><i class="bi bi-trash"></i><p>Xóa</p></button>
                                 </div>
                                 <div class="row d-flex justify-content-center flex-row">
-                                    <button class="btn btn-secondary reviewContest-btn col-3" data-contest-id="<?php echo $contest['ContestID']; ?>"><i class="bi bi-eye"></i><p>Xem</p></button>
-                                    <button class="btn btn-info getContestCode-btn col-3" data-contest-id="<?php echo $contest['ContestID']; ?>" data-contest-code="<?php echo $contest['ContestCode']; ?>"><i class="bi bi-code-slash"></i><p>Lấy mã</p></button>
-                                    <button class="btn btn-info getStudentList-btn col-3 px-2" onclick="window.location.href='contestStatistic.php?contestID=<?php echo $contest['ContestID']; ?>'"><i class="bi bi-list-ul"></i><p>Danh sách</p></button>
+                                    <button class="btn btn-info activateUser-btn col-5" data-user-id="<?php echo $contest['UserID']; ?>"><i class="bi bi-key"></i><p>Kích hoạt</p></button>
                                 </div>
                               </td>
                             </tr>
@@ -168,10 +165,10 @@
             </table>
             
         </div>
-        <!-- Quản lý câu hỏi trong thư viện -->
+        <!-- Xuất kết quả -->
         <div class="mb-4 container">
-            <h4>Thêm Cuộc Thi</h4>
-            <button class="btn btn-info" id="contestCreateRequest">Thêm Cuộc Thi</button>
+            <h4>Xuất kết quả</h4>
+            <button class="btn btn-info" id="exportResult">Xuất kết quả</button>
         </div>
         
     </div>

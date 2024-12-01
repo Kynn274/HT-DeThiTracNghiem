@@ -5,8 +5,11 @@
     <?php
         include 'header.php';
     ?>
-
+    <script>
+        const userID = '<?php $userID = $_SESSION['user_id']; echo $userID; ?>';
+    </script>
     <!-- Add content here -->
+    
     <div class="hero overlay" style="height: 150px !important; max-height: 150px !important; min-height: 100px !important">
 	</div>
     <div class="container mt-4" style="min-height: 250px;">
@@ -22,36 +25,7 @@
                 <div class="row" id="examList">
                     
                     <!-- Giả lập 3 cuộc thi -->
-                    <!-- <div class="col-md-4 mb-4">
-                        <div class="card" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
-                            <div class="card-body">
-                                <h5 class="card-title">Cuộc thi 1</h5>
-                                <p class="card-text">Mô tả về cuộc thi 1.</p>
-                                <a href="ThamGiaThi.php?id=1" class="btn btn-primary" style="border-radius: 25px;">Tham gia</a>
-                                <a href="edit_exam.php?id=1" class="btn btn-secondary" style="border-radius: 25px;">Chỉnh sửa</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
-                            <div class="card-body">
-                                <h5 class="card-title">Cuộc thi 2</h5>
-                                <p class="card-text">Mô tả về cuộc thi 2.</p>
-                                <a href="ThamGiaThi.php?id=2" class="btn btn-primary" style="border-radius: 25px;">Tham gia</a>
-                                <a href="edit_exam.php?id=2" class="btn btn-secondary" style="border-radius: 25px;">Chỉnh sửa</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card" style="border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
-                            <div class="card-body">
-                                <h5 class="card-title">Cuộc thi 3</h5>
-                                <p class="card-text">Mô tả về cuộc thi 3.</p>
-                                <a href="ThamGiaThi.php?id=3" class="btn btn-primary" style="border-radius: 25px;">Tham gia</a>
-                                <a href="edit_exam.php?id=3" class="btn btn-secondary" style="border-radius: 25px;">Chỉnh sửa</a>
-                            </div>
-                        </div>
-                    </div> -->
+                    
                 </div>
 
                 <!-- Nút chuyển trang -->
@@ -74,8 +48,41 @@
                 </nav>
             </div>
         </div>
+        <div class="modal" tabindex="-1" id="joinContestModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Kết quả cuộc thi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">        
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="./js/contestZone.js"></script>
+    <script>
+        // Initialize contest list when page loads
+        $(document).ready(function() {
+            loadJoinedContest(userID);
+            $('#searchBox').on('keyup', function(event){
+                const contestCode = $('#searchBox').val();
+                if(event.key == 'Enter'){
+                    searchContest(contestCode, userID);
+                }
+            });
+            $('#searchButton').on('click', function(){
+                const contestCode = $('#searchBox').val();
+                searchContest(contestCode, userID);
+            });
+        });
+    </script>
     <?php
         include 'footer.php';
         include 'javascript.php';

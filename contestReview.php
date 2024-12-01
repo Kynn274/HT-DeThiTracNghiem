@@ -5,15 +5,16 @@
     <?php
         include 'header.php';
         $contestID = 0;
-        $type = '';
-        if(isset($_SESSION['joinContest'])){
-            $contestID = $_SESSION['joinContest']['contestID'];
-            $type = $_SESSION['joinContest']['type'];            
+        $contestCode = '';
+        if(isset($_GET['contestID']) && isset($_GET['contestCode'])){
+            $contestID = $_GET['contestID'];
+            $contestCode = $_GET['contestCode'];        
         }
+        echo $contestID, ' ', $contestCode;
     ?>
     <script>
         let contestID = '<?php echo $contestID; ?>';
-        let type = '<?php echo $type; ?>';
+        let contestCode = '<?php echo $contestCode; ?>';
         let currentQuestion = 1;
         let questionsArray = [];
         $('#previousQuestion').prop('disabled', true);
@@ -39,7 +40,16 @@
                 alert('Error: ' + error);
             }
         });
-        
+        $('#markQuestion').click(function(){
+            console.log($(this).attr('value'));
+            if($(this).attr('value') == 0){
+                $(this).attr('value', 1);
+                $(this).find('i').removeClass('text-danger').addClass('text-success');
+            }else{
+                $(this).attr('value', 0);
+                $(this).find('i').removeClass('text-success').addClass('text-danger');
+            }
+        });
         //  Functions
         function loadQuestions(questionNumber){
             let number = questionNumber - 1;
@@ -62,7 +72,12 @@
             $('#questionPanel').empty();
             console.log(questionsArray.length);
             for(let j = 0; j < questionsArray.length; j++){
-                    let btn = $('<button>').addClass('btn btn-outline-primary rounded-circle questionNumber mx-auto').attr('id', `question${j + 1}`).attr('style', 'width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 22px;').attr('value', j + 1).text(j + 1);
+
+                    let btn = $('<button>').addClass('btn btn-outline-primary rounded-circle questionNumber mx-auto position-relative').attr('id', `question${j + 1}`).attr('style', 'width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 22px;').attr('value', j + 1).text(j + 1);
+                    let span = $('<span>').addClass('position-absolute top-0 start-100 translate-middle p-2 bg-transparent border border-0 rounded-circle').attr('id', `markQuestion${j + 1}`).attr('value', 0);
+                    let i = $('<i>').addClass('bi bi-flag-fill text-success fs-5').attr('id', `markQuestion${j + 1}`);
+                    span.append(i);
+                    btn.append(span);
                     $('#questionPanel').append(btn);
                     btn.click(function(){
                         currentQuestion = parseInt($(this).attr('value'));
@@ -100,7 +115,14 @@
                 $('#previousQuestion').prop('disabled', true);
             }
         }
-
+        function copyContestCode(){
+            if(contestCode != ''){
+                navigator.clipboard.writeText(contestCode);
+                alert('Đã copy mã cuộc thi');
+            }else{
+                alert('Không có mã cuộc thi');
+            }
+        }
     </script>
     <!-- Add content here -->
     <div class="hero overlay" style="height: 150px !important; max-height: 150px !important; min-height: 100px !important">
@@ -113,8 +135,16 @@
             <div class="flex-shrink-0">
                 <div class="card shadow-lg rounded-lg border-0">
                     <div class="card-body">
-                        <h4 class="text-primary text-center">Chọn Câu Hỏi:</h4>
-
+                        <div class="d-flex justify-content-between">
+                            <h4 class="text-primary text-center">Chọn Câu Hỏi:</h4>
+                            <div class="d-flex justify-content-end">
+                                <div class="d-flex align-items-center gap-2">
+                                    <button id="markQuestion" class="p-2 bg-transparent border border-0" value="0">
+                                        <i class="bi bi-flag-fill text-danger fs-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Circle Buttons for Questions -->
                         <div class="mx-auto d-flex justify-content-center align-items-center gap-2 flex-wrap mt-4 mb-2" id="questionPanel">
                             <!-- Question buttons will be loaded here -->
@@ -129,11 +159,9 @@
                 <div class="card shadow-lg rounded-lg border-0">
                     <div class="card-body">
                         <!-- Timer Display -->
-                        <?php if($type == 'contest'): ?>
-                            <div class="text-center mb-4">
-                                <h5 class="text-danger">Thời gian còn lại: <span id="countdown">30:00</span></h5>
-                            </div>
-                        <?php endif; ?>
+                        <!-- <div class="text-center mb-4">
+                            <h5 class="text-danger">Thời gian còn lại: <span id="countdown">30:00</span></h5>
+                        </div> -->
                         <div id="questionBox">
                             <h4 class="text-danger fs-5">Cannot load question</h4>
                         </div>
@@ -147,14 +175,11 @@
                 </div>
             </div>
         </div>
-        <?php if($type == 'contest'): ?>
-            <button onclick="submitAnswer()" class="btn btn-success px-4 py-2 rounded-pill">Nộp bài</button>
-        <?php else: ?>
+            <!-- <button onclick="submitAnswer()" class="btn btn-success px-4 py-2 rounded-pill">Nộp bài</button> -->
             <div class="d-flex justify-content-end mt-4">
                 <button onclick="window.location.href='./contest.php'" class="btn btn-primary px-4 py-3 me-2 rounded-pill">Quay lại</button>
                 <button onclick="copyContestCode()" class="btn btn-primary px-4 py-3 rounded-pill">Lấy mã cuộc thi</button>
             </div>
-        <?php endif; ?>
     </div>
 
 
