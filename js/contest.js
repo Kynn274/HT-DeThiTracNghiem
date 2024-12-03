@@ -88,56 +88,6 @@ $(document).ready(function(){
     // Thiết lập giá trị mặc định cho ngày thi (ngày hiện tại)
     $('#examDate').valueAsDate = new Date();
 
-    function togglePasswordField() {
-        const examMode = $('#examMode').val();
-        if (examMode === 'contest') {
-            $('#passwordSection').css('display', 'block');
-            $('#testTimesSection').css('display', 'block');
-            $('#testTimes').prop('required', true);
-            $('#password').prop('required', true);
-        } else {
-            $('#passwordSection').css('display', 'none');
-            $('#testTimesSection').css('display', 'none');
-            $('#testTimes').prop('required', false);
-            $('#password').prop('required', false);
-        }
-    }
-
-    function updateDifficultyLimits() {
-        const total = parseInt($('#totalQuestions').val());
-        const easy = $('#easyQuestions');
-        const medium = $('#mediumQuestions');
-        const hard = $('#hardQuestions');
-
-        // Cập nhật giới hạn cho từng loại
-        [easy, medium, hard].forEach(input => {
-            input.max = total;
-            const currentVal = parseInt(input.val());
-            if (currentVal > total) {
-                input.val(Math.floor(total / 3));
-            }
-        });
-
-        validateDifficultyDistribution();
-    }
-
-    function validateDifficultyDistribution() {
-        const total = parseInt($('#totalQuestions').val());
-        const easy = parseInt($('#easyQuestions').val()) || 0;
-        const medium = parseInt($('#mediumQuestions').val()) || 0;
-        const hard = parseInt($('#hardQuestions').val()) || 0;
-        const currentTotal = easy + medium + hard;
-
-        const distributionTotal = $('#questionDistributionTotal');
-        distributionTotal.text(`Tổng: ${currentTotal}/${total} câu`);
-        distributionTotal.css('color', currentTotal === total ? 'var(--primary-color)' : 'var(--error-color)');
-
-        return currentTotal === total;
-    }
-
-    // Khởi tạo ban đầu
-    togglePasswordField();
-    validateDifficultyDistribution();
     $('#contestCreateSubmit').click(function(){
         let examName = $('#examName').val().trim();
         let school = $('#school').val();
@@ -199,6 +149,57 @@ $(document).ready(function(){
     });
     
 });
+
+function togglePasswordField() {
+    const examMode = $('#examMode').val();
+    if (examMode === 'contest') {
+        $('#passwordSection').css('display', 'block');
+        $('#testTimesSection').css('display', 'block');
+        $('#testTimes').prop('required', true);
+        $('#password').prop('required', true);
+    } else {
+        $('#passwordSection').css('display', 'none');
+        $('#testTimesSection').css('display', 'none');
+        $('#testTimes').prop('required', false);
+        $('#password').prop('required', false);
+    }
+}
+
+function updateDifficultyLimits() {
+    const total = parseInt($('#totalQuestions').val());
+    const easy = $('#easyQuestions');
+    const medium = $('#mediumQuestions');
+    const hard = $('#hardQuestions');
+
+    // Cập nhật giới hạn cho từng loại
+    [easy, medium, hard].forEach(input => {
+        input.max = total;
+        const currentVal = parseInt(input.val());
+        if (currentVal > total) {
+            input.val(Math.floor(total / 3));
+        }
+    });
+
+    validateDifficultyDistribution();
+}
+
+function validateDifficultyDistribution() {
+    const total = parseInt($('#totalQuestions').val());
+    const easy = parseInt($('#easyQuestions').val()) || 0;
+    const medium = parseInt($('#mediumQuestions').val()) || 0;
+    const hard = parseInt($('#hardQuestions').val()) || 0;
+    const currentTotal = easy + medium + hard;
+
+    const distributionTotal = $('#questionDistributionTotal');
+    distributionTotal.text(`Tổng: ${currentTotal}/${total} câu`);
+    distributionTotal.css('color', currentTotal === total ? 'var(--primary-color)' : 'var(--error-color)');
+
+    return currentTotal === total;
+}
+
+// Khởi tạo ban đầu
+togglePasswordField();
+validateDifficultyDistribution();
 
 
 

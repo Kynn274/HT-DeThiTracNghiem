@@ -52,171 +52,326 @@
 	$saved_username = isset($_COOKIE['username']) ? $_COOKIE['username'] : '';
 	$saved_password = isset($_COOKIE['password']) ? $_COOKIE['password'] : '';
 ?>
-<?php
-	include 'head.php';
-?>
+<?php include 'head.php'; ?>
 <style>
-	body {
-		background: linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 139, 0.85));
-		font-family: 'Work Sans', sans-serif;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		min-height: 100vh;
-		margin: 0;
-		padding: 20px;
-	}
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #4154f1, #2c3cdd);
+    font-family: 'Work Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
 
-	.logo {
-		position: absolute;
-		top: 10px;
-		left: 10px;
-		font-weight: bolder;
-		font-size: 30px;
-		color: #ffffff;
-	}
+/* Background Animation */
+.bg-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
 
-	.container {
-		width: 100%;
-		max-width: 400px;
-	}
+.bg-animation li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    border-radius: 50%;
+}
 
-	.form-container {
-		background: #ffffff;
-		border-radius: 12px;
-		padding: 30px;
-		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-		border: 1px solid #ddd;
-	}
+@keyframes animate {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
 
-	h2 {
-		text-align: center;
-		font-weight: 700;
-		color: #333;
-		margin-bottom: 20px;
-	}
+/* Logo Section */
+.logo-section {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    z-index: 10;
+}
 
-	.form-group {
-		margin-bottom: 20px;
-	}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
 
-	.form-control {
-		border-radius: 8px;
-		border: 1px solid #ccc;
-		padding: 12px;
-		font-size: 16px;
-		width: 100%;
-		transition: all 0.3s ease;
-	}
+.logo-container:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+}
 
-	.form-control:focus {
-		border-color: #2575fc;
-		box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
-	}
+.logo-container img {
+    width: 50px;
+    height: auto;
+    filter: brightness(0) invert(1);
+}
 
-	.position-relative {
-		position: relative;
-	}
+.logo-text {
+    text-decoration: none;
+}
 
-	#togglePassword {
-		position: absolute;
-		right: 10px;
-		top: 38px;
-		cursor: pointer;
-	}
+.logo-text h1 {
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
 
-	.btn-primary {
-		width: 100%;
-		background-color: #2575fc;
-		border: none;
-		padding: 12px;
-		border-radius: 8px;
-		color: white;
-		font-size: 16px;
-		font-weight: bold;
-		cursor: pointer;
-		transition: background-color 0.3s, transform 0.3s;
-	}
+/* Login Form Container */
+.login-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 0.6s ease-out;
+}
 
-	.btn-primary:hover {
-		background-color: #6a11cb;
-		transform: translateY(-2px);
-	}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-	.text-center {
-		text-align: center;
-	}
+.login-container h2 {
+    color: #2c3cdd;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
 
-	.text-primary {
-		color: #2575fc;
-	}
+.form-group {
+    margin-bottom: 25px;
+}
 
-	.text-primary:hover {
-		text-decoration: underline;
-	}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #495057;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
 
-	@media (max-width: 575px) {
-		.form-container {
-			padding: 20px;
-		}
-		h2 {
-			font-size: 24px;
-		}
-		.form-control {
-			padding: 10px;
-			font-size: 14px;
-		}
-		.btn-primary {
-			padding: 10px;
-			font-size: 14px;
-		}
-	}
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-control:focus {
+    border-color: #4154f1;
+    box-shadow: 0 0 0 3px rgba(65, 84, 241, 0.1);
+    outline: none;
+}
+
+.position-relative {
+    position: relative;
+}
+
+#togglePassword {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.3s ease;
+}
+
+#togglePassword:hover {
+    color: #4154f1;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #4154f1, #2c3cdd);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(65, 84, 241, 0.4);
+}
+
+.text-center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text-center a {
+    color: #4154f1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.text-center a:hover {
+    color: #2c3cdd;
+    text-decoration: underline;
+}
+
+.error {
+    background: #fff5f5;
+    color: #e53e3e;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+    border-left: 4px solid #e53e3e;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-container {
+        margin: 20px;
+        padding: 30px 20px;
+    }
+
+    .logo-section {
+        top: 20px;
+        left: 20px;
+    }
+
+    .logo-container {
+        padding: 10px;
+    }
+
+    .logo-container img {
+        width: 40px;
+    }
+
+    .logo-text h1 {
+        font-size: 1.2rem;
+    }
+}
 </style>
+
 <body>
-	<div class="logo text-center mb-4">
-		<div style="display: flex; align-items: center;">
-			<img src="images/logo.png" alt="Logo" style="width: 100px; height: auto;">
-			<div style="text-align: left;">
-				<a href="index.php" class="text-decoration-none">
-					<h1 class="m-0" style="font-size: 1.8rem; color: #ffffff; font-weight: bold;">MindBridge</h1>
-					<h1 class="m-0" style="font-size: 1.8rem; color: #ffffff; font-weight: bold;">Institute</h1>
-				</a>
-			</div>
-		</div>
-	</div>
+    <!-- Background Animation -->
+    <ul class="bg-animation">
+        <?php for($i = 0; $i < 10; $i++): ?>
+            <li style="
+                left: <?php echo rand(0, 100); ?>%;
+                width: <?php echo rand(10, 30); ?>px;
+                height: <?php echo rand(10, 30); ?>px;
+                animation-delay: <?php echo $i * 0.5; ?>s;
+                animation-duration: <?php echo rand(10, 30); ?>s;
+            "></li>
+        <?php endfor; ?>
+    </ul>
 
+    <!-- Logo Section -->
+    <div class="logo-section">
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Logo">
+            <a href="index.php" class="logo-text">
+                <h1>MindBridge</h1>
+                <h1>Institute</h1>
+            </a>
+        </div>
+    </div>
 
-	<div class="container">
-		<div class="form-container">
-			<form method="post" action="DangNhap.php">
-				<h2>Đăng Nhập</h2>
-				<div class="form-group">
-					<label for="username">Tên đăng nhập</label>
-					<input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập" value="<?php echo htmlspecialchars($saved_username); ?>" required>
-				</div>
+    <!-- Login Form -->
+    <div class="login-container">
+        <form method="post" action="DangNhap.php">
+            <h2>Đăng Nhập</h2>
+            
+            <div class="form-group">
+                <label for="username">Tên đăng nhập</label>
+                <input type="text" class="form-control" name="username" id="username" 
+                       placeholder="Nhập tên đăng nhập" value="<?php echo htmlspecialchars($saved_username); ?>" required>
+            </div>
 
-				<div class="form-group position-relative">
-					<label for="password">Mật khẩu</label>
-					<input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" value="<?php echo htmlspecialchars($saved_password); ?>" required>
-					<span id="togglePassword">
-						<i class="bi bi-eye" id="eyeIcon"></i>
-					</span>
-				</div>
+            <div class="form-group position-relative">
+                <label for="password">Mật khẩu</label>
+                <input type="password" class="form-control" name="password" id="password" 
+                       placeholder="Nhập mật khẩu" value="<?php echo htmlspecialchars($saved_password); ?>" required>
+                <i class="bi bi-eye" id="togglePassword"></i>
+            </div>
 
-				<?php if (!empty($message)) echo $message; ?>
-				<button type="submit" class="btn btn-primary" name="dangnhap">Đăng Nhập</button>
+            <?php if (!empty($message)) echo $message; ?>
 
-				<p class="text-center mt-3">
-					Bạn chưa có tài khoản? <a href="DangKy.php" class="text-primary">Đăng ký</a><br>
-					<a href="index.php" class="text-primary">Trang Chủ</a>
-				</p>
-			</form>
-		</div>
-	</div>
+            <button type="submit" class="btn-login" name="dangnhap">Đăng Nhập</button>
 
-	<script src="./js/signin.js"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            <div class="text-center">
+                <p>Bạn chưa có tài khoản? <a href="DangKy.php">Đăng ký</a></p>
+                <p><a href="index.php">Về trang chủ</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('bi-eye');
+            this.classList.toggle('bi-eye-slash');
+        });
+    </script>
 </body>
 </html>

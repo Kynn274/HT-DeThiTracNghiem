@@ -386,6 +386,10 @@ if(isset($_POST['action'])) {
                             'success' => false,
                             'message' => 'Không đủ câu hỏi'
                         ]);
+                        $sql = "DELETE FROM Contests WHERE ContestID = ?";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("i", $contestID);
+                        $stmt->execute();
                         exit;
                     }
                     $sql = "SELECT * FROM Questions WHERE QuestionBankID = ? AND Level = ? ORDER BY RAND() LIMIT ?";

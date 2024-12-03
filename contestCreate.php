@@ -7,127 +7,201 @@
 	?>
     <style>
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --background-color: #f0f9ff;
+            --primary-color: #4154f1;
+            --secondary-color: #2c3cdd;
             --text-color: #1e293b;
-            --border-color: #bfdbfe;
-            --error-color: #ef4444;
+            --border-color: #e9ecef;
         }
 
-        /* body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        } */
-
-        body>.container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        /* Main Content Section */
+        #content {
+            padding: 40px 0;
+            background: linear-gradient(135deg, #f6f9ff 0%, #f1f4ff 100%);
         }
 
-        h1 {
-            text-align: center;
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-row > * {
-            flex: 1;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-color);
-        }
-
-        select, input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: all 0.2s;
-        }
-
-        select:focus, input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .difficulty-section {
-            background-color: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .difficulty-title {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        .password-section {
-            display: block;
-            animation: fadeIn 0.3s ease-in-out;
+        #content .container {
+            max-width: 900px !important;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.6s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .btn {
+        /* Form Styling */
+        #contestForm {
+            margin-top: 30px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
             display: block;
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--text-color);
             font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .btn:hover {
-            background-color: var(--secondary-color);
+        .form-group label i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
         }
 
-        .error {
-            color: var(--error-color);
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(65, 84, 241, 0.1);
+            outline: none;
+        }
+
+        /* Custom Select Styling */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%234154f1' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+        }
+
+        /* Difficulty Section */
+        .difficulty-section {
+            background: linear-gradient(135deg, rgba(65, 84, 241, 0.05), rgba(44, 60, 221, 0.05));
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 1px solid rgba(65, 84, 241, 0.1);
+        }
+
+        .difficulty-title {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .difficulty-title i {
+            font-size: 1.2rem;
         }
 
         .total-questions {
-            text-align: right;
-            font-weight: 500;
-            margin-top: 0.5rem;
+            display: inline-block;
+            padding: 8px 15px;
+            background: rgba(65, 84, 241, 0.1);
             color: var(--primary-color);
+            border-radius: 8px;
+            font-weight: 500;
+            /* float: right; */
+            margin-right: 15px;
+            margin-left: auto;
+            margin-top: 15px;
+        }
+
+        /* Button Styling */
+        #contestCreateSubmit {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        #contestCreateSubmit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(65, 84, 241, 0.4);
+        }
+
+        #contestCreateSubmit i {
+            font-size: 1.2rem;
+        }
+
+        /* Number Input Styling */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            #content .container {
+                padding: 25px;
+                margin: 15px;
+            }
+
+            .difficulty-section {
+                padding: 20px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        #content .container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #content .container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        #content .container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        #content .container::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
         }
     </style>
 	<div class="hero overlay inner-page">
@@ -251,7 +325,6 @@
 
 		</div>
 	</div>
-    <script src="./js/createExam.js"></script>
     <script src="./js/contest.js"></script>                            
 	<?php
 		include 'footer.php';

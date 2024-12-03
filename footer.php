@@ -80,12 +80,12 @@
                                     <!-- Menu cho mọi user đã đăng nhập -->
                                     <?php if($is_logged_in): ?>
 										<?php if($user_type == 1): ?>
-                                        <li class="mb-3">
-                                            <a href="#" class="text-white-50 menu-user">
-                                                Không có chức năng
-                                            </a>
-                                        </li>
-                                    <?php endif; ?>
+                                            <li class="mb-3">
+                                                <a href="#" class="text-white-50 menu-user">
+                                                    Không có chức năng
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
                                     <?php elseif (!$is_logged_in): ?>
                                         <li class="mb-3">
                                             <a href="DangNhap.php" class="text-white-50 menu-user">

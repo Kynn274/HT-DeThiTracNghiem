@@ -239,25 +239,25 @@
                         $i = 1;
                         while($contest = $contests->fetch_assoc()): ?>
                             <tr>
-                                <th scope="col"><?php echo $i++; ?></th>
+                                <th scope="col" class="text-center align-middle"><?php echo $i++; ?></th>
                                 <td scope="col"><?php echo $contest['ContestName']; ?></td>
                                 <td scope="col"><?php echo $subjects[$contest['Subject']] ?? 'Không xác định'; ?></td>
                                 <td scope="col"><?php echo $contest['CreateDate']; ?></td>
                                 <td scope="col">
                                     <div class="action-buttons">
-                                        <button class="btn btn-primary moreInfo-btn" data-contest-id="<?php echo $contest['ContestID']; ?>">
-                                            <i class="bi bi-info-circle"></i><p>Thông tin</p>
+                                        <button class="btn align-items-center btn-primary moreInfo-btn" data-contest-id="<?php echo $contest['ContestID']; ?>">
+                                            <i class="bi bi-info-circle"></i><p class="m-0 align-middle">Thông tin</p>
                                         </button>
-                                        <button class="btn btn-warning editContest-btn" onclick="window.location.href='testEdit.php?contestID=<?php echo $contest['ContestID']; ?>'">
-                                            <i class="bi bi-pen"></i><p>Sửa</p>
+                                        <button class="btn align-items-center btn-warning editContest-btn" onclick="window.location.href='testEdit.php?contestID=<?php echo $contest['ContestID']; ?>'">
+                                            <i class="bi bi-pen"></i><p class="m-0 align-middle">Sửa</p>
                                         </button>
-                                        <button class="btn btn-danger deleteContest-btn" data-contest-id="<?php echo $contest['ContestID']; ?>">
-                                            <i class="bi bi-trash"></i><p>Xóa</p>
+                                        <button class="btn align-items-center btn-danger deleteContest-btn" data-contest-id="<?php echo $contest['ContestID']; ?>">
+                                            <i class="bi bi-trash"></i><p class="m-0 align-middle">Xóa</p>
                                         </button>
                                     </div>
                                     <div class="action-buttons">
-                                        <button class="btn btn-info" onclick="generatePDF(<?php echo $contest['ContestID']; ?>)">
-                                            <i class="bi bi-file-pdf"></i><p>Xem PDF</p>
+                                        <button class="btn align-items-center btn-info" onclick="generatePDF(<?php echo $contest['ContestID']; ?>)">
+                                            <i class="bi bi-file-pdf"></i><p class="m-0 align-middle">Xem PDF</p>
                                         </button>
                                     </div>
                                 </td>

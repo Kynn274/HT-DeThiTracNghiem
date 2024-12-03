@@ -238,7 +238,7 @@
                         $i = 1;
                         while($contest = $contests->fetch_assoc()): ?>
                             <tr>
-                                <th scope="col"><?php echo $i++; ?></th>
+                                <th scope="col" class="text-center align-middle"><?php echo $i++; ?></th>
                                 <td scope="col"><?php echo $contest['ContestName']; ?></td>
                                 <td scope="col"><?php echo $subjects[$contest['Subject']] ?? 'Không xác định'; ?></td>
                                 <td scope="col"><?php echo $contest['CreateDate']; ?></td>
@@ -249,25 +249,25 @@
                                 </td>
                                 <td scope="col">
                                     <div class="action-buttons">
-                                        <button class="btn btn-primary moreInfo-btn" data-contest-id="<?php echo $contest['ContestID']; ?>">
-                                            <i class="bi bi-info-circle"></i><p>Thông tin</p>
+                                        <button class="btn btn-primary moreInfo-btn align-middle" data-contest-id="<?php echo $contest['ContestID']; ?>">
+                                            <i class="bi bi-info-circle"></i><p class="align-middle m-0">Thông tin</p>
                                         </button>
-                                        <button class="btn btn-warning editContest-btn" onclick="window.location.href='contestEdit.php?contestID=<?php echo $contest['ContestID']; ?>'">
-                                            <i class="bi bi-pen"></i><p>Sửa</p>
+                                        <button class="btn btn-warning editContest-btn align-middle" onclick="window.location.href='contestEdit.php?contestID=<?php echo $contest['ContestID']; ?>'">
+                                            <i class="bi bi-pen"></i><p class="align-middle m-0">Sửa</p>
                                         </button>
-                                        <button class="btn btn-danger deleteContest-btn" data-contest-id="<?php echo $contest['ContestID']; ?>">
-                                            <i class="bi bi-trash"></i><p>Xóa</p>
+                                        <button class="btn btn-danger deleteContest-btn align-middle" data-contest-id="<?php echo $contest['ContestID']; ?>">
+                                            <i class="bi bi-trash"></i><p class="align-middle m-0">Xóa</p>
                                         </button>
                                     </div>
                                     <div class="action-buttons">
-                                        <button class="btn btn-secondary reviewContest-btn" data-contest-id="<?php echo $contest['ContestID']; ?>">
-                                            <i class="bi bi-eye"></i><p>Xem</p>
+                                        <button class="btn btn-secondary reviewContest-btn align-middle" data-contest-id="<?php echo $contest['ContestID']; ?>">
+                                            <i class="bi bi-eye"></i><p class="align-middle m-0">Xem</p>
                                         </button>
-                                        <button class="btn btn-info getContestCode-btn" data-contest-id="<?php echo $contest['ContestID']; ?>" data-contest-code="<?php echo $contest['ContestCode']; ?>">
-                                            <i class="bi bi-code-slash"></i><p>Lấy mã</p>
+                                        <button class="btn btn-info getContestCode-btn align-middle" data-contest-id="<?php echo $contest['ContestID']; ?>" data-contest-code="<?php echo $contest['ContestCode']; ?>">
+                                            <i class="bi bi-code-slash"></i><p class="align-middle m-0">Lấy mã</p>
                                         </button>
-                                        <button class="btn btn-info getStudentList-btn" onclick="window.location.href='contestStatistic.php?contestID=<?php echo $contest['ContestID']; ?>'">
-                                            <i class="bi bi-list-ul"></i><p>Danh sách</p>
+                                        <button class="btn btn-info getStudentList-btn align-middle" onclick="window.location.href='contestStatistic.php?contestID=<?php echo $contest['ContestID']; ?>'">
+                                            <i class="bi bi-list-ul"></i><p class="align-middle m-0">Danh sách</p>
                                         </button>
                                     </div>
                                 </td>

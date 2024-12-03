@@ -144,11 +144,11 @@
 			<div class="menu-bg-wrap">
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
-						<div class="col-4 logo">
+						<div class="col-3 logo">
 							<a href="index.php"><img src="images/logo.png" alt="logo"></a>
 							<a href="index.php" class="logo m-0 float-start" id="logo-text"><span class="text-primary">MindBridge <br> Institute</span></a>
 						</div>
-						<div class="col-4 text-center">
+						<div class="col-5 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto fw-bold">
 								<li class="active"><a href="index.php">TRANG CHỦ</a></li>
 								<li><a href="<?php echo $is_logged_in? 'contestZone.php' : 'DangNhap.php' ?>">CUỘC THI</a></li>

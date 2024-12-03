@@ -24,13 +24,9 @@
 					</p>
 					<div class="hero-buttons aos-init" data-aos="fade-up" data-aos-delay="200">
 						<?php if(!$is_logged_in): ?>
-							<a href="DangKy.php" class="btn btn-primary me-3 mb-3">
+							<a href="DangNhap.php" class="btn btn-primary me-3 mb-3">
 								Bắt đầu ngay
 								<i class="bi bi-arrow-right ms-2"></i>
-							</a>
-							<a href="DangNhap.php" class="btn btn-outline-light mb-3">
-								Đăng nhập
-								<i class="bi bi-box-arrow-in-right ms-2"></i>
 							</a>
 						<?php else: ?>
 							<a href="<?php echo $is_logged_in? 'contestZone.php' : 'DangNhap.php' ?>" class="btn btn-primary me-3 mb-3">
@@ -507,7 +503,7 @@
 							</li>
 						</ul>
 						<?php if(!$is_logged_in): ?>
-							<a href="DangKy.php" class="btn btn-primary mt-4">Bắt đầu ngay</a>
+							<a href="DangNhap.php" class="btn btn-primary mt-4">Bắt đầu ngay</a>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -538,7 +534,7 @@
 							</li>
 						</ul>
 						<?php if(!$is_logged_in): ?>
-							<a href="DangKy.php" class="btn btn-success mt-4">Tham gia ngay</a>
+							<a href="DangNhap.php" class="btn btn-success mt-4">Tham gia ngay</a>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -569,7 +565,7 @@
 							</li>
 						</ul>
 						<?php if(!$is_logged_in): ?>
-							<a href="DangKy.php" class="btn btn-info mt-4">Liên hệ ngay</a>
+							<a href="DangNhap.php" class="btn btn-info mt-4">Liên hệ ngay</a>
 						<?php endif; ?>
 					</div>
 				</div>
