@@ -10,7 +10,6 @@
             $contestID = $_GET['contestID'];
             $contestCode = $_GET['contestCode'];        
         }
-        echo $contestID, ' ', $contestCode;
     ?>
     <script>
         let contestID = '<?php echo $contestID; ?>';

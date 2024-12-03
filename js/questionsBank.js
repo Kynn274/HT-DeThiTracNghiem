@@ -43,7 +43,7 @@ $(document).ready(function(){
         let optionB = $(editRow).find('#editOptionB').val();
         let optionC = $(editRow).find('#editOptionC').val();
         let optionD = $(editRow).find('#editOptionD').val();
-        let correctAnswer = $(editRow).find('#editCorrectAnswer').val();
+        let correctAnswer = $(editRow).find('#editCorrectAnswer').find('option:selected').attr('data-question-id');
         let answerIDA = $(editRow).find('#editAnswerIDA').val();
         let answerIDB = $(editRow).find('#editAnswerIDB').val();
         let answerIDC = $(editRow).find('#editAnswerIDC').val();

@@ -163,13 +163,17 @@
                 <div class="form-group">
                     <label for="subject">Môn học:</label>
                     <select id="subject" name="subject" required>
-                        <option value="">-- Chọn môn học --</option>
+                    <option value="">-- Chọn môn học --</option>
                         <option value="toan">Toán</option>
                         <option value="ly">Vật lý</option>
                         <option value="hoa">Hóa học</option>
                         <option value="sinh">Sinh học</option>
                         <option value="anh">Tiếng Anh</option>
                         <option value="van">Ngữ văn</option>
+                        <option value="su">Sử</option>
+                        <option value="dia">Địa</option>
+                        <option value="gdcd">GDCD</option>
+                        <option value="tin">Tin học</option>
                     </select>
                 </div>
                 <div class="form-group">

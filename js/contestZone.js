@@ -1,4 +1,5 @@
     function loadJoinedContest(userID){
+        console.log(userID);
         $.ajax({
             url: 'process.php',
             type: 'POST',
@@ -36,7 +37,8 @@
                     }
                     loadPagination(data.contests.length);
                 }else{
-                    alert(data.error);
+                    console.log(data.error);
+                    console.log(data);
                 }
             },
             error: function(xhr, status, error){
@@ -85,7 +87,7 @@ function searchContest(contestCode, userID){
                         $('#examList').append(`<h5 class="text-center text-muted my-4">Không tìm thấy cuộc thi nào!</h5>`);
                     }
                 }else{
-                    alert(data.error);
+                    console.log(data.error);
                 }
             },
             error: function(xhr, status, error){
@@ -95,13 +97,3 @@ function searchContest(contestCode, userID){
     }
 }
 
-$('#searchBox').on('keyup', function(event){
-    const contestCode = $('#searchBox').val();
-    if(event.key == 'Enter'){
-        searchContest(contestCode);
-    }
-});
-$('#searchButton').on('click', function(){
-    const contestCode = $('#searchBox').val();
-    searchContest(contestCode);
-});

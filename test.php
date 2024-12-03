@@ -185,129 +185,209 @@
         </div>
     <script src="./js/test.js"></script>
     <script src="https://unpkg.com/jspdf-invoice-template@1.4.0/dist/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
-      function generatePDF(contestID){
-        var pdfObject = jsPDFInvoiceTemplate.default(props);
-        console.log(pdfObject);
-      }
+      // Khởi tạo jsPDF
+      window.jsPDF = window.jspdf.jsPDF;
 
-      var props = {
-        outputType: jsPDFInvoiceTemplate.OutputType.Save,
-        // onJsPDFDocCreation?: (jsPDFDoc: jsPDF) => void, //Allows for additional configuration prior to writing among others, adds support for different languages and symbols
-        returnJsPDFDocObject: true,
-        fileName: "Invoice 2021",
-        orientationLandscape: false,
-        compress: true,
-        logo: {
-            src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/logo.png",
-            type: 'PNG', //optional, when src= data:uri (nodejs case)
-            width: 53.33, //aspect ratio = width/height
-            height: 26.66,
-            margin: {
-                top: 0, //negative or positive num, from the current position
-                left: 0 //negative or positive num, from the current position
-            }
-        },
-        stamp: {
-            inAllPages: true, //by default = false, just in the last page
-            src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
-            type: 'JPG', //optional, when src= data:uri (nodejs case)
-            width: 20, //aspect ratio = width/height
-            height: 20,
-            margin: {
-                top: 0, //negative or positive num, from the current position
-                left: 0 //negative or positive num, from the current position
-            }
-        },
-        business: {
-            name: "Business Name",
-            address: "Albania, Tirane ish-Dogana, Durres 2001",
-            phone: "(+355) 069 11 11 111",
-            email: "email@example.com",
-            email_1: "info@example.al",
-            website: "www.example.al",
-        },
-        contact: {
-            label: "Invoice issued for:",
-            name: "Client Name",
-            address: "Albania, Tirane, Astir",
-            phone: "(+355) 069 22 22 222",
-            email: "client@website.al",
-            otherInfo: "www.website.al",
-        },
-        invoice: {
-            label: "Invoice #: ",
-            num: 19,
-            invDate: "Payment Date: 01/01/2021 18:12",
-            invGenDate: "Invoice Date: 02/02/2021 10:17",
-            headerBorder: false,
-            tableBodyBorder: false,
-            header: [
-              {
-                title: "#", 
-                style: { 
-                  width: 10 
-                } 
-              }, 
-              { 
-                title: "Title",
-                style: {
-                  width: 30
-                } 
-              }, 
-              { 
-                title: "Description",
-                style: {
-                  width: 80
-                } 
-              }, 
-              { title: "Price"},
-              { title: "Quantity"},
-              { title: "Unit"},
-              { title: "Total"}
-            ],
-            table: Array.from(Array(10), (item, index)=>([
-                index + 1,
-                "There are many variations ",
-                "Lorem Ipsum is simply dummy text dummy text ",
-                200.5,
-                4.5,
-                "m2",
-                400.5
-            ])),
-            additionalRows: [{
-                col1: 'Total:',
-                col2: '145,250.50',
-                col3: 'ALL',
-                style: {
-                    fontSize: 14 //optional, default 12
-                }
-            },
-            {
-                col1: 'VAT:',
-                col2: '20',
-                col3: '%',
-                style: {
-                    fontSize: 10 //optional, default 12
-                }
-            },
-            {
-                col1: 'SubTotal:',
-                col2: '116,199.90',
-                col3: 'ALL',
-                style: {
-                    fontSize: 10 //optional, default 12
-                }
-            }],
-            invDescLabel: "Invoice Note",
-            invDesc: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
-        },
-        footer: {
-            text: "The invoice is created on a computer and is valid without the signature and stamp.",
-        },
-        pageEnable: true,
-        pageLabel: "Page ",
-    };
+      function generatePDF(contestID) {
+          var subject ={
+            'toan' : 'Toán',
+            'anh' : 'Tiếng Anh',
+            'ly' : 'Vật lý',
+            'hoa' : 'Hóa học',
+            'sinh' : 'Sinh học',
+            'van' : 'Ngữ văn',
+            'su' : 'Sử',
+            'dia' : 'Địa',
+            'gdcd' : 'GDCD',
+            'tin' : 'Tin học'
+          }
+          $.ajax({
+              url: 'process.php',
+              type: 'POST',
+              data: {
+                  action: 'getContestQuestions',
+                  contestID: contestID
+              },
+              success: function(response) {
+                  if(response.success) {
+                      var contest = response.contestInfo;
+                      var questions = response.questions;
+                      
+                      // Tạo HTML content
+                      var htmlContent = `
+                          <div id="pdf-content" style="font-family: Times New Roman, serif; font-size: 13pt; padding: 20mm;">
+                              <!-- Trang đầu tiên với 4 câu -->
+                              <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13pt; line-height: 1.15;">
+                                  <div style="text-align: center;">
+                                      <div style="width: 50%; float: left; text-transform: uppercase;">
+                                          <p style="margin: 0;">TRƯỜNG: ${contest.School}</p>
+                                          <p style="margin-top: 10pt;">KHOA:........................</p>
+                                      </div>
+                                      <div style="width: 50%; float: right; text-transform: uppercase;">
+                                          <h3 style="font-size: 13pt; font-weight: bold; margin: 0;">ĐỀ THI KẾT THÚC HỌC PHẦN</h3>
+                                          <h3 style="font-size: 13pt; font-weight: bold; margin-top: 8pt;">HỌC KỲ ...... NĂM HỌC .................</h3>
+                                      </div>
+                                  </div>
+
+                                  <div style="text-align: center; margin-top: 20pt;">
+                                      <p style="margin: 0; font-weight: bold; font-size: 13pt;">MÔN THI: ${subject[contest.Subject]}</p>
+                                      <p style="margin-top: 10pt; font-weight: bold;">Thời gian: ${contest.Longtime} phút. (không kể thời gian phát đề)</p>
+                                  </div>
+
+                                  <div style="border: 1px solid black; padding: 5pt; margin: 10pt 0; width: fit-content; margin-left: 0;">
+                                      MÃ ĐỀ: ${contest.ContestCode}
+                                  </div>
+
+                                  <div style="text-align: center; margin: 10pt 0;">
+                                      <label style="margin-right: 20pt;">
+                                          □ Không sử dụng tài liệu
+                                      </label>
+                                      <label style="margin-right: 20pt;">
+                                          □ Được sử dụng tài liệu
+                                      </label>
+                                      <br/>
+                                      <label style="margin-right: 20pt;">
+                                          □ Nộp lại đề thi
+                                      </label>
+                                      <label>
+                                          □ Không nộp lại đề thi
+                                      </label>
+                                  </div>
+
+                                  <div style="margin: 20pt 0;">
+                                      <p>Họ và tên:.................................................... MSSV:.........................</p>
+                                      <p style="margin: 0;">Lớp:.......................</p>
+                                  </div>
+
+                                  <div style="margin: 10pt 0;">
+                                      <h4 style="text-align: center; font-size: 13pt; font-family: 'Times New Roman', Times, serif;"><b>NỘI DUNG ĐỀ THI</b></h4>
+                                      
+                                      <!-- 4 câu đầu tiên -->
+                                      ${questions.slice(0, 5).map((question, index) => `
+                                          <div style="margin-bottom: 15pt;">
+                                              <p>Câu ${index + 1}: ${question.QuestionDescription}</p>
+                                              <div style="margin-left: 20pt;">
+                                                  <div style="display: flex;">
+                                                      <p style="margin: 5pt 0; margin-right: 10pt; flex: 1;">a. ${question.Answer[0].AnswerDescription}</p>
+                                                      <p style="margin: 5pt 0; margin-right: 10pt; flex: 1;">b. ${question.Answer[1].AnswerDescription}</p>
+                                                  </div>
+                                                  <div style="display: flex;">
+                                                      <p style="margin: 5pt 0; margin-right: 10pt; flex: 1;">c. ${question.Answer[2].AnswerDescription}</p>
+                                                      <p style="margin: 5pt 0; margin-right: 10pt; flex: 1;">d. ${question.Answer[3].AnswerDescription}</p>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      `).join('')}
+
+                                       <!-- Số trang 1 -->
+                                       <!-- <div style="text-align: center; position: absolute; bottom: 20mm; left: 0; right: 0;">
+                                           <p style="margin: 0;">Trang 1/${Math.ceil((questions.length - 4) / 7) + 1} - Mã đề: ${contest.ContestCode}</p>
+                                       </div> -->
+                                  </div>
+
+                                  <!-- Các trang tiếp theo, mỗi trang 7 câu -->
+                                  ${Array.from({ length: Math.ceil((questions.length - 5) / 7) }, (_, pageIndex) => `
+                                      <div class="page" style="page-break-before: always; padding: 25mm 0;font-family: 'Times New Roman', Times, serif; font-size: 13pt; line-height: 1.3;">
+                                          ${questions.slice(5 + pageIndex * 7, 5 + (pageIndex + 1) * 7).map((question, index) => `
+                                              <div style="margin-bottom: 15pt;">
+                                                  <p>Câu ${5 + pageIndex * 7 + index + 1}: ${question.QuestionDescription}</p>
+                                                  <div style="margin-left: 20pt;">
+                                                      <div style="display: flex;">
+                                                          <p style="margin: 5pt 0; margin-right: 10pt; flex: 1;">a. ${question.Answer[0].AnswerDescription}</p>
+                                                          <p style="margin: 5pt 0; margin-right: 10pt; flex: 1;">b. ${question.Answer[1].AnswerDescription}</p>
+                                                      </div>
+                                                      <div style="display: flex;">
+                                                          <p style="margin: 5pt 0; margin-right: 10pt; flex: 1;">c. ${question.Answer[2].AnswerDescription}</p>
+                                                          <p style="margin: 5pt 0; margin-right: 10pt; flex: 1;">d. ${question.Answer[3].AnswerDescription}</p>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          `).join('')}
+
+                                      </div>
+                                  `).join('')}
+                              </div>
+                          </div>
+                      `;
+
+                      // Tạo div tạm thời để chứa nội dung
+                      var container = document.createElement('div');
+                      container.innerHTML = htmlContent;
+                      document.body.appendChild(container);
+
+                      // Tạo modal xem trước
+                      var previewModal = `
+                          <div class="modal fade" id="pdfPreviewModal" tabindex="-1">
+                              <div class="modal-dialog modal-xl">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title">Xem trước PDF</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                      </div>
+                                      <div class="modal-body" style="height: 80vh;">
+                                          <div id="pdfPreview" style="height: 100%;"></div>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                          <button type="button" class="btn btn-primary" id="downloadPDF">Tải xuống</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      `;
+                      
+                      // Thêm modal vào body nếu chưa có
+                      if (!document.getElementById('pdfPreviewModal')) {
+                          document.body.insertAdjacentHTML('beforeend', previewModal);
+                      }
+
+                      // Cấu hình cho html2pdf
+                      var opt = {
+                          margin: [0, 0, 0, 0],
+                          filename: contest.ContestName + '.pdf',
+                          image: { type: 'jpeg', quality: 0.98 },
+                          html2canvas: { 
+                              scale: 2,
+                              useCORS: true,
+                              letterRendering: true
+                          },
+                          jsPDF: { 
+                              unit: 'mm', 
+                              format: 'a4', 
+                              orientation: 'portrait'
+                          }
+                      };
+
+                      // Tạo PDF và hiển thị trong modal
+                      var worker = html2pdf().set(opt).from(container);
+                      
+                      worker.outputPdf('datauristring').then(function(pdfAsString) {
+                          // Hiển thị PDF trong modal
+                          var modal = new bootstrap.Modal(document.getElementById('pdfPreviewModal'));
+                          var pdfPreview = document.getElementById('pdfPreview');
+                          pdfPreview.innerHTML = `<iframe src="${pdfAsString}" width="100%" height="100%" frameborder="0"></iframe>`;
+                          modal.show();
+
+                          // Xử lý sự kiện tải xuống
+                          document.getElementById('downloadPDF').onclick = function() {
+                              worker.save();
+                              modal.hide();
+                          };
+                      });
+
+                      // Xóa container sau khi modal đóng
+                      document.getElementById('pdfPreviewModal').addEventListener('hidden.bs.modal', function () {
+                          document.body.removeChild(container);
+                      });
+                  }
+              }
+          });
+      }
     </script>
     <?php
         include 'footer.php';

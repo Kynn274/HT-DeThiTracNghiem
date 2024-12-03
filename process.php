@@ -250,38 +250,53 @@ if(isset($_POST['action'])) {
         exit;
     }
     if($_POST['action'] == 'deleteQuestion'){
-        $questionID = $_POST['questionID'];
+        $questionID = intval($_POST['questionID']);
+        
+        // Xóa các answers liên quan
+        $sql = "DELETE FROM Answers WHERE QuestionID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $questionID);
+        $stmt->execute();
+        
+        // Xóa question
         $sql = "DELETE FROM Questions WHERE QuestionID = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $questionID);
+        
         if($stmt->execute()){
             echo json_encode([
                 'success' => true
             ]);
             exit;
         }
+        
         echo json_encode([
             'success' => false,
-            'message' => 'Could not delete question'
+            'message' => 'Could not delete question',
+            'error' => $conn->error
         ]);
         exit;
     }
     if($_POST['action'] == 'editQuestion'){
-        try {
-            // Bắt đầu transaction
-            $conn->begin_transaction();
+        
 
             // Lấy dữ liệu từ request
             $questionID = $_POST['questionID'];
             $questionDescription = $_POST['questionDescription'];
-            $level = $_POST['level'];
+            $level = intval($_POST['level']);
             $correctAnswer = $_POST['correctAnswer'];
             
-            // Cập nhật thông tin câu hỏi
-            $sql = "UPDATE Questions SET QuestionDescription = ?, Level = ? WHERE QuestionID = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sii", $questionDescription, $level, $questionID);
-            $stmt->execute();
+        // Cập nhật thông tin câu hỏi
+        $sql = "UPDATE Questions SET QuestionDescription = ?, Level = ? WHERE QuestionID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sii", $questionDescription, $level, $questionID);
+        if(!$stmt->execute()){
+            echo json_encode([
+                'success' => false,
+                'message' => 'Could not edit question'
+            ]);
+            exit;
+        }
 
             // Cập nhật các đáp án
             $answers = [
@@ -297,7 +312,13 @@ if(isset($_POST['action'])) {
             foreach($answers as $key => $answer) {
                 $isCorrect = ($key == $correctAnswer) ? 1 : 0;
                 $stmt->bind_param("sii", $answer['text'], $isCorrect, $answer['id']);
-                $stmt->execute();
+                if(!$stmt->execute()){
+                    echo json_encode([
+                        'success' => false,
+                        'message' => 'Could not edit question'
+                    ]);
+                    exit;
+                }
 
                 // Lưu ID của đáp án đúng
                 if($isCorrect) {
@@ -309,25 +330,19 @@ if(isset($_POST['action'])) {
             $sql = "UPDATE Questions SET QuestionAnswerID = ? WHERE QuestionID = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ii", $correctAnswerID, $questionID);
-            $stmt->execute();
+            if($stmt->execute()){
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Edit question'
+                ]);
+                exit;
+            }
 
-            // Commit transaction nếu mọi thứ OK
-            $conn->commit();
-            
-            echo json_encode([
-                'success' => true,
-                'message' => 'Edit question'
-            ]);
-            exit;
-        } catch(Exception $e) {
-            // Rollback nếu có lỗi
-            $conn->rollback();
             echo json_encode([
                 'success' => false,
-                'message' => 'Có lỗi xảy ra: ' . $e->getMessage()
+                'message' => 'Could not edit question'
             ]);
-            exit;
-        }
+        exit;
     }
     if($_POST['action'] == 'contestCreate'){
         $userID = $_SESSION['user_id'];
@@ -353,7 +368,6 @@ if(isset($_POST['action'])) {
         $stmt->bind_param("iisssssiiiiidisss", $userID, $questionBank, $contestName, $school, $subject, $createDate, $testDate, $duration, $totalQuestions, $easyQuestions, $mediumQuestions, $hardQuestions, $scorePerQuestion, $testTimes, $examMode, $password, $contestCode);
         if($stmt->execute()){
             $contestID = $stmt->insert_id;
-            $sql = "SELECT * FROM Questions WHERE QuestionBankID = ? AND Level = ? ORDER BY RAND() LIMIT ?";
             for($i = 1; $i <= 3; $i++){
                 $stmt = $conn->prepare($sql);
                 $limit = $i == 1 ? $easyQuestions : ($i == 2 ? $mediumQuestions : $hardQuestions);
@@ -374,6 +388,8 @@ if(isset($_POST['action'])) {
                         ]);
                         exit;
                     }
+                    $sql = "SELECT * FROM Questions WHERE QuestionBankID = ? AND Level = ? ORDER BY RAND() LIMIT ?";
+                    $stmt = $conn->prepare($sql);
                     $stmt->bind_param("iii", $questionBank, $i, $limit);
                     $stmt->execute();
                     $result = $stmt->get_result();
@@ -508,21 +524,53 @@ if(isset($_POST['action'])) {
         exit;
     }
     if($_POST['action'] == 'loadJoinedContest'){
-        $userID = $_POST['userID'];
-        $sql = "SELECT * FROM JoiningContests, Contests WHERE JoiningContests.UserID = ? AND JoiningContests.ContestID = Contests.ContestID ORDER BY Contests.TestDate DESC";
+        $userID = intval($_POST['userID']);
+        
+        // Kiểm tra userID
+        if(!$userID) {
+            echo json_encode([
+                'success' => false, 
+                'error' => 'Invalid userID',
+                'message' => 'UserID is required'
+            ]);
+            exit;
+        }
+
+        $sql = "SELECT jc.*, c.* 
+                FROM JoiningContests jc 
+                INNER JOIN Contests c ON jc.ContestID = c.ContestID 
+                WHERE jc.UserID = ? 
+                ORDER BY jc.CreateDate DESC";
+                
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $userID);
-        if($stmt->execute()){
-            $result = $stmt->get_result();
-            $contests = [];
-            while($row = $result->fetch_assoc()){
-                $contests[] = $row;
+        
+        try {
+            if($stmt->execute()){
+                $result = $stmt->get_result();
+                $contests = [];
+                while($row = $result->fetch_assoc()){
+                    $contests[] = $row;
+                }
+                echo json_encode([
+                    'success' => true, 
+                    'contests' => $contests,
+                    'userID' => $userID
+                ]);
+                exit;   
+            } else {
+                throw new Exception($conn->error);
             }
-            echo json_encode(['success' => true, 'contests' => $contests]);
-            exit;   
+        } catch(Exception $e) {
+            echo json_encode([
+                'success' => false, 
+                'error' => $e->getMessage(),
+                'message' => 'Could not load joined contests',
+                'userID' => $userID,
+                'sql' => $sql
+            ]);
+            exit;
         }
-        echo json_encode(['success' => false, 'error' => $conn->error]);
-        exit;
     }
     if($_POST['action'] == 'searchContest'){
         $contestCode = $_POST['contestCode'];
@@ -541,16 +589,60 @@ if(isset($_POST['action'])) {
     if($_POST['action'] == 'startExam'){
         $userID = $_POST['userID'];
         $contestID = $_POST['contestID'];
-        $createDate = date('Y-m-d');
-        $sql = "INSERT INTO JoiningContests (UserID, ContestID, CreateDate) VALUES (?, ?, ?)";
+        $sql = "SELECT * FROM JoiningContests WHERE UserID = ? AND ContestID = ? ORDER BY JoiningContestID DESC LIMIT 1";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iis", $userID, $contestID, $createDate);
+        $stmt->bind_param("ii", $userID, $contestID);
         if($stmt->execute()){
-            echo json_encode(['success' => true]);
+            $result = $stmt->get_result();
+            if($result->num_rows > 0){
+                $row = $result->fetch_assoc();
+                $joiningContestID = intval($row['JoiningContestID']);
+                $testTimes = intval($row['TestTimes']);
+                if($testTimes > 0){
+                    $testTimes--;
+                    $sql = "UPDATE JoiningContests SET TestTimes = ? WHERE JoiningContestID = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("ii", $testTimes, $joiningContestID);
+                    if($stmt->execute()){
+                        echo json_encode(['success' => true]);
+                    }else{
+                        echo json_encode(['success' => false, 'message' => 'Could not update test times']);
+                    }
+                    exit;
+                }else{
+                    echo json_encode(['success' => false, 'message' => 'You have reached the maximum number of attempts']);
+                    exit;
+                }
+            }else{
+                $sql = "SELECT * FROM Contests WHERE ContestID = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $contestID);
+                if($stmt->execute()){
+                    $result = $stmt->get_result();
+                    $row = $result->fetch_assoc();
+                    $testTimes = intval($row['TestTimes']);
+                    $sql = "INSERT INTO JoiningContests (UserID, ContestID, TestTimes, CreateDate) VALUES (?, ?, ?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("iiis", $userID, $contestID, $testTimes, $createDate);
+                    if($stmt->execute()){
+                        echo json_encode(['success' => true]);
+                        exit;
+                    }else{
+                        echo json_encode(['success' => false, 'error' => $conn->error]);
+                        exit;
+                    }
+                }else{
+                    echo json_encode(['success' => false, 'error' => $conn->error]);
+                    exit;
+                }
+            }else{
+                echo json_encode(['success' => false, 'error' => $conn->error]);
+                exit;
+            }
         }else{
             echo json_encode(['success' => false, 'error' => $conn->error]);
+            exit;
         }
-        exit;
     }
     if($_POST['action'] == 'getJoiningContestID'){
         $userID = intval($_POST['userID']);

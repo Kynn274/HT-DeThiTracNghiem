@@ -15,7 +15,11 @@
           'ly' => 'Vật lý',
           'hoa' => 'Hóa học',
           'sinh' => 'Sinh học',
-          'van' => 'Ngữ văn'
+          'van' => 'Ngữ văn',
+          'su' => 'Sử',
+          'dia' => 'Địa',
+          'gdcd' => 'GDCD',
+          'tin' => 'Tin học'
         ];
        
     ?>

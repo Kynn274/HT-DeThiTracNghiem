@@ -107,6 +107,7 @@
 			CorrectAnswer INT DEFAULT 0, -- Số câu đúng
 	        Score DECIMAL(5,2) DEFAULT 0, -- Điểm thi
 			CreateDate DATE, -- Ngày tham gia
+			TestTimes INT NOT NULL DEFAULT 0, -- Số lần thi
             FOREIGN KEY (UserID) REFERENCES Users(UserId) ON DELETE CASCADE,
             FOREIGN KEY (ContestID) REFERENCES Contests(ContestID) ON DELETE CASCADE
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",

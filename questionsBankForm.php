@@ -147,7 +147,11 @@
                             'hoa' => 'Hóa học',
                             'sinh' => 'Sinh học',
                             'van' => 'Ngữ văn',
-                            'anh' => 'Tiếng Anh'
+                            'anh' => 'Tiếng Anh',
+                            'su' => 'Sử',
+                            'dia' => 'Địa',
+                            'gdcd' => 'GDCD',
+                            'tin' => 'Tin học'
                         ];
                         
                         foreach($subjects as $key => $value) {

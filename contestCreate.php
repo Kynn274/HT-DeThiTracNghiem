@@ -170,6 +170,10 @@
                         <option value="sinh">Sinh học</option>
                         <option value="anh">Tiếng Anh</option>
                         <option value="van">Ngữ văn</option>
+                        <option value="su">Sử</option>
+                        <option value="dia">Địa</option>
+                        <option value="gdcd">GDCD</option>
+                        <option value="tin">Tin học</option>
                     </select>
                 </div>
                 <div class="form-group">

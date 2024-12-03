@@ -10,7 +10,11 @@
             'ly' => 'Vật lý',
             'hoa' => 'Hóa học',
             'sinh' => 'Sinh học',
-            'van' => 'Ngữ văn'
+            'van' => 'Ngữ văn',
+            'su' => 'Sử',
+            'dia' => 'Địa',
+            'gdcd' => 'GDCD',
+            'tin' => 'Tin học'
         ];
 
         if(isset($_GET['id'])){
@@ -75,13 +79,14 @@
                         contestID: contestID
                     },
                     success: function(response){
-                        console.log(response);
                         if(response.success){
                             window.location.href = 'ThamGiaThi.php?id=' + contestID;
+                        }else{
+                            alert(response.message);
                         }
                     },
                     error: function(response){
-                        console.log(response);
+                        console.log('Có lỗi xảy ra: ' + response.error);
                     }
                 });
             });

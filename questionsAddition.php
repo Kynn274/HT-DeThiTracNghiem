@@ -110,9 +110,81 @@
     }
 
     /* Ensure proper spacing */
-    .questionAddition table {
+    #questionsTable table tbody {
         margin-bottom: 0;
     }
+    
+    #questionsTable table tbody::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    #questionsTable table tbody::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    #questionsTable table tbody::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+
+    #questionsTable table tbody::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    /* Thêm các style mới cho table scroll */
+    #questionsTable {
+        max-height: 500px;
+        overflow: hidden;
+    }
+
+    #questionsTable table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    #questionsTable thead {
+        position: sticky;
+        top: 0;
+        background-color: #f8f9fa;
+        z-index: 2;
+    }
+
+    #questionsTable tbody {
+        display: block;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    #questionsTable thead tr,
+    #questionsTable tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    /* Điều chỉnh chiều rộng các cột */
+    #questionsTable th:nth-child(1),
+    #questionsTable td:nth-child(1) { width: 5%; }
+    #questionsTable th:nth-child(2),
+    #questionsTable td:nth-child(2) { width: 5%; }
+    #questionsTable th:nth-child(3),
+    #questionsTable td:nth-child(3) { width: 15%; }
+    #questionsTable th:nth-child(4),
+    #questionsTable td:nth-child(4) { width: 10%; }
+    #questionsTable th:nth-child(5),
+    #questionsTable td:nth-child(5) { width: 10%; }
+    #questionsTable th:nth-child(6),
+    #questionsTable td:nth-child(6) { width: 10%; }
+    #questionsTable th:nth-child(7),
+    #questionsTable td:nth-child(7) { width: 10%; }
+    #questionsTable th:nth-child(8),
+    #questionsTable td:nth-child(8) { width: 10%; }
+    #questionsTable th:nth-child(9),
+    #questionsTable td:nth-child(9) { width: 10%; }
+    #questionsTable th:nth-child(10),
+    #questionsTable td:nth-child(10) { width: 20%; }
+
 </style>
 
     <div class="hero overlay" style="height: 150px !important; max-height: 150px !important; min-height: 100px !important">
@@ -183,7 +255,8 @@
             <thead>
                 <tr>
                     <th scope="col" width="5%" class="text-center align-middle">#</th>
-                    <th scope="col" width="25%" class="text-center align-middle">Câu hỏi</th>
+                    <th scope="col" width="5%" class="text-center align-middle" style="display: none;">ID</th>
+                    <th scope="col" width="15%" class="text-center align-middle">Câu hỏi</th>
                     <th scope="col" width="10%" class="text-center align-middle">Độ khó</th>
                     <th scope="col" width="10%" class="text-center align-middle">A</th>
                     <th scope="col" width="10%" class="text-center align-middle">B</th>
@@ -248,10 +321,10 @@
                                 </td>
                                 <td class="text-center align-middle">
                                     <select class="form-select form-control" id="editCorrectAnswer" name="editCorrectAnswer" required>
-                                        <option value="<?php echo $question['answers'][0]['AnswerID']; ?>" <?php echo $question['answers'][0]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>A</option>
-                                        <option value="<?php echo $question['answers'][1]['AnswerID']; ?>" <?php echo $question['answers'][1]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>B</option>
-                                        <option value="<?php echo $question['answers'][2]['AnswerID']; ?>" <?php echo $question['answers'][2]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>C</option>
-                                        <option value="<?php echo $question['answers'][3]['AnswerID']; ?>" <?php echo $question['answers'][3]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>D</option>
+                                        <option value="A" data-question-id="<?php echo $question['answers'][0]['AnswerID']; ?>" <?php echo $question['answers'][0]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>A</option>
+                                        <option value="B" data-question-id="<?php echo $question['answers'][1]['AnswerID']; ?>" <?php echo $question['answers'][1]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>B</option>
+                                        <option value="C" data-question-id="<?php echo $question['answers'][2]['AnswerID']; ?>" <?php echo $question['answers'][2]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>C</option>
+                                        <option value="D" data-question-id="<?php echo $question['answers'][3]['AnswerID']; ?>" <?php echo $question['answers'][3]['AnswerID'] == $question['QuestionAnswerID'] ? 'selected' : ''; ?>>D</option>
                                     </select>
                                 </td>
                                 <td class="text-center align-middle">
