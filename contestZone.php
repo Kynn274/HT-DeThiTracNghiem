@@ -4,7 +4,6 @@
 <body>
     <?php
         include 'header.php';
-        echo $_SESSION['user_id'];
     ?>
     <script>
         const userID = '<?php $userID = $_SESSION['user_id']; echo $userID; ?>';

@@ -1,101 +1,111 @@
-(function(){
-	'use strict'
+(function($) {
+	'use strict';
 
-	var siteMenuClone = function() {
-		var jsCloneNavs = document.querySelectorAll('.js-clone-nav>li')
-		var siteMobileMenuBody = document.querySelector('.site-mobile-menu-body');
-		var newNavWrap = document.createElement('ul');
-		newNavWrap.classList.add('site-nav-wrap', 'mx-auto', 'fw-bold');
-		// Clone menu
-		jsCloneNavs.forEach(nav => {
-			var navCloned = nav.cloneNode(true);
-			newNavWrap.appendChild(navCloned);
+	function siteMenuClone() {
+		// Clone menu chính vào mobile menu
+		const $mobileMenu = $('.site-mobile-menu-body');
+		const $mainNav = $('.site-navigation').find('.js-clone-nav');
+		console.log($mainNav);
+		if (!$mobileMenu.length || !$mainNav.length) return;
+
+		// Tạo mobile nav
+		const $mobileNav = $('<ul>').addClass('site-nav-wrap mx-auto fw-bold');
+		
+		// Clone menu items
+		$mainNav.children('li').each(function() {
+			$mobileNav.append($(this).clone());
 		});
-		var separator = document.createElement('hr');
-			separator.style.margin = '20px 0';
-			separator.style.borderColor = 'rgba(255,255,255,0.1)';
-			newNavWrap.appendChild(separator);
 
-		var CloneButtons = document.createElement('li');
-			CloneButtons.classList.add('mobile-auth-buttons');
+		// Thêm separator
+		$('<hr>').css({
+			margin: '20px 0',
+			borderColor: 'rgba(255,255,255,0.1)'
+		}).appendTo($mobileNav);
 
-		var loginBtn = document.querySelector('.auth-btn.login-btn');
-		if(loginBtn){
-			loginBtnClone = loginBtn.cloneNode(true);
-			CloneButtons.appendChild(loginBtn);
-			var registerBtn = document.querySelector('.auth-btn.register-btn').cloneNode(true);
-			CloneButtons.appendChild(registerBtn);
-		}else{
-			var userInfoBtn = document.querySelector('.auth-btn.userInfo-btn').cloneNode(true);
-			CloneButtons.appendChild(userInfoBtn);
-			var logoutBtn = document.querySelector('.auth-btn.logout-btn').cloneNode(true);
-			CloneButtons.appendChild(logoutBtn);
+		// Thêm auth buttons
+		const $authButtons = $('<li>').addClass('mobile-auth-buttons');
+		
+		// Kiểm tra trạng thái đăng nhập
+		const $loginBtn = $('.auth-btn.login-btn');
+		if ($loginBtn.length) {
+			// Chưa đăng nhập
+			const $registerBtn = $('.auth-btn.register-btn');
+			$authButtons.append(
+				$loginBtn.clone(),
+				$registerBtn.clone()
+			);
+		} else {
+			// Đã đăng nhập
+			const $userInfoBtn = $('.auth-btn.userInfo-btn');
+			const $logoutBtn = $('.auth-btn.logout-btn');
+			$authButtons.append(
+				$userInfoBtn.clone(),
+				$logoutBtn.clone()
+			);
 		}
-		// var loginBtn = document.querySelector('.auth-btn.login-btn').cloneNode(true);
-		// CloneButtons.appendChild(loginBtn);
-		// var registerBtn = document.querySelector('.auth-btn.register-btn').cloneNode(true);
-		// CloneButtons.appendChild(registerBtn);
-		console.log(newNavWrap);
-		newNavWrap.appendChild(CloneButtons);
-		siteMobileMenuBody.appendChild(newNavWrap);
 
-		setTimeout(function(){
-			var hasChildrens = document.querySelector('.site-mobile-menu').querySelectorAll(' .has-children');
+		// Append vào mobile menu
+		$mobileNav.append($authButtons);
+		$mobileMenu.append($mobileNav);
 
-			var counter = 0;
-			hasChildrens.forEach( hasChild => {
-				var refEl = hasChild.querySelector('a');
-				var newElSpan = document.createElement('span');
-				newElSpan.setAttribute('class', 'arrow-collapse collapsed');
-				
-				hasChild.insertBefore(newElSpan, refEl);
+		// Setup dropdowns
+		setupDropdowns();
+		
+		// Setup menu toggle
+		setupMenuToggle();
+	}
 
-				var arrowCollapse = hasChild.querySelector('.arrow-collapse');
-				arrowCollapse.setAttribute('data-bs-toggle', 'collapse');
-				arrowCollapse.setAttribute('data-bs-target', '#collapseItem' + counter);
+	function setupDropdowns() {
+		setTimeout(function() {
+			$('.site-mobile-menu .has-children').each(function(index) {
+				const $menu = $(this);
+				const $link = $menu.find('> a');
+				const $dropdown = $menu.find('.dropdown');
 
-				var dropdown = hasChild.querySelector('.dropdown');
-				dropdown.setAttribute('class', 'collapse');
-				dropdown.setAttribute('id', 'collapseItem' + counter);
+				// Tạo toggle button
+				const $toggleBtn = $('<span>')
+					.addClass('arrow-collapse collapsed')
+					.attr({
+						'data-bs-toggle': 'collapse',
+						'data-bs-target': '#collapseItem' + index
+					});
 
-				counter++;
+				// Setup dropdown
+				$dropdown
+					.addClass('collapse')
+					.attr('id', 'collapseItem' + index);
+
+				// Insert toggle button
+				$toggleBtn.insertBefore($link);
 			});
 		}, 1000);
+	}
 
+	function setupMenuToggle() {
+		const $toggleBtns = $('.js-menu-toggle');
+		const $mobileMenu = $('.site-mobile-menu');
 
-		var menuToggle = document.querySelectorAll(".js-menu-toggle");
-		var mTog;
-		menuToggle.forEach(mtoggle => {
-			mTog = mtoggle;
-			mtoggle.addEventListener("click", (e) => {
-				if ( document.body.classList.contains('offcanvas-menu') ) {
-					document.body.classList.remove('offcanvas-menu');
-					mtoggle.classList.remove('active');
-					mTog.classList.remove('active');
-				} else {
-					document.body.classList.add('offcanvas-menu');
-					mtoggle.classList.add('active');
-					mTog.classList.add('active');
-				}
-			});
-		})
+		// Toggle menu khi click button
+		$toggleBtns.on('click', function() {
+			$('body').toggleClass('offcanvas-menu');
+			$toggleBtns.toggleClass('active');
+		});
 
-		var specifiedElement = document.querySelector(".site-mobile-menu");
-		var mt, mtoggleTemp;
-		document.addEventListener('click', function(event) {
-			var isClickInside = specifiedElement.contains(event.target);
-			menuToggle.forEach(mtoggle => {
-				mtoggleTemp = mtoggle
-				mt = mtoggle.contains(event.target);
-			})
+		// Đóng menu khi click outside
+		$(document).on('click', function(e) {
+			const isClickInside = $mobileMenu.has(e.target).length > 0;
+			const isClickOnToggle = $toggleBtns.has(e.target).length > 0;
 
-			if (!isClickInside && !mt) {
-				if ( document.body.classList.contains('offcanvas-menu') ) {
-					document.body.classList.remove('offcanvas-menu');
-					mtoggleTemp.classList.remove('active');
-				}
+			if (!isClickInside && !isClickOnToggle && $('body').hasClass('offcanvas-menu')) {
+				$('body').removeClass('offcanvas-menu');
+				$toggleBtns.removeClass('active');
 			}
 		});
-	}; 
-	siteMenuClone();
-})()
+	}
+
+	// Initialize khi document ready
+	$(function() {
+		siteMenuClone();
+	});
+
+})(jQuery);

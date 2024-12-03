@@ -523,8 +523,11 @@ if(isset($_POST['action'])) {
         }
         exit;
     }
-    if($_POST['action'] == 'loadJoinedContest'){
+    if($_POST['action'] == 'loadJoinedContest') {
         $userID = intval($_POST['userID']);
+        $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+        $limit = 6; // Số cuộc thi mỗi trang
+        $offset = ($page - 1) * $limit;
         
         // Kiểm tra userID
         if(!$userID) {
@@ -536,14 +539,25 @@ if(isset($_POST['action'])) {
             exit;
         }
 
+        // Đếm tổng số cuộc thi
+        $countSql = "SELECT COUNT(*) as total FROM JoiningContests WHERE UserID = ?";
+        $countStmt = $conn->prepare($countSql);
+        $countStmt->bind_param("i", $userID);
+        $countStmt->execute();
+        $totalResult = $countStmt->get_result()->fetch_assoc();
+        $total = $totalResult['total'];
+        $totalPages = ceil($total / $limit);
+
+        // Lấy danh sách cuộc thi theo trang
         $sql = "SELECT jc.*, c.* 
                 FROM JoiningContests jc 
                 INNER JOIN Contests c ON jc.ContestID = c.ContestID 
                 WHERE jc.UserID = ? 
-                ORDER BY jc.CreateDate DESC";
+                ORDER BY jc.CreateDate DESC
+                LIMIT ? OFFSET ?";
                 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $userID);
+        $stmt->bind_param("iii", $userID, $limit, $offset);
         
         try {
             if($stmt->execute()){
@@ -555,6 +569,8 @@ if(isset($_POST['action'])) {
                 echo json_encode([
                     'success' => true, 
                     'contests' => $contests,
+                    'totalPages' => $totalPages,
+                    'currentPage' => $page,
                     'userID' => $userID
                 ]);
                 exit;   
@@ -589,15 +605,19 @@ if(isset($_POST['action'])) {
     if($_POST['action'] == 'startExam'){
         $userID = $_POST['userID'];
         $contestID = $_POST['contestID'];
+        $createDate = date('Y-m-d');
+
         $sql = "SELECT * FROM JoiningContests WHERE UserID = ? AND ContestID = ? ORDER BY JoiningContestID DESC LIMIT 1";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ii", $userID, $contestID);
+        
         if($stmt->execute()){
             $result = $stmt->get_result();
             if($result->num_rows > 0){
                 $row = $result->fetch_assoc();
                 $joiningContestID = intval($row['JoiningContestID']);
                 $testTimes = intval($row['TestTimes']);
+                
                 if($testTimes > 0){
                     $testTimes--;
                     $sql = "UPDATE JoiningContests SET TestTimes = ? WHERE JoiningContestID = ?";
@@ -614,35 +634,40 @@ if(isset($_POST['action'])) {
                     exit;
                 }
             }else{
+                // Nếu chưa có bản ghi JoiningContests
                 $sql = "SELECT * FROM Contests WHERE ContestID = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("i", $contestID);
+                
                 if($stmt->execute()){
                     $result = $stmt->get_result();
                     $row = $result->fetch_assoc();
-                    $testTimes = intval($row['TestTimes']);
+                    $testTimes = intval($row['TestTimes']) - 1;
+
                     $sql = "INSERT INTO JoiningContests (UserID, ContestID, TestTimes, CreateDate) VALUES (?, ?, ?, ?)";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("iiis", $userID, $contestID, $testTimes, $createDate);
+                    
                     if($stmt->execute()){
                         echo json_encode(['success' => true]);
-                        exit;
                     }else{
-                        echo json_encode(['success' => false, 'error' => $conn->error]);
-                        exit;
+                        echo json_encode([
+                            'success' => false, 
+                            'error' => $conn->error,
+                            'message' => 'Could not create joining contest'
+                        ]);
                     }
-                }else{
-                    echo json_encode(['success' => false, 'error' => $conn->error]);
                     exit;
                 }
-            }else{
-                echo json_encode(['success' => false, 'error' => $conn->error]);
-                exit;
             }
-        }else{
-            echo json_encode(['success' => false, 'error' => $conn->error]);
-            exit;
         }
+        
+        echo json_encode([
+            'success' => false, 
+            'error' => $conn->error,
+            'message' => 'Could not check joining contest'
+        ]);
+        exit;
     }
     if($_POST['action'] == 'getJoiningContestID'){
         $userID = intval($_POST['userID']);
@@ -712,7 +737,175 @@ if(isset($_POST['action'])) {
         }
         exit;
     }
-
+    if($_POST['action'] == 'moreTestTimes'){
+        $userID = intval($_POST['userID']);
+        $contestID = intval($_POST['contestID']);
+        $sql = "UPDATE JoiningContests SET TestTimes = TestTimes + 1 WHERE UserID = ? AND ContestID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $userID, $contestID);
+        if($stmt->execute()){
+            echo json_encode(['success' => true]);
+        }else{
+            echo json_encode(['success' => false, 'error' => $conn->error]);
+        }
+        exit;
+    }
+    if($_POST['action'] == 'exportContestResult') {
+        $contestID = $_POST['contestID'];
+        
+        // Lấy danh sách học sinh và thông tin cơ bản
+        $sql = "SELECT 
+                ud.UserID,
+                ud.FullName,
+                jc.JoiningContestID,
+                jc.CreateDate as LastAttemptDate,
+                jc.CorrectAnswer,
+                c.TotalQuestions,
+                c.ContestName
+                FROM JoiningContests jc
+                INNER JOIN UserDetails ud ON jc.UserID = ud.UserID
+                INNER JOIN Contests c ON jc.ContestID = c.ContestID
+                WHERE jc.ContestID = ?
+                GROUP BY ud.UserID";
+                
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $contestID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        // Tạo file CSV
+        $filename = "KetQua_" . date('Y-m-d_H-i-s') . ".csv";
+        
+        // Headers để download file
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        
+        // Tạo file handle
+        $output = fopen('php://output', 'w');
+        
+        // Thêm BOM để Excel nhận diện UTF-8
+        fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
+        
+        $data = array();
+        while($row = $result->fetch_assoc()) {
+            // Lấy chi tiết câu hỏi và đáp án của mỗi học sinh
+            $sql2 = "SELECT 
+                    q.QuestionDescription,
+                    jca.IsCorrect
+                    FROM JoiningContestAnswers jca
+                    INNER JOIN Questions q ON jca.QuestionID = q.QuestionID
+                    WHERE jca.JoiningContestID = ?
+                    ORDER BY q.QuestionID";
+            
+            $stmt2 = $conn->prepare($sql2);
+            $stmt2->bind_param("i", $row['JoiningContestID']);
+            $stmt2->execute();
+            $result2 = $stmt2->get_result();
+            
+            $questionDetails = array();
+            while($detail = $result2->fetch_assoc()) {
+                $questionDetails[] = $detail['IsCorrect'] == 1 ? 'Đúng' : 'Sai';
+            }
+            
+            $row['QuestionResults'] = $questionDetails;
+            $data[] = $row;
+        }
+        
+        // Tạo header cho file CSV
+        $header = ['STT', 'Họ và tên', 'Ngày thi', 'Kết quả chung', 'Điểm'];
+        
+        // Thêm các cột câu hỏi vào header
+        if(count($data) > 0 && isset($data[0]['QuestionResults'])) {
+            for($i = 0; $i < count($data[0]['QuestionResults']); $i++) {
+                $header[] = 'Câu ' . ($i + 1);
+            }
+        }
+        
+        // Ghi header vào file
+        fputcsv($output, $header);
+        
+        // Ghi dữ liệu
+        $stt = 1;
+        foreach($data as $row) {
+            $score = ($row['CorrectAnswer'] / $row['TotalQuestions']) * 100;
+            $rowData = [
+                $stt,
+                $row['FullName'],
+                $row['LastAttemptDate'],
+                $row['CorrectAnswer'] . ' / ' . $row['TotalQuestions'] . ' câu',
+                number_format($score, 2)
+            ];
+            
+            // Thêm kết quả từng câu
+            foreach($row['QuestionResults'] as $result) {
+                $rowData[] = $result;
+            }
+            
+            fputcsv($output, $rowData);
+            $stt++;
+        }
+        $exportDate = date('Y-m-d');
+        fputcsv($output, ['Ngày xuất file: ' . $exportDate]);
+        fclose($output);
+        exit();
+    }
+    if($_POST['action'] == 'previewContestResult') {
+        $contestID = $_POST['contestID'];
+        
+        // Lấy danh sách học sinh và thông tin cơ bản
+        $sql = "SELECT 
+                ud.UserID,
+                ud.FullName,
+                jc.JoiningContestID,
+                jc.CreateDate as LastAttemptDate,
+                jc.CorrectAnswer,
+                c.TotalQuestions,
+                c.ContestName
+                FROM JoiningContests jc
+                INNER JOIN UserDetails ud ON jc.UserID = ud.UserID
+                INNER JOIN Contests c ON jc.ContestID = c.ContestID
+                WHERE jc.ContestID = ?
+                GROUP BY ud.UserID";
+                
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $contestID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $data = array();
+        while($row = $result->fetch_assoc()) {
+            // Lấy chi tiết câu hỏi và đáp án của mỗi học sinh
+            $sql2 = "SELECT 
+                    q.QuestionDescription,
+                    jca.IsCorrect,
+                    a.AnswerDescription as CorrectAnswerText,
+                    (SELECT AnswerDescription FROM Answers WHERE AnswerID = jca.SelectedAnswer) as SelectedAnswerText
+                    FROM JoiningContestAnswers jca
+                    INNER JOIN Questions q ON jca.QuestionID = q.QuestionID
+                    INNER JOIN Answers a ON q.QuestionAnswerID = a.AnswerID
+                    WHERE jca.JoiningContestID = ?
+                    ORDER BY q.QuestionID";
+            
+            $stmt2 = $conn->prepare($sql2);
+            $stmt2->bind_param("i", $row['JoiningContestID']);
+            $stmt2->execute();
+            $result2 = $stmt2->get_result();
+            
+            $questionDetails = array();
+            while($detail = $result2->fetch_assoc()) {
+                $questionDetails[] = $detail;
+            }
+            
+            $row['QuestionAndAnswer'] = $questionDetails;
+            $data[] = $row;
+        }
+        
+        echo json_encode([
+            'success' => true,
+            'data' => $data
+        ]);
+        exit();
+    }
 }
 if(isset($_GET['action'])){
     if($_GET['action'] == 'requestAddBank'){

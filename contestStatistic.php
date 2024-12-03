@@ -172,23 +172,174 @@
         </div>
         
     </div>
-    <!-- Thông tin cuộc thi -->
-    <div class="mb-4 container position-fixed top-0 left-0 w-100 h-100" style="z-index: 1000; max-width: 100vw !important; max-height: 100vh !important;" id="contestInfo">
-            <div class="card position-absolute top-50 start-50 translate-middle" style="width: 500px; background-color: #fdfdfd; border-radius: 10px;">
-                <div class="card-header fs-4 fw-bold">
-                    Thông tin cuộc thi
+    <!-- Modal Preview -->
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="previewModalLabel">Xem trước kết quả</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="card-body" id="contestInfoBody">
-                    <h5 class="card-title fs-5">Special title treatment</h5>
-                    <p class="card-text fs-6">With supporting text below as a natural lead-in to additional content.</p>
-                    <button class="btn btn-primary" id="closeContestInfo">Đóng</button>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <!-- Header sẽ được thêm bằng JavaScript -->
+                            </thead>
+                            <tbody id="previewData">
+                                <!-- Data sẽ được thêm bằng JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="downloadBtn">Tải xuống</button>
                 </div>
             </div>
         </div>
-    <script src="./js/contest.js"></script>
+    </div>
+    <style>
+    .modal-dialog {
+        max-width: 95%;
+    }
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        padding: 0.5rem;
+    }
+    .text-success {
+        font-weight: bold;
+    }
+    .text-danger {
+        font-weight: bold;
+    }
+    </style>
+    <!-- <script src="./js/contest.js"></script> -->
+    <script>
+      const contestID = <?php echo $contestID; ?>;
+      $('.activateUser-btn').on('click', function(){
+        const userID = $(this).data('user-id');
+        $.ajax({
+          url: 'process.php',
+          method: 'POST',
+          data: {
+            userID: userID, 
+            contestID: contestID, 
+            action: 'moreTestTimes'
+          },
+          success: function(response){
+            alert('Kích hoạt thành công');
+          },
+          error: function(xhr, status, error){
+            alert('Kích hoạt thất bại');
+          }
+        });
+      });
+
+      $('#exportResult').on('click', function(){
+        $.ajax({
+            url: 'process.php',
+            method: 'POST',
+            data: {
+                action: 'previewContestResult',
+                contestID: contestID
+            },
+            success: function(response) {
+                console.log(response);
+                if(response.success) {
+                    let html = '';
+                    // Tạo header với các câu hỏi
+                    let headerHtml = `
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Ngày thi</th>
+                            <th>Kết quả chung</th>
+                            <th>Điểm</th>
+                    `;
+                    
+                    // Thêm các cột câu hỏi vào header
+                    if(response.data[0] && response.data[0].QuestionAndAnswer) {
+                        response.data[0].QuestionAndAnswer.forEach((qa, idx) => {
+                            headerHtml += `<th>Câu ${idx + 1}</th>`;
+                        });
+                    }
+                    headerHtml += '</tr>';
+                    
+                    // Thêm dữ liệu học sinh và kết quả
+                    response.data.forEach((row, index) => {
+                        const score = (row.CorrectAnswer / row.TotalQuestions) * 100;
+                        let rowClass = '';
+                        if(score >= 80) rowClass = 'table-success';
+                        else if(score >= 50) rowClass = 'table-warning';
+                        else rowClass = 'table-danger';
+                        
+                        html += `
+                            <tr class="${rowClass}">
+                                <td>${index + 1}</td>
+                                <td>${row.FullName}</td>
+                                <td>${row.LastAttemptDate}</td>
+                                <td>${row.CorrectAnswer} / ${row.TotalQuestions} câu</td>
+                                <td>${score.toFixed(2)}</td>
+                        `;
+                        
+                        // Thêm kết quả đúng/sai cho từng câu
+                        row.QuestionAndAnswer.forEach(qa => {
+                            html += `<td>${qa.IsCorrect == 1 ? 
+                                '<span class="text-success">Đúng</span>' : 
+                                '<span class="text-danger">Sai</span>'}</td>`;
+                        });
+                        
+                        html += '</tr>';
+                    });
+                    
+                    // Cập nhật bảng
+                    $('#previewModal thead').html(headerHtml);
+                    $('#previewData').html(html);
+                    $('#previewModal').modal('show');
+                } else {
+                    alert('Có lỗi xảy ra khi tải dữ liệu');
+                }
+            },
+            error: function() {
+                alert('Có lỗi xảy ra khi tải dữ liệu');
+            }
+        });
+      });
+
+      $('#downloadBtn').on('click', function(){
+        // Tạo form ẩn để submit
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'process.php';
+        
+        // Thêm các input hidden
+        const actionInput = document.createElement('input');
+        actionInput.type = 'hidden';
+        actionInput.name = 'action';
+        actionInput.value = 'exportContestResult';
+        
+        const contestInput = document.createElement('input');
+        contestInput.type = 'hidden';
+        contestInput.name = 'contestID';
+        contestInput.value = contestID;
+        
+        form.appendChild(actionInput);
+        form.appendChild(contestInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+        
+        $('#previewModal').modal('hide');
+      });
+    </script>
     <?php
         include 'footer.php';
         include 'javascript.php';
     ?>
+    
 </body>
 </html>

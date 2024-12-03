@@ -15,6 +15,14 @@
 	}
 ?>
 
+<style>
+@media (max-width: 992px) {
+    #logo-text {
+        display: none !important;
+    }
+}
+</style>
+
 <div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
 			<div class="site-mobile-menu-close">
@@ -31,31 +39,33 @@
 				<div class="site-navigation">
 					<div class="row g-0 align-items-center">
 						<div class="col-4 logo">
-							<img src="images/logo.png">
-							<a href="index.php" class="logo m-0 float-start"><span class="text-primary">MindBridge <br> Institute</span></a>
+							<a href="index.php"><img src="images/logo.png" alt="logo"></a>
+							<a href="index.php" class="logo m-0 float-start" id="logo-text"><span class="text-primary">MindBridge <br> Institute</span></a>
 						</div>
 						<div class="col-4 text-center">
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto fw-bold">
 								<li class="active"><a href="index.php">TRANG CHỦ</a></li>
-								<li class="has-children">
-									<a href="#">CHẾ ĐỘ</a>
-									<ul class="dropdown">
-										<?php if($is_logged_in): 
-											if($user_type == 0 && $user_type != 2): ?>
-												<li class="fw-normal" style="width:fit-content;"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
-											<?php endif; ?>
-											<?php if($user_type == 2 || $user_type == 0): ?>
-												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'contest.php' : 'DangNhap.php' ?>">Tạo cuộc thi</a></li>
-												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'questionsBank.php' : 'DangNhap.php' ?>">Quản lý ngân hàng câu hỏi</a></li>
-												<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'test.php' : 'DangNhap.php' ?>">Tạo đề thi</a></li>
-											<?php endif; ?>
-										<?php endif; ?>
-										<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'LichSuCuocThi.php' : 'DangNhap.php' ?>">Lịch sử cuộc thi</a></li>
-										<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'contestZone.php' : 'DangNhap.php' ?>">Tham gian cuộc thi</a></li>
-									</ul>
-								</li>
-								<li><a href="LienHe.php">LIÊN HỆ</a></li>
-							
+								<li><a href="<?php echo $is_logged_in? 'contestZone.php' : 'DangNhap.php' ?>">CUỘC THI</a></li>
+								<?php if($is_logged_in): 
+									if($user_type == 0 || $user_type == 2): ?>
+										<li class="has-children">
+											<a href="#">CHẾ ĐỘ</a>
+											<ul class="dropdown">
+												<?php if($is_logged_in): 
+													if($user_type == 0 && $user_type != 2): ?>
+														<li class="fw-normal" style="width:fit-content;"><a href="QuanLyNguoiDung.php">Quản lý người dùng</a></li>
+													<?php endif; ?>
+													<?php if($user_type == 2 || $user_type == 0): ?>
+														<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'contest.php' : 'DangNhap.php' ?>">Tạo cuộc thi</a></li>
+														<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'questionsBank.php' : 'DangNhap.php' ?>">Quản lý ngân hàng câu hỏi</a></li>
+														<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'test.php' : 'DangNhap.php' ?>">Tạo đề thi</a></li>
+													<?php endif; ?>
+												<?php endif; ?>
+											</ul>
+										</li>
+									<?php endif; ?>
+								<?php endif; ?>
+							<li><a href="LienHe.php">LIÊN HỆ</a></li>
 						</div>
 						<?php if(!$is_logged_in): ?>
 						<div class="col-4 text-end">
