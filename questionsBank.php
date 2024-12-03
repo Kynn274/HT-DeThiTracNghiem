@@ -241,14 +241,14 @@
                               <td scope="col"><?php echo $questionBank['TotalNumber']; ?></td>
                               <td scope="col">
                                 <div class="action-buttons">
-                                  <button class="btn btn-success addQuestion-btn">
-                                    <i class="bi bi-plus"></i><p>Thêm câu hỏi</p>
+                                  <button class="btn btn-success addQuestion-btn align-middle">
+                                    <i class="bi bi-plus"></i><p class="align-middle m-0">Thêm câu hỏi</p>
                                   </button>
-                                  <button class="btn btn-primary editQuestionsBank-btn">
-                                    <i class="bi bi-pen"></i><p>Sửa</p>
+                                  <button class="btn btn-primary editQuestionsBank-btn align-middle">
+                                    <i class="bi bi-pen"></i><p class="align-middle m-0">Sửa</p>
                                   </button>
-                                  <button class="btn btn-danger deleteQuestionsBank-btn">
-                                    <i class="bi bi-trash"></i><p>Xóa</p>
+                                  <button class="btn btn-danger deleteQuestionsBank-btn align-middle">
+                                    <i class="bi bi-trash"></i><p class="align-middle m-0">Xóa</p>
                                   </button>
                                 </div>
                               </td>

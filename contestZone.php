@@ -256,6 +256,7 @@
         .card-body {
             padding: 1.5rem;
         }
+
     }
 
     .hero.overlay {

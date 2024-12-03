@@ -20,102 +20,238 @@
         $contestStatistic = $stmt->get_result();
     ?>
     <style>
-    input {
-      border: none;
-      background-color: transparent;
-      width: fit-content;
-      max-width: 100px;
+    :root {
+        --primary-color: #4154f1;
+        --secondary-color: #2c3cdd;
+        --text-color: #1e293b;
+        --border-color: #e9ecef;
     }
-    .btn{
-      padding: 10px 15px;
-      height: 100%;
+
+    /* Main Content Section */
+    .section {
+        padding: 40px 0;
+        background: linear-gradient(135deg, #f6f9ff 0%, #f1f4ff 100%);
     }
-    thead{
-      background-color: #f8f9fa;
-      text-align: center;
-    }
-    caption{
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    td, th{
-      vertical-align: middle;
-    }
-    tbody button i{
-      font-size: 1rem;
-      margin-right: 5px;
-    }
-    tbody button p{
-      display: inline;
-    }
-    tbody button{
-      margin: 5px;
-    }
-    
-    @media (max-width: 1200px) {
-      tbody button i{
-        font-size: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-      }
-      tbody button p{
-        display: none;
-      }
-    }
-    
+
+    /* Table Container */
     .container.article {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         max-height: 600px;
         overflow-y: auto;
         margin: 20px auto;
-        border-radius: 8px;
-        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     }
 
-    /* Make the header sticky while scrolling */
+    /* Table Styling */
+    .table {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        margin-bottom: 0;
+    }
+
+    .table thead {
+        background: linear-gradient(135deg, #4154f1, #2c3cdd);
+        color: white;
+    }
+
     .table thead th {
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        padding: 15px;
+        border: none;
+        text-align: center;
         position: sticky;
         top: 0;
-        background-color: #f8f9fa;
         z-index: 1;
     }
-    td, th{
-      text-align: center;
+
+    .table tbody tr {
+        transition: all 0.3s ease;
     }
-    /* Custom scrollbar styling */
+
+    .table tbody tr:hover {
+        background-color: #f8f9ff;
+        transform: scale(1.01);
+    }
+
+    .table tbody td {
+        padding: 12px 15px;
+        vertical-align: middle;
+        border-bottom: 1px solid #edf2f9;
+        text-align: center;
+    }
+
+    .table caption {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .action-buttons .btn {
+        flex: 1;
+        min-width: 120px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 8px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .action-buttons .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(65, 84, 241, 0.2);
+    }
+
+    .action-buttons .btn i {
+        font-size: 1.1rem;
+    }
+
+    /* Export Section */
+    .mb-4.container {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .mb-4.container h4 {
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    #exportResult {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    #exportResult:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(65, 84, 241, 0.2);
+    }
+
+    /* Modal Styling */
+    .modal-content {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        border: none;
+        padding: 15px 25px;
+    }
+
+    .modal-body {
+        padding: 25px;
+    }
+
+    .modal-footer {
+        border: none;
+        padding: 15px 25px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border: none;
+    }
+
+    /* Custom Scrollbar */
     .container.article::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
     }
 
     .container.article::-webkit-scrollbar-track {
         background: #f1f1f1;
-        border-radius: 4px;
+        border-radius: 10px;
     }
 
     .container.article::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 4px;
+        background: var(--primary-color);
+        border-radius: 10px;
     }
 
     .container.article::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: var(--secondary-color);
     }
 
-    /* Ensure the table caption stays above the scrollable area */
-    .table caption {
-        position: sticky;
-        top: 0;
-        background-color: white;
-        z-index: 2;
-        padding: 10px 0;
+    /* Hero Section */
+    .hero.overlay {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     }
 
-    /* Ensure proper spacing */
-    .table {
-        margin-bottom: 0;
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        tbody button i {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        tbody button p {
+            display: none;
+        }
+
+        .action-buttons .btn {
+            min-width: auto;
+            padding: 8px;
+        }
     }
-  </style>
+
+    /* Preview Table */
+    .table-bordered {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .table-success {
+        background-color: rgba(16, 185, 129, 0.1) !important;
+    }
+
+    .table-warning {
+        background-color: rgba(245, 158, 11, 0.1) !important;
+    }
+
+    .table-danger {
+        background-color: rgba(239, 68, 68, 0.1) !important;
+    }
+
+    .text-success {
+        color: #10b981 !important;
+    }
+
+    .text-danger {
+        color: #ef4444 !important;
+    }
+    </style>
     <!-- Add content here -->
     <div class="hero overlay" style="height: 150px !important; max-height: 150px !important; min-height: 100px !important">
     </div>
@@ -141,7 +277,7 @@
                         $i = 1;
                         while($contest = $contestStatistic->fetch_assoc()): ?>
                             <tr>
-                              <th scope="col" style="text-align: center;"><?php echo $i++; ?></th>
+                              <th scope="col align-middle" style="text-align: center;"><?php echo $i++; ?></th>
                               <td scope="col" style="display: none;"><?php echo $contest['UserID']; ?></td>
                               <td scope="col"><?php echo $contest['FullName']; ?></td>
                               <td scope="col"><?php echo $contest['CreateDate']; ?></td>
@@ -151,7 +287,7 @@
                                 <div class="row d-flex justify-content-center flex-row">
                                 </div>
                                 <div class="row d-flex justify-content-center flex-row">
-                                    <button class="btn btn-info activateUser-btn col-5" data-user-id="<?php echo $contest['UserID']; ?>"><i class="bi bi-key"></i><p>Kích hoạt</p></button>
+                                    <button class="btn btn-info activateUser-btn col-5 align-middle" data-user-id="<?php echo $contest['UserID']; ?>"><i class="bi bi-key"></i><p class="align-middle m-0">Kích hoạt</p></button>
                                 </div>
                               </td>
                             </tr>

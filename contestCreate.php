@@ -203,6 +203,50 @@
         #content .container::-webkit-scrollbar-thumb:hover {
             background: var(--secondary-color);
         }
+
+        /* Hero Section */
+        .hero.inner-page, .hero.inner-page > .container > .row{
+            min-height: 300px; 
+            padding-top: 64px;
+        }
+        @media (max-width: 992px) {
+            .hero.inner-page > .container > .row{
+                min-height: 200px;
+            }
+        }
+
+        .hero.overlay {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .hero .heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Form Title */
+        h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
     </style>
 	<div class="hero overlay inner-page">
 		<img src="images/blob.svg" alt="" class="img-fluid blob">
