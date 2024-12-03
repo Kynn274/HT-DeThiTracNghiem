@@ -183,6 +183,174 @@
     .table {
         margin-bottom: 0;
     }
+
+    /* Style mới cho bảng */
+    .table {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    .table thead {
+        background: linear-gradient(135deg, #4154f1, #2c3cdd);
+        color: white;
+    }
+
+    .table thead th {
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        padding: 15px;
+        border: none;
+    }
+
+    .table tbody tr {
+        transition: all 0.3s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f8f9ff;
+        transform: scale(1.01);
+    }
+
+    .table tbody td {
+        padding: 12px 15px;
+        vertical-align: middle;
+        border-bottom: 1px solid #edf2f9;
+    }
+
+    /* Style cho buttons */
+    .btn {
+        padding: 8px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: none;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #4154f1, #2c3cdd);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #ff4d4d, #f73859);
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #2dce89, #2dcecc);
+    }
+
+    .btn-warning {
+        background: linear-gradient(135deg, #fb6340, #fbb140);
+    }
+
+    /* Style cho modal */
+    .show-info .container, .show-evidence .container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        padding: 25px;
+    }
+
+    .show-info .container h1 {
+        color: #2c3cdd;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .show-info .avatar img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid #4154f1;
+        padding: 3px;
+    }
+
+    .show-info .info-container {
+        background: #f8f9ff;
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .show-info .info-item {
+        margin-bottom: 15px;
+    }
+
+    .show-info .info-item label {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+
+    .show-info .info-item input {
+        font-size: 1rem;
+        color: #2c3cdd;
+        padding: 8px 12px;
+        background: white;
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    .show-evidence .container img{
+      width: 100%;
+      height: 100%;
+    }
+    /* Style cho container chính */
+    .container.article {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .table caption {
+        color: #2c3cdd;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Custom scrollbar */
+    .container.article::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .container.article::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .container.article::-webkit-scrollbar-thumb {
+        background: #4154f1;
+        border-radius: 10px;
+    }
+
+    .container.article::-webkit-scrollbar-thumb:hover {
+        background: #2c3cdd;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+        tbody button i {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        .btn {
+            padding: 6px 10px;
+        }
+    }
   </style>
   <div class="hero overlay inner-page">
     <img src="images/blob.svg" alt="" class="img-fluid blob">
@@ -201,7 +369,7 @@
       <table class="table table-hover caption-top">
         <caption>DANH SÁCH NGƯỜI DÙNG</caption>
         <thead>
-          <tr>
+          <tr class="text-center text-dark fw-bold">
             <th scope="col">#</th>
             <th scope="col" style="display: none;">Mã người dùng</th>
             <th scope="col">Tài khoản</th>
@@ -248,7 +416,7 @@
     </div>
   </div>
   <div class="show-info">
-    <button class="btn btn-danger close-btn close-info"><i class="bi bi-x-lg"></i></button>
+    <button class="btn btn-danger close-btn close-info z-1001"><i class="bi bi-x-lg"></i></button>
     <div class="container">
       <h1>Thông tin chi tiết</h1>
       <div class="info-container">
@@ -275,7 +443,7 @@
     </div>
   </div>
   <div class="show-evidence">
-    <button class="btn btn-danger close-btn close-evidence"><i class="bi bi-x-lg"></i>
+    <button class="btn btn-danger close-btn close-evidence z-1001"><i class="bi bi-x-lg"></i>
     </button>
     <div class="container">
       <img src="" alt="">

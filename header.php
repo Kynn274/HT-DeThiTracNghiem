@@ -21,12 +21,118 @@
         display: none !important;
     }
 }
-</style>
 
+.site-nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.menu-bg-wrap {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin-top: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.site-menu > li > a {
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.site-menu > li > a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background: var(--primary);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.site-menu > li > a:hover:after {
+    width: 80%;
+}
+
+.auth-btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+}
+
+.login-btn {
+    background: transparent;
+    border: 2px solid #007bff;
+    color: #007bff;
+}
+
+.login-btn:hover {
+    background: #007bff;
+    color: white;
+}
+
+.register-btn, .logout-btn {
+    background: #007bff;
+    color: white;
+}
+
+.register-btn:hover, .logout-btn:hover {
+    background: #0056b3;
+    color: white;
+}
+
+.userInfo-btn {
+    background: #0056b3;
+    border: 1px solid #dee2e6;
+}
+
+.userInfo-btn:hover {
+    background: #e9ecef;
+}
+
+.dropdown {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+.dropdown li a {
+    padding: 8px 20px;
+    transition: all 0.2s ease;
+}
+
+.dropdown li a:hover {
+    background: #f8f9fa;
+    color: var(--primary);
+}
+
+.menu-bg-wrap.scrolled {
+    background: #1d42c5;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+}
+</style>
+<script>
+	$(window).scroll(function() {
+		if ($(this).scrollTop() > 50) {
+			$('.menu-bg-wrap').addClass('scrolled');
+		} else {
+			$('.menu-bg-wrap').removeClass('scrolled');
+		}
+	});
+</script>
 <div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
-			<div class="site-mobile-menu-close">
-				<span class="icofont-close js-menu-toggle"></span>
+			<div class="site-mobile-menu-close me-3">
+				<span class="close-menu"></span>
 			</div>
 		</div>
 		<div class="site-mobile-menu-body">
@@ -57,8 +163,8 @@
 													<?php endif; ?>
 													<?php if($user_type == 2 || $user_type == 0): ?>
 														<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'contest.php' : 'DangNhap.php' ?>">Tạo cuộc thi</a></li>
-														<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'questionsBank.php' : 'DangNhap.php' ?>">Quản lý ngân hàng câu hỏi</a></li>
 														<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'test.php' : 'DangNhap.php' ?>">Tạo đề thi</a></li>
+														<li class="fw-normal" style="width:fit-content;"><a href="<?php echo $is_logged_in? 'questionsBank.php' : 'DangNhap.php' ?>">Quản lý ngân hàng câu hỏi</a></li>
 													<?php endif; ?>
 												<?php endif; ?>
 											</ul>
@@ -74,13 +180,13 @@
 									<i class="bi bi-box-arrow-in-right me-1"></i>
 									ĐĂNG NHẬP
 								</a>
-								<a href="DangKy.php" class="auth-btn register-btn text-decoration-none fw-bold">
+								<a href="DangKy.php" class="auth-btn register-btn me-3 text-decoration-none fw-bold">
 									<i class="bi bi-person-plus me-1"></i>
 									ĐĂNG KÝ
 								</a>
-								<a href="#" class="burger ms-3 float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
+								<button class="burger border-0 me-3 float-end bg-transparent site-menu-toggle open-menu d-inline-block d-lg-none light">
 									<span></span>
-								</a>
+								</button>
 							</div>
 						</div>
 						<?php endif; ?>
@@ -90,13 +196,13 @@
 								<a href="ChinhSuaThongTinCaNhan.php" class="auth-btn userInfo-btn text-decoration-none fw-bold" value="<?php echo $user_id; ?>">
 									<?php echo htmlspecialchars($user_fullname); ?>
 								</a>
-								<a href="logout.php" class="auth-btn logout-btn text-decoration-none fw-bold">
+								<a href="logout.php" class="auth-btn logout-btn me-3 text-decoration-none fw-bold">
 									<i class="bi bi-door-open-fill me-1"></i>
 									ĐĂNG XUẤT
 								</a>
-								<a href="#" class="burger ms-3 float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
+								<button class="burger border-0 me-3 float-end bg-transparent site-menu-toggle open-menu d-inline-block d-lg-none light" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
 									<span></span>
-								</a>
+								</button>
 							</div>
 						</div>
 						<?php endif ?>

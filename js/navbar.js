@@ -56,50 +56,49 @@
 	}
 
 	function setupDropdowns() {
-		setTimeout(function() {
-			$('.site-mobile-menu .has-children').each(function(index) {
-				const $menu = $(this);
-				const $link = $menu.find('> a');
-				const $dropdown = $menu.find('.dropdown');
+		$('.site-mobile-menu .has-children').each(function(index) {
+			const $menu = $(this);
+			const $link = $menu.find('> a');
+			const $dropdown = $menu.find('.dropdown');
 
-				// Tạo toggle button
-				const $toggleBtn = $('<span>')
-					.addClass('arrow-collapse collapsed')
-					.attr({
-						'data-bs-toggle': 'collapse',
-						'data-bs-target': '#collapseItem' + index
-					});
+			// Tạo toggle button
+			const $toggleBtn = $('<span>')
+				.addClass('arrow-collapse collapsed rotate-180')
+				.attr({
+					'data-bs-toggle': 'collapse',
+					'data-bs-target': '#collapseItem' + index
+				});
 
-				// Setup dropdown
-				$dropdown
-					.addClass('collapse')
-					.attr('id', 'collapseItem' + index);
+			// Setup dropdown
+			$dropdown
+				.addClass('collapse')
+				.attr('id', 'collapseItem' + index);
 
-				// Insert toggle button
-				$toggleBtn.insertBefore($link);
-			});
-		}, 1000);
+			// Insert toggle button
+			$toggleBtn.insertBefore($link)
+		});
+		$('.arrow-collapse').click(function() {
+			if($(this).hasClass('active')){
+				$(this).removeClass('active rotate-180');
+				$(this).parent().find('.dropdown').slideUp(200);
+			} else {
+				$(this).addClass('active rotate-180');
+				$(this).parent().find('.dropdown').slideDown(200);
+			}
+		});
 	}
 
 	function setupMenuToggle() {
-		const $toggleBtns = $('.js-menu-toggle');
+		const $toggleBtns = $('.open-menu');
 		const $mobileMenu = $('.site-mobile-menu');
-
-		// Toggle menu khi click button
-		$toggleBtns.on('click', function() {
+		const closeMenu = $('.close-menu');
+		$toggleBtns.click(function() {
 			$('body').toggleClass('offcanvas-menu');
-			$toggleBtns.toggleClass('active');
+			closeMenu.toggleClass('active');
 		});
-
-		// Đóng menu khi click outside
-		$(document).on('click', function(e) {
-			const isClickInside = $mobileMenu.has(e.target).length > 0;
-			const isClickOnToggle = $toggleBtns.has(e.target).length > 0;
-
-			if (!isClickInside && !isClickOnToggle && $('body').hasClass('offcanvas-menu')) {
-				$('body').removeClass('offcanvas-menu');
-				$toggleBtns.removeClass('active');
-			}
+		closeMenu.click(function() {
+			$('body').removeClass('offcanvas-menu');
+			$(this).removeClass('active');
 		});
 	}
 

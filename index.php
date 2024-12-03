@@ -7,96 +7,72 @@
 		include 'header.php';
 	?>
 
-	<div class="hero overlay">
+	<div class="hero overlay position-relative">
+		<div class="hero-background-animation"></div>
 		<img src="images/blob.svg" alt="" class="img-fluid blob">
-		<div class="container">
+		<div class="container position-relative">
 			<div class="row align-items-center justify-content-between pt-5">
 				<div class="col-lg-6 text-center text-lg-start pe-lg-5">
-					<h1 class="heading text-white mb-3" data-aos="fade-up">MindBridgeInstitute</h1>
-					<!-- <div class="align-items-center mb-5 mm" data-aos="fade-up" data-aos-delay="200">
-						<a href="LienHe.php" class="btn btn-outline-white-reverse me-4">Liên Hệ</a>
-						<a href="#" class="text-white glightbox">Watch the video</a>
-					</div> -->
+					<span class="text-gradient d-block mb-3 aos-init" data-aos="fade-up">
+						Nền Tảng Thi Trắc Nghiệm Trực Tuyến
+					</span>
+					<h1 class="heading text-white mb-3 display-4 fw-bold aos-init" data-aos="fade-up">
+						MindBridge Institute
+					</h1>
+					<p class="lead text-white-50 mb-4 aos-init" data-aos="fade-up" data-aos-delay="100">
+						Khám phá cách học và kiểm tra kiến thức hiện đại. Tạo, quản lý và tham gia các bài thi trắc nghiệm một cách dễ dàng.
+					</p>
+					<div class="hero-buttons aos-init" data-aos="fade-up" data-aos-delay="200">
+						<?php if(!$is_logged_in): ?>
+							<a href="DangKy.php" class="btn btn-primary me-3 mb-3">
+								Bắt đầu ngay
+								<i class="bi bi-arrow-right ms-2"></i>
+							</a>
+							<a href="DangNhap.php" class="btn btn-outline-light mb-3">
+								Đăng nhập
+								<i class="bi bi-box-arrow-in-right ms-2"></i>
+							</a>
+						<?php else: ?>
+							<a href="<?php echo $is_logged_in? 'contestZone.php' : 'DangNhap.php' ?>" class="btn btn-primary me-3 mb-3">
+								Tham gia thi
+								<i class="bi bi-arrow-right ms-2"></i>
+							</a>
+						<?php endif; ?>
+					</div>
+					
+					<!-- Stats -->
+					<div class="row mt-5 g-3 stats-container aos-init" data-aos="fade-up" data-aos-delay="300">
+						<div class="col-4">
+							<div class="stats-item">
+								<h3 class="text-gradient mb-1">1000+</h3>
+								<p class="text-white-50 mb-0">Học sinh</p>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="stats-item">
+								<h3 class="text-gradient mb-1">500+</h3>
+								<p class="text-white-50 mb-0">Đề thi</p>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="stats-item">
+								<h3 class="text-gradient mb-1">50+</h3>
+								<p class="text-white-50 mb-0">Giáo viên</p>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+				<div class="col-lg-5" data-aos="fade-up" data-aos-delay="300">
 					<div class="img-wrap">
-						<img src="images/img_7.jpg" alt="Image" class="img-fluid rounded">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<div class="section">
-	<div class="container">
-		<div class="row justify-content-between">
-			<div class="col-lg-7 mb-4 mb-lg-0">
-				<img src="images/img_8.jpg" alt="Image" class="img-fluid rounded">
-			</div>
-			<div class="col-lg-4 ps-lg-2">
-				<div class="mb-5">
-					<h2 class="text-black h4">BẮT ĐẦU NGAY</h2>
-					<p>Nền tảng của chúng tôi giúp đơn giản hóa quá trình tạo đề thi, cho phép bạn thiết kế các bài kiểm tra trắc nghiệm tùy chỉnh một cách dễ dàng và hiệu quả.</p>
-				</div>
-
-				<!-- Tạo Đề Thi / Cuộc Thi -->
-				<div class="d-flex mb-3 service-alt">
-					<div>
-						<span class="bi-pencil-square me-4"></span>
-					</div>
-					<div>
-						<h3>TẠO ĐỀ THI / CUỘC THI</h3>
-						<p>Tạo ra các đề thi hoặc cuộc thi mới với các tính năng linh hoạt và dễ dàng tùy chỉnh.</p>
-					</div>
-				</div>
-
-				<!-- Quản Lý Đề Thi -->
-				<div class="d-flex mb-3 service-alt">
-					<div>
-						<span class="bi-file-earmark-text-fill me-4"></span>
-					</div>
-					<div>
-						<h3>QUẢN LÝ ĐỀ THI</h3>
-						<p>Quản lý các đề thi đã tạo, chỉnh sửa và cập nhật nội dung một cách thuận tiện.</p>
-					</div>
-				</div>
-
-				<!-- Quản Lý Thư Viện Đề Thi -->
-				<div class="d-flex mb-3 service-alt">
-					<div>
-						<span class="bi-bookmark-fill me-4"></span>
-					</div>
-					<div>
-						<h3>QUẢN LÝ NGÂN HÀNG CÂU HÒI</h3>
-						<p>Quản lý và lưu trữ các câu hỏi trong ngân hàng, dễ dàng tìm kiếm và tái sử dụng các câu hỏi cũ.</p>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-</div>
-
-
-	<div class="section sec-features">
-		<div class="container">
-			<div class="row g-5 justify-content-center">
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
-					<div class="feature d-flex align-items-start">
-						<span class="bi-clipboard-check me-3"></span>
-						<div>
-							<h3 class="mb-2">HỌC SINH</h3>
-							<p>Học sinh có thể dễ dàng tự luyện tập với nhiều dạng câu hỏi và bài thi mô phỏng, từ đó đánh giá năng lực của mình, xác định được điểm mạnh và những phần cần cải thiện.</p>
+						<img src="images/img_7.jpg" alt="Image" class="img-fluid rounded shadow-lg">
+						<!-- Floating elements -->
+						<div class="floating-card card-1">
+							<i class="bi bi-check-circle-fill text-success"></i>
+							<span>Dễ dàng sử dụng</span>
 						</div>
-					</div>
-				</div>
-				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-					<div class="feature d-flex align-items-start">
-						<span class="bi-calendar-check-fill me-3"></span>
-						<div>
-							<h3 class="mb-2">GIÁO VIÊN</h3>
-							<p>Thao tác tạo đề đơn giản, chính xác cùng phương pháp đánh giá hiệu quả, giúp giáo viên dễ dàng quản lý chất lượng giảng dạy.</p>
+						<div class="floating-card card-2">
+							<i class="bi bi-shield-check text-primary"></i>
+							<span>An toàn & Bảo mật</span>
 						</div>
 					</div>
 				</div>
@@ -104,236 +80,943 @@
 		</div>
 	</div>
 
-	
-	
+	<style>
+		.hero {
+			min-height: 100vh;
+			background: linear-gradient(140deg, var(--bs-dark) 0%, #3038e8 100%);
+			overflow: hidden;
+		}
 
-	<div class="section">
+		.hero-background-animation {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: url('images/grid.png');
+			opacity: 0.1;
+			animation: backgroundMove 20s linear infinite;
+		}
+
+		@keyframes backgroundMove {
+			0% { background-position: 0 0; }
+			100% { background-position: 100% 100%; }
+		}
+
+		.text-gradient {
+			background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			font-weight: 600;
+			font-size: 1.2rem;
+		}
+
+		.hero-buttons .btn {
+			padding: 12px 30px;
+			border-radius: 50px;
+			font-weight: 500;
+			transition: all 0.3s ease;
+		}
+
+		.hero-buttons .btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+		}
+
+		.stats-container {
+			padding: 20px;
+			border-radius: 15px;
+			background: rgba(255,255,255,0.1);
+			backdrop-filter: blur(10px);
+		}
+
+		.stats-item {
+			text-align: center;
+			padding: 10px;
+		}
+
+		.stats-item h3 {
+			font-size: 2rem;
+			font-weight: 700;
+		}
+
+		.img-wrap {
+			position: relative;
+			z-index: 1;
+		}
+
+		.floating-card {
+			position: absolute;
+			background: white;
+			padding: 15px 25px;
+			border-radius: 10px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			animation: float 3s ease-in-out infinite;
+		}
+
+		.floating-card i {
+			font-size: 1.5rem;
+		}
+
+		.card-1 {
+			top: -20px;
+			left: -20px;
+			animation-delay: 0s;
+		}
+
+		.card-2 {
+			bottom: -20px;
+			right: -20px;
+			animation-delay: 1.5s;
+		}
+
+		@keyframes float {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-20px); }
+		}
+
+		@media (max-width: 991.98px) {
+			.hero {
+				padding: 100px 0;
+				min-height: auto;
+			}
+			
+			.stats-container {
+				margin-bottom: 40px;
+			}
+			
+			.floating-card {
+				display: none;
+			}
+		}
+	</style>
+
+	<div class="section features-section position-relative overflow-hidden">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-7 order-lg-4 mb-4 mb-lg-0">
-					<img src="images/img_9.png" alt="Create Exam" class="img-fluid">
+			<div class="row justify-content-between align-items-center">
+				<div class="col-lg-6 mb-4 mb-lg-0">
+					<div class="features-image position-relative">
+						<img src="images/img_8.jpg" alt="Features" class="img-fluid rounded-4 shadow-lg">
+						<!-- Decorative elements -->
+						<div class="feature-shape-1"></div>
+						<div class="feature-shape-2"></div>
+						<!-- Experience badge -->
+						<div class="experience-badge">
+							<span class="number">5+</span>
+							<span class="text">Năm<br>Kinh nghiệm</span>
+						</div>
+					</div>
 				</div>
-				<div class="col-lg-5 pe-lg-5">
+				<div class="col-lg-5">
+					<div class="features-content">
+						<div class="section-tag mb-3" data-aos="fade-up">TÍNH NĂNG NỔI BẬT</div>
+						<h2 class="section-title mb-4" data-aos="fade-up" data-aos-delay="100">
+							Nền Tảng Giáo Dục <span class="text-primary">Thông Minh</span>
+						</h2>
+						<p class="section-description mb-4" data-aos="fade-up" data-aos-delay="200">
+							Chúng tôi cung cấp giải pháp toàn diện cho việc tạo lập, quản lý và tham gia các bài kiểm tra trực tuyến.
+						</p>
+
+						<!-- Feature cards -->
+						<div class="feature-cards">
+							<!-- Card 1 -->
+							<div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+								<div class="icon-box bg-primary-soft">
+									<i class="bi bi-pencil-square text-primary"></i>
+								</div>
+								<div class="feature-content">
+									<h4>Tạo đề thi dễ dàng</h4>
+									<p>Giao diện trực quan, dễ sử dụng, tạo đề thi chỉ trong vài phút</p>
+								</div>
+							</div>
+
+							<!-- Card 2 -->
+							<div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+								<div class="icon-box bg-success-soft">
+									<i class="bi bi-shield-check text-success"></i>
+								</div>
+								<div class="feature-content">
+									<h4>Bảo mật tuyệt đối</h4>
+									<p>Hệ thống bảo mật cao, đảm bảo tính công bằng trong kiểm tra</p>
+								</div>
+							</div>
+
+							<!-- Card 3 -->
+							<div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+								<div class="icon-box bg-info-soft">
+									<i class="bi bi-graph-up text-info"></i>
+								</div>
+								<div class="feature-content">
+									<h4>Thống kê chi tiết</h4>
+									<p>Phân tích kết quả chi tiết, giúp đánh giá năng lực chính xác</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<style>
+		.features-section {
+			padding: 100px 0;
+			background: #f8f9fa;
+		}
+
+		.section-tag {
+			display: inline-block;
+			padding: 8px 16px;
+			background: rgba(var(--bs-primary-rgb), 0.1);
+			color: var(--bs-primary);
+			border-radius: 50px;
+			font-weight: 600;
+			font-size: 0.9rem;
+		}
+
+		.section-title {
+			font-size: 2.5rem;
+			font-weight: 700;
+			line-height: 1.2;
+		}
+
+		.section-description {
+			color: #6c757d;
+			font-size: 1.1rem;
+			line-height: 1.6;
+		}
+
+		.features-image {
+			position: relative;
+			z-index: 1;
+		}
+
+		.feature-shape-1,
+		.feature-shape-2 {
+			position: absolute;
+			width: 200px;
+			height: 200px;
+			border-radius: 28% 72% 50% 50% / 28% 28% 72% 72%;
+			background: rgba(var(--bs-primary-rgb), 0.1);
+			z-index: -1;
+		}
+
+		.feature-shape-1 {
+			top: -40px;
+			left: -40px;
+			animation: morphing 15s linear infinite;
+		}
+
+		.feature-shape-2 {
+			bottom: -40px;
+			right: -40px;
+			animation: morphing 20s linear infinite reverse;
+		}
+
+		@keyframes morphing {
+			0% { border-radius: 28% 72% 50% 50% / 28% 28% 72% 72%; }
+			25% { border-radius: 50% 50% 28% 72% / 72% 28% 72% 28%; }
+			50% { border-radius: 72% 28% 72% 28% / 50% 50% 28% 72%; }
+			75% { border-radius: 28% 72% 28% 72% / 72% 28% 50% 50%; }
+			100% { border-radius: 28% 72% 50% 50% / 28% 28% 72% 72%; }
+		}
+
+		.experience-badge {
+			position: absolute;
+			bottom: 30px;
+			right: 30px;
+			background: white;
+			padding: 20px;
+			border-radius: 15px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+			text-align: center;
+		}
+
+		.experience-badge .number {
+			display: block;
+			font-size: 2rem;
+			font-weight: 700;
+			color: var(--bs-primary);
+			line-height: 1;
+		}
+
+		.experience-badge .text {
+			font-size: 0.9rem;
+			color: #6c757d;
+		}
+
+		.feature-card {
+			display: flex;
+			align-items: flex-start;
+			gap: 20px;
+			padding: 20px;
+			margin-bottom: 20px;
+			border-radius: 15px;
+			background: white;
+			transition: all 0.3s ease;
+		}
+
+		.feature-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+		}
+
+		.icon-box {
+			width: 50px;
+			height: 50px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 12px;
+		}
+
+		.icon-box i {
+			font-size: 1.5rem;
+		}
+
+		.bg-primary-soft { background: rgba(var(--bs-primary-rgb), 0.1); }
+		.bg-success-soft { background: rgba(var(--bs-success-rgb), 0.1); }
+		.bg-info-soft { background: rgba(var(--bs-info-rgb), 0.1); }
+
+		.feature-content h4 {
+			font-size: 1.1rem;
+			font-weight: 600;
+			margin-bottom: 5px;
+		}
+
+		.feature-content p {
+			font-size: 0.9rem;
+			color: #6c757d;
+			margin: 0;
+		}
+
+		@media (max-width: 991.98px) {
+			.features-section {
+				padding: 60px 0;
+			}
+
+			.section-title {
+				font-size: 2rem;
+			}
+
+			.feature-shape-1,
+			.feature-shape-2 {
+				width: 150px;
+				height: 150px;
+			}
+
+			.experience-badge {
+				padding: 15px;
+			}
+		}
+	</style>
+
+	<!-- <div class="section">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-lg-7 mb-4 mb-lg-0">
+					<img src="images/img_8.jpg" alt="Image" class="img-fluid rounded">
+				</div>
+				<div class="col-lg-4 ps-lg-2">
 					<div class="mb-5">
-						<h2 class="text-black h4">CÁCH TẠO ĐỀ THI ĐƠN GIẢN</h2>
-					</div>
-	
-					<!-- Mô tả câu hỏi và đáp án -->
-					<div class="d-flex mb-3 service-alt">
+						<h2 class="text-black h4">BẮT ĐẦU NGAY</h2>
+						<p>Nền tảng của chúng tôi giúp đơn giản hóa quá trình tạo đề thi, cho phép bạn thiết kế các bài kiểm tra trắc nghiệm tùy chỉnh một cách dễ dàng và hiệu quả.</p>
+					</div> -->
+
+					<!-- Tạo Đ Thi / Cuộc Thi -->
+					<!-- <div class="d-flex mb-3 service-alt">
 						<div>
 							<span class="bi-pencil-square me-4"></span>
 						</div>
 						<div>
-							<h3>MÔ TẢ CÂU HỎI VÀ ĐÁP ÁN</h3>
-							<p>Nhập câu hỏi và đưa ra các đáp án để tạo đề thi.</p>
+							<h3>TẠO ĐỀ THI / CUỘC THI</h3>
+							<p>Tạo ra các đề thi hoặc cuộc thi mới với các tính năng linh hoạt và dễ dàng tùy chỉnh.</p>
 						</div>
-					</div>
-	
-					<!-- Chọn môn học -->
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<s class="bi-bookmark-fill me-4"></s	pan>
-						</div>
-						<div>
-							<h3>CHỌN ĐÁP ÁN ĐÚNG</h3>
-							<p>Chọn đáp án đúng của câu hỏi.</p>
-						</div>
-					</div>
-	
-					<!-- Chọn dạng câu hỏi
-					<div class="d-flex mb-3 service-alt">
+					</div> -->
+
+					<!-- Quản Lý Đề Thi -->
+					<!-- <div class="d-flex mb-3 service-alt">
 						<div>
 							<span class="bi-file-earmark-text-fill me-4"></span>
 						</div>
 						<div>
-							<h3>Chọn Dạng Câu Hỏi</h3>
-							<p>Chọn dạng câu hỏi như Trắc nghiệm, Điền khuyết, Tự luận, ...</p>
+							<h3>QUẢN LÝ ĐỀ THI</h3>
+							<p>Quản lý các đề thi đã tạo, chỉnh sửa và cập nhật nội dung một cách thuận tiện.</p>
 						</div>
 					</div> -->
-	
-					<!-- Chọn độ khó -->
-					<div class="d-flex mb-3 service-alt">
-						<div>
-							<span class="bi-bar-chart-fill me-4"></span>
-						</div>
-						<div>
-							<h3>CHỌN ĐỘ KHÓ</h3>
-							<p>Đặt độ khó cho đề thi, từ dễ đến khó để phù hợp với trình độ học sinh.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-		<div class="section sec-services">
-			<div class="container">
-				<div class="row mb-5">
-					<div class="col-lg-5 mx-auto text-center" data-aos="fade-up">
-						<h2 class="heading text-primary">DỊCH VỤ QUẢN LÝ ĐỀ THI TRẮC NGHIỆM</h2>
-						<p>Hệ thống cung cấp các tính năng quản lý và tạo đề thi trắc nghiệm một cách nhanh chóng và dễ dàng.</p>
-					</div>
-				</div>
-
-				<div class="row">
-					<!-- Tạo Đề Thi / Cuộc Thi -->
-					<?php //if (displayService($role, 'create_exam')): ?>
-					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up">
-						<div class="service text-center">
-							<span class="bi-pencil-square"></span>
-							<div>
-								<h3>TẠO ĐỀ THI</h3>
-								<p class="mb-4">Tạo đề thi hoặc cuộc thi mới với các tính năng linh hoạt.</p>
-								<p><a href="TaoDeThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
-							</div>
-						</div>
-					</div>
-					<?php //endif; ?>
-
-					<!-- Quản Lý Người Dùng -->
-					<?php //if ($role == 'admin' && displayService($role, 'manage_user')): ?>
-					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-						<div class="service text-center">
-							<span class="bi-person-fill"></span>
-							<div>
-								<h3>QUẢN LÝ NGƯỜI DÙNG</h3>
-								<p class="mb-4">Quản lý thông tin người dùng trong hệ thống.</p>
-								<p><a href="QuanLyNguoiDung.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
-							</div>
-						</div>
-					</div>
-					<?php //endif; ?>
 
 					<!-- Quản Lý Thư Viện Đề Thi -->
-					<?php //if (displayService($role, 'library_management')): ?>
-					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-						<div class="service text-center">
-							<span class="bi-bookmark-fill"></span>
-							<div>
-								<h3>QUẢN LÝ Ngân Hàng Câu Hỏi</h3>
-								<p class="mb-4">Quản lý các câu hỏi trong ngân hàng.</p>
-								<p><a href="questionsBank.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
-							</div>
+					<!-- <div class="d-flex mb-3 service-alt">
+						<div>
+							<span class="bi-bookmark-fill me-4"></span>
+						</div>
+						<div>
+							<h3>QUẢN LÝ NGÂN HÀNG CÂU HÒI</h3>
+							<p>Quản lý và lưu trữ các câu hỏi trong ngân hàng, dễ dàng tìm kiếm và tái sử dụng các câu hỏi cũ.</p>
 						</div>
 					</div>
-					<?php //endif; ?>
 
-					<!-- Quản Lý Đề Thi -->
-					<?php //if (displayService($role, 'manage_exam')): ?>
-					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-						<div class="service text-center">
-							<span class="bi-file-earmark-text-fill"></span>
-							<div>
-								<h3>QUẢN LÝ ĐỀ THI</h3>
-								<p class="mb-4">Quản lý và chỉnh sửa các đề thi đã tạo.</p>
-								<p><a href="QuanLyDeThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
-							</div>
-						</div>
-					</div>
-					<?php //endif; ?>
-
-					<!-- Lịch Sử Cuộc Thi -->
-					<?php //if (displayService($role, 'history_exam')): ?>
-					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-						<div class="service text-center">
-							<span class="bi-clock-history"></span>
-							<div>
-								<h3>LỊCH SỬ CUỘC THI</h3>
-								<p class="mb-4">Xem lại lịch sử các cuộc thi đã diễn ra.</p>
-								<p><a href="LichSuCuocThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
-							</div>
-						</div>
-					</div>
-					<?php //endif; ?>
-
-					<!-- Tham Gia Cuộc Thi -->
-					<?php //if (displayService($role, 'join_exam')): ?>
-					<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-						<div class="service text-center">
-							<span class="bi-person-check-fill"></span>
-							<div>
-								<h3>THAM GIA CUỘC THI</h3>
-								<p class="mb-4">Tham gia các cuộc thi trắc nghiệm.<br></p>
-								<p><a href="ThamGiaThi.php" class="btn btn-outline-primary py-2 px-3">Bắt Đầu</a></p>
-							</div>
-						</div>
-					</div>
-					<?php //endif; ?>
 				</div>
 			</div>
 		</div>
+	</div> -->
 
 
-
-	<div class="section sec-portfolio bg-light pb-5">
+	<div class="section sec-features position-relative">
+		<div class="section-pattern"></div>
 		<div class="container">
 			<div class="row mb-5">
-				<div class="col-lg-5 mx-auto text-center">
-					<h2 class="heading text-primary mb-3" data-aos="fade-up" data-aos-delay="0">CÁC ĐỀ THI TRẮC NGHIỆM</h2>
-					<p class="mb-4" data-aos="fade-up" data-aos-delay="100">Khám phá và tạo các đề thi trắc nghiệm phù hợp với yêu cầu của bạn. Chọn môn học, loại câu hỏi, và mức độ khó để bắt đầu tạo đề thi ngay.</p>
-	
-					<div id="post-slider-nav" data-aos="fade-up" data-aos-delay="200">
-						<button class="btn btn-primary py-2" class="prev" data-controls="prev">Trở lại</button>
-						<button class="btn btn-primary py-2" class="next" data-controls="next">Tiếp theo</button>
-					</div>
+				<div class="col-lg-6 mx-auto text-center">
+					<div class="section-tag mb-3" data-aos="fade-up">ĐỐI TƯỢNG SỬ DỤNG</div>
+					<h2 class="section-title text-white mb-4" data-aos="fade-up" data-aos-delay="100">
+						Giải Pháp Cho Mọi <span class="text-warning">Đối Tượng</span>
+					</h2>
+					<p class="text-white-50" data-aos="fade-up" data-aos-delay="200">
+						Nền tảng của chúng tôi được thiết kế phù hợp cho nhiều đối tượng khác nhau, từ học sinh đến giáo viên
+					</p>
 				</div>
 			</div>
-		</div>
-	
-		<div class="post-slider-wrap" data-aos="fade-up" data-aos-delay="300">
-			<div id="post-slider" class="post-slider">
-				<div class="item">
-					<a href="TaoDeThi.php" class="card d-block">
-						<img src="images/img_10.jpg" class="card-img-top" alt="Image">
-						<div class="card-body">
-							<h5 class="card-title">TẠO ĐỀ THI MỚI</h5>
-							<p>Chọn môn học và loại câu hỏi để tạo một đề thi trắc nghiệm hoàn chỉnh.</p>
+
+			<div class="row g-4 justify-content-center">
+				<!-- Card Học sinh -->
+				<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+					<div class="user-card student-card">
+						<div class="card-icon">
+							<i class="bi bi-mortarboard-fill"></i>
 						</div>
-					</a>
+						<h3>HỌC SINH</h3>
+						<ul class="feature-list">
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Giao diện dễ sử dụng
+							</li>
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Đánh giá năng lực thường xuyên
+							</li>
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Theo dõi tiến độ học tập
+							</li>
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Truy cập mọi lúc mọi nơi
+							</li>
+						</ul>
+						<?php if(!$is_logged_in): ?>
+							<a href="DangKy.php" class="btn btn-primary mt-4">Bắt đầu ngay</a>
+						<?php endif; ?>
+					</div>
 				</div>
-	
-				<div class="item">
-					<a href="TaoDeThi.php" class="card">
-						<img src="images/img_1.jpeg" class="card-img-top" alt="Image">
-						<div class="card-body">
-							<h5 class="card-title">CHỈNH SỬA ĐỀ THI</h5>
-							<p>Chỉnh sửa các câu hỏi hoặc thay đổi cấu trúc đề thi trắc nghiệm đã tạo.</p>
+
+				<!-- Card Giáo viên -->
+				<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+					<div class="user-card teacher-card">
+						<div class="card-icon">
+							<i class="bi bi-person-workspace"></i>
 						</div>
-					</a>
+						<h3>GIÁO VIÊN</h3>
+						<ul class="feature-list">
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Tạo đề thi dễ dàng
+							</li>
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Quản lý ngân hàng câu hỏi
+							</li>
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Thống kê kết quả chi tiết
+							</li>
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Đánh giá học sinh hiệu quả
+							</li>
+						</ul>
+						<?php if(!$is_logged_in): ?>
+							<a href="DangKy.php" class="btn btn-success mt-4">Tham gia ngay</a>
+						<?php endif; ?>
+					</div>
 				</div>
-	
-				<div class="item">
-					<a href="XemDanhSachDeThi.php" class="card">
-						<img src="images/img_2.jpg" class="card-img-top" alt="Image">
-						<div class="card-body">
-							<h5 class="card-title">DANH SÁCH ĐỀ THI</h5>
-							<p>Xem lại các đề thi trắc nghiệm đã được tạo và quản lý chúng.</p>
+
+				<!-- Card Admin -->
+				<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+					<div class="user-card admin-card">
+						<div class="card-icon">
+							<i class="bi bi-shield-check"></i>
 						</div>
-					</a>
+						<h3>QUẢN TRỊ VIÊN</h3>
+						<ul class="feature-list">
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Quản lý người dùng
+							</li>
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Phân quyền hệ thống
+							</li>
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Hỗ trợ tận tình
+							</li>
+							<li>
+								<i class="bi bi-check-circle-fill"></i>
+								Tiếp nhận phản hồi
+							</li>
+						</ul>
+						<?php if(!$is_logged_in): ?>
+							<a href="DangKy.php" class="btn btn-info mt-4">Liên hệ ngay</a>
+						<?php endif; ?>
+					</div>
 				</div>
-	
-				<div class="item">
-					<a href="XemDanhSachDeThi.php" class="card">
-						<img src="images/img_11.jpg" class="card-img-top" alt="Image">
-						<div class="card-body">
-							<h5 class="card-title">QUẢN LÝ ĐỀ THI</h5>
-							<p>Quản lý, chỉnh sửa và xóa các đề thi trắc nghiệm trong hệ thống.</p>
-						</div>
-					</a>
-				</div>
-	
-				<!-- <div class="item">
-					<a href="TaoDeThi.php" class="card">
-						<img src="images/img_3.jpg" class="card-img-top" alt="Image">
-						<div class="card-body">
-							<h5 class="card-title">Tạo Đề Thi Mới</h5>
-							<p>Bắt đầu tạo đề thi trắc nghiệm cho các môn học và các chủ đề khác nhau.</p>
-						</div>
-					</a>
-				</div> -->
 			</div>
 		</div>
 	</div>
+
+	<style>
+		.sec-features {
+			background: linear-gradient(140deg, var(--bs-dark) 0%, #3038e8 100%);
+			padding: 100px 0;
+			overflow: hidden;
+		}
+
+		.section-pattern {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background-image: radial-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+			background-size: 30px 30px;
+			opacity: 0.5;
+		}
+
+		.user-card {
+			background: rgba(255, 255, 255, 0.05);
+			backdrop-filter: blur(10px);
+			border-radius: 20px;
+			padding: 30px;
+			text-align: center;
+			transition: all 0.3s ease;
+			height: 100%;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.user-card:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+		}
+
+		.card-icon {
+			width: 80px;
+			height: 80px;
+			margin: 0 auto 20px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			font-size: 2rem;
+		}
+
+		.student-card .card-icon {
+			background: rgba(var(--bs-primary-rgb), 0.1);
+			color: var(--bs-primary);
+		}
+
+		.teacher-card .card-icon {
+			background: rgba(var(--bs-success-rgb), 0.1);
+			color: var(--bs-success);
+		}
+
+		.admin-card .card-icon {
+			background: rgba(var(--bs-info-rgb), 0.1);
+			color: var(--bs-info);
+		}
+
+		.user-card h3 {
+			color: white;
+			font-size: 1.5rem;
+			margin-bottom: 20px;
+		}
+
+		.feature-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			text-align: left;
+		}
+
+		.feature-list li {
+			color: rgba(255, 255, 255, 0.8);
+			margin-bottom: 15px;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.feature-list li i {
+			color: var(--bs-success);
+			font-size: 1.2rem;
+		}
+
+		.user-card .btn {
+			border-radius: 50px;
+			padding: 10px 30px;
+			font-weight: 500;
+			transition: all 0.3s ease;
+		}
+
+		.user-card .btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+		}
+
+		@media (max-width: 991.98px) {
+			.sec-features {
+				padding: 60px 0;
+			}
+			
+			.user-card {
+				margin-bottom: 30px;
+			}
+		}
+	</style>
+
+	<div class="section create-exam-section">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-7 order-lg-4 mb-4 mb-lg-0">
+					<div class="position-relative">
+						<img src="images/img_9.png" alt="Create Exam" class="img-fluid rounded-4 shadow">
+						<div class="floating-badge">
+							<div class="badge-icon">
+								<i class="bi bi-check-circle-fill"></i>
+							</div>
+							<div class="badge-text">
+								<span class="d-block fw-bold">Dễ dàng</span>
+								<small>Tạo đề trong 5 phút</small>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-5 pe-lg-5">
+					<div class="create-exam-content">
+						<div class="section-tag mb-3" data-aos="fade-up">HƯỚNG DẪN</div>
+						<h2 class="section-title mb-4" data-aos="fade-up" data-aos-delay="100">
+							Quy Trình Tạo Đề Thi <span class="text-primary">Đơn Giản</span>
+						</h2>
+
+						<!-- Steps -->
+						<div class="steps-container">
+							<!-- Step 1 -->
+							<div class="step-item" data-aos="fade-up" data-aos-delay="200">
+								<div class="step-icon bg-primary-soft">
+									<i class="bi bi-pencil-square text-primary"></i>
+								</div>
+								<div class="step-content">
+									<h4>Soạn câu hỏi</h4>
+									<p>Nhập nội dung câu hỏi và các phương án trả lời một cách dễ dàng</p>
+								</div>
+							</div>
+
+							<!-- Step 2 -->
+							<div class="step-item" data-aos="fade-up" data-aos-delay="300">
+								<div class="step-icon bg-success-soft">
+									<i class="bi bi-check-circle text-success"></i>
+								</div>
+								<div class="step-content">
+									<h4>Chọn đáp án</h4>
+									<p>Đánh dấu đáp án đúng cho từng câu hỏi trong đề thi</p>
+								</div>
+							</div>
+
+							<!-- Step 3 -->
+							<div class="step-item" data-aos="fade-up" data-aos-delay="400">
+								<div class="step-icon bg-warning-soft">
+									<i class="bi bi-sliders text-warning"></i>
+								</div>
+								<div class="step-content">
+									<h4>Cấu hình đề thi</h4>
+									<p>Thiết lập thời gian, độ khó và các thông số khác cho đề thi</p>
+								</div>
+							</div>
+
+							<!-- Step 4 -->
+							<div class="step-item" data-aos="fade-up" data-aos-delay="500">
+								<div class="step-icon bg-info-soft">
+									<i class="bi bi-send-check text-info"></i>
+								</div>
+								<div class="step-content">
+									<h4>Xuất bản</h4>
+									<p>Hoàn tất và chia sẻ đề thi đến học sinh</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<style>
+		.create-exam-section {
+			padding: 100px 0;
+			background: #f8f9fa;
+		}
+
+		.floating-badge {
+			position: absolute;
+			bottom: 30px;
+			right: -20px;
+			background: white;
+			padding: 15px 20px;
+			border-radius: 15px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+			display: flex;
+			align-items: center;
+			gap: 15px;
+		}
+
+		.badge-icon {
+			width: 40px;
+			height: 40px;
+			background: rgba(var(--bs-success-rgb), 0.1);
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+			color: var(--bs-success);
+		}
+
+		.badge-text small {
+			color: #6c757d;
+		}
+
+		.steps-container {
+			position: relative;
+			padding-left: 50px;
+		}
+
+		.steps-container::before {
+			content: '';
+			position: absolute;
+			left: 20px;
+			top: 0;
+			bottom: 0;
+			width: 2px;
+			background: rgba(var(--bs-primary-rgb), 0.1);
+		}
+
+		.step-item {
+			position: relative;
+			padding-bottom: 30px;
+		}
+
+		.step-icon {
+			position: absolute;
+			left: -50px;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+			background: white;
+			z-index: 1;
+		}
+
+		.step-content {
+			background: white;
+			padding: 20px;
+			border-radius: 15px;
+			margin-left: 20px;
+			transition: all 0.3s ease;
+		}
+
+		.step-content:hover {
+			transform: translateX(10px);
+			box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+		}
+
+		.step-content h4 {
+			font-size: 1.1rem;
+			font-weight: 600;
+			margin-bottom: 5px;
+		}
+
+		.step-content p {
+			color: #6c757d;
+			margin: 0;
+			font-size: 0.9rem;
+		}
+
+		.bg-warning-soft { background: rgba(var(--bs-warning-rgb), 0.1); }
+
+		@media (max-width: 991.98px) {
+			.create-exam-section {
+				padding: 60px 0;
+			}
+			
+			.floating-badge {
+				right: 20px;
+			}
+		}
+	</style>
+
+	<div class="section sec-services">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-lg-6 mx-auto text-center">
+					<div class="section-tag mb-3" data-aos="fade-up">DỊCH VỤ</div>
+					<h2 class="section-title mb-4" data-aos="fade-up" data-aos-delay="100">
+						Các Tính Năng <span class="text-primary">Chính</span>
+					</h2>
+					<p class="section-description" data-aos="fade-up" data-aos-delay="200">
+						Hệ thống cung cấp đầy đủ các công cụ cần thiết để tạo và quản lý đề thi trắc nghiệm một cách hiệu quả
+					</p>
+				</div>
+			</div>
+
+			<div class="row g-4 justify-content-center">
+				<!-- Tạo Đề Thi Card -->
+				<div class="col-md-6 col-lg-4" data-aos="fade-up">
+					<div class="service-card">
+						<div class="card-icon bg-primary-soft">
+							<i class="bi bi-pencil-square text-primary"></i>
+						</div>
+						<h3>Tạo Đề Thi</h3>
+						<p>Tạo đề thi với các tính năng linh hoạt, dễ dàng tùy chỉnh theo nhu cầu.</p>
+					</div>
+				</div>
+
+				<!-- Tạo Cuộc Thi Card -->
+				<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+					<div class="service-card">
+						<div class="card-icon bg-warning-soft">
+							<i class="bi bi-trophy-fill text-warning"></i>
+						</div>
+						<h3>Tạo Cuộc Thi</h3>
+						<p>Tổ chức các cuộc thi trực tuyến với nhiều hình thức và quy mô khác nhau.</p>
+					</div>
+				</div>
+
+				<!-- Ngân Hàng Câu Hỏi Card -->
+				<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+					<div class="service-card">
+						<div class="card-icon bg-success-soft">
+							<i class="bi bi-bookmark-fill text-success"></i>
+						</div>
+						<h3>Ngân Hàng Câu Hỏi</h3>
+						<p>Quản lý và tổ chức câu hỏi theo chủ đề, môn học. Dễ dàng tìm kiếm và tái sử dụng.</p>
+					</div>
+				</div>
+
+				<!-- Quản Lý Người Dùng Card -->
+				<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+					<div class="service-card">
+						<div class="card-icon bg-info-soft">
+							<i class="bi bi-people-fill text-info"></i>
+						</div>
+						<h3>Quản Lý Người Dùng</h3>
+						<p>Quản lý thông tin và phân quyền người dùng trong hệ thống một cách hiệu quả.</p>
+					</div>
+				</div>
+
+				<!-- Tham Gia Thi Card -->
+				<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+					<div class="service-card">
+						<div class="card-icon bg-danger-soft">
+							<i class="bi bi-person-check-fill text-danger"></i>
+						</div>
+						<h3>Tham Gia Thi</h3>
+						<p>Tham gia các cuộc thi trắc nghiệm online với giao diện thân thiện, dễ sử dụng.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<style>
+		.sec-services {
+			padding: 100px 0;
+			background: white;
+		}
+
+		.service-card {
+			background: white;
+			padding: 30px;
+			border-radius: 20px;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+			transition: all 0.3s ease;
+			height: 100%;
+		}
+
+		.service-card:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+		}
+
+		.card-icon {
+			width: 60px;
+			height: 60px;
+			border-radius: 15px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 20px;
+		}
+
+		.card-icon i {
+			font-size: 1.5rem;
+		}
+
+		.service-card h3 {
+			font-size: 1.3rem;
+			font-weight: 600;
+			margin-bottom: 15px;
+		}
+
+		.service-card p {
+			color: #6c757d;
+			margin-bottom: 20px;
+			font-size: 0.95rem;
+			line-height: 1.6;
+		}
+
+		.service-link {
+			color: var(--bs-primary);
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			font-weight: 500;
+			transition: all 0.3s ease;
+		}
+
+		.service-link:hover {
+			gap: 12px;
+			color: var(--bs-primary);
+		}
+
+		.bg-danger-soft { background: rgba(var(--bs-danger-rgb), 0.1); }
+		.bg-warning-soft { background: rgba(var(--bs-warning-rgb), 0.1); }
+
+		@media (max-width: 991.98px) {
+			.sec-services {
+				padding: 60px 0;
+			}
+			
+			.service-card {
+				padding: 20px;
+			}
+		}
+	</style>
 </div>
 
 	<?php
