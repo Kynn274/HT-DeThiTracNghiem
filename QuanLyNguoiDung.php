@@ -62,7 +62,7 @@
       right: 0;
       bottom: 0;
       display: none;
-      z-index: 5;
+      z-index: 9999;
     }
     .show-info .container, .show-evidence .container{
       background-color: #fff;
@@ -121,7 +121,7 @@
       margin: 0 10px;
     }
     .close-info, .close-evidence{
-      z-index: 5;
+      z-index: 10000;
       background-color: transparent;
       border: none;
       width: fit-content;
@@ -129,10 +129,19 @@
       position: absolute;
       top: 20px;
       right: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
     .close-info i, .close-evidence i{
       font-size: 1.5rem;
       color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    .close-info:hover, .close-evidence:hover {
+      transform: rotate(90deg);
+    }
+    .close-info:hover i, .close-evidence:hover i {
+      color: #ff4d4d;
     }
     /* Container for the table with scrolling */
     .container.article {
@@ -394,15 +403,15 @@
             <td><input type="password" value="<?php echo $user['Password'] ?>" disabled></td>
             <td><input type="text" value="<?php echo $type = $user['Type'] == 0 ? 'Admin' : ($user['Type'] == 1 ? 'Học sinh' : 'Giáo viên') ?>" disabled></td>
             <td><input type="text" value="<?php echo $user['JoiningDate'] ?>" disabled></td>
-            <td><button class="btn btn-primary show-evidence-btn" value="<?php echo $user['Evidence'] ?>"><i class="bi bi-eye-fill"></i><p>Xem <br> minh chứng</p></button></td>
+            <td><button class="btn btn-primary show-evidence-btn" value="<?php echo $user['Evidence'] ?>"><i class="bi bi-eye-fill"></i><p class="m-0">Xem <br> minh chứng</p></button></td>
             <td>
               <?php if ($user['Status'] == 1) { ?>
-                <button class="btn btn-danger ban-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-lock-fill"></i><p>Hạn Chế<br>tài khoản</p></button>
+                <button class="btn btn-danger ban-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-lock-fill"></i><p class="m-0">Hạn Chế<br>tài khoản</p></button>
               <?php } else { ?>
-                <button class="btn btn-success activate-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-unlock-fill"></i><p>Kích hoạt<br>tài khoản</p></button>
+                <button class="btn btn-success activate-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-unlock-fill"></i><p class="m-0">Kích hoạt<br>tài khoản</p></button>
               <?php } ?>
-              <button class="btn btn-warning reset-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-key-fill"></i><p>Khôi phục<br>mật khẩu</p></button>
-              <button class="btn btn-primary show-info-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-info-circle"></i><p>Thông tin<br>chi tiết</p></button>
+              <button class="btn btn-warning reset-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-key-fill"></i><p class="m-0">Khôi phục<br>mật khẩu</p></button>
+              <button class="btn btn-primary show-info-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-info-circle"></i><p class="m-0">Thông tin<br>chi tiết</p></button>
             </td>
             </tr>
             <?php } ?>

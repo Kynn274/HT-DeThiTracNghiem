@@ -133,6 +133,13 @@
             GreaterNine INT, -- Số lượng điểm lớn hơn hoặc bằng 9
             FOREIGN KEY (ContestID) REFERENCES Contests(ContestID) ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
+		"CREATE TABLE IF NOT EXISTS ResetPasswordRequests(
+			ResetPasswordRequestID INT AUTO_INCREMENT PRIMARY KEY, -- Mã yêu cầu khôi phục mật khẩu
+			UserID INT NOT NULL, -- Mã người dùng
+			CreateDate DATE, -- Ngày tạo
+            FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+		)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
     ];
 
     foreach ($tableQueries as $tableQuery) {

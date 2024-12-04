@@ -41,150 +41,235 @@
         }
     ?>
 <style>
-    /* Hiệu ứng hover cho các hàng trong bảng */
-    .table-hover tbody tr:hover {
-        background-color: #e3f2fd;
-        box-shadow: inset 0 0 10px rgba(0, 123, 255, 0.25);
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
+:root {
+    --primary-color: #4154f1;
+    --secondary-color: #2c3cdd;
+    --text-color: #1e293b;
+    --border-color: #e9ecef;
+}
+
+/* Main Content Section */
+.section {
+    padding: 40px 0;
+    background: linear-gradient(135deg, #f6f9ff 0%, #f1f4ff 100%);
+}
+
+/* Container Styling */
+.container.article {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Card */
+.card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Form Title */
+h2.text-center {
+    color: var(--primary-color);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h2.text-center:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+/* Form Controls */
+.form-label {
+    color: var(--text-color);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-label i {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.form-control {
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(65, 84, 241, 0.1);
+}
+
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Select Styling */
+.form-select {
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%234154f1' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+}
+
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(65, 84, 241, 0.1);
+}
+
+/* Questions Table */
+.table {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.table thead {
+    background: linear-gradient(135deg, #4154f1, #2c3cdd);
+    color: white;
+}
+
+.table thead th {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 15px;
+    border: none;
+}
+
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9ff;
+    transform: scale(1.01);
+}
+
+.table caption {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    caption-side: top;
+}
+
+/* Action Buttons */
+.btn {
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn i {
+    font-size: 1.2rem;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(65, 84, 241, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+}
+
+.btn-lg {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+}
+
+/* Edit Form */
+.editQuestion {
+    background: rgba(65, 84, 241, 0.05);
+    border-radius: 12px;
+}
+
+.editQuestion td {
+    padding: 15px;
+}
+
+/* Custom Scrollbar */
+#questionsTable {
+    max-height: 600px;
+    overflow: auto;
+    border-radius: 15px;
+    margin: 2rem 0;
+}
+
+#questionsTable::-webkit-scrollbar {
+    width: 6px;
+}
+
+#questionsTable::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#questionsTable::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+#questionsTable::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Hero Section */
+.hero.overlay {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container.article {
+        padding: 20px;
     }
 
-    /* Hiệu ứng hover cho các nút hành động */
-    .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease-in-out;
-    }
-    .btn-warning:hover {
-        background-color: #ffcc00;
-        border-color: #ffcc00;
-        color: #fff;
-    }
-    .btn-danger:hover {
-        background-color: #d9534f;
-        border-color: #d43f3a;
-        color: #fff;
-    }
-    .btn-primary:hover {
-        background-color: #337ab7;
-        border-color: #2e6da4;
-        color: #fff;
-    }
-    /* Make the header sticky while scrolling */
-    .questionAddition thead th {
-        position: sticky;
-        top: 0;
-        background-color: #f8f9fa;
-        z-index: 1;
-        font-weight: bold;
-        text-align: center;
+    .card-body {
+        padding: 1.5rem;
     }
 
-    /* Custom scrollbar styling */
-    .questionsTable::-webkit-scrollbar {
-        width: 8px;
+    .btn {
+        padding: 10px 20px;
     }
 
-    .questionsTable::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 4px;
+    .table td, .table th {
+        padding: 10px;
     }
-
-    .questionsTable::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 4px;
-    }
-
-    .questionsTable::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-
-    /* Ensure the table caption stays above the scrollable area */
-    .questionAddition caption {
-        position: sticky;
-        top: 0;
-        background-color: white;
-        z-index: 2;
-        padding: 10px 0;
-        font-weight: bold;
-    }
-
-    /* Ensure proper spacing */
-    #questionsTable table tbody {
-        margin-bottom: 0;
-    }
-    
-    #questionsTable table tbody::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    #questionsTable table tbody::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 4px;
-    }
-
-    #questionsTable table tbody::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 4px;
-    }
-
-    #questionsTable table tbody::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-
-    /* Thêm các style mới cho table scroll */
-    #questionsTable {
-        max-height: 500px;
-        overflow: hidden;
-    }
-
-    #questionsTable table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    #questionsTable thead {
-        position: sticky;
-        top: 0;
-        background-color: #f8f9fa;
-        z-index: 2;
-    }
-
-    #questionsTable tbody {
-        display: block;
-        max-height: 400px;
-        overflow-y: auto;
-    }
-
-    #questionsTable thead tr,
-    #questionsTable tbody tr {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-    }
-
-    /* Điều chỉnh chiều rộng các cột */
-    #questionsTable th:nth-child(1),
-    #questionsTable td:nth-child(1) { width: 5%; }
-    #questionsTable th:nth-child(2),
-    #questionsTable td:nth-child(2) { width: 5%; }
-    #questionsTable th:nth-child(3),
-    #questionsTable td:nth-child(3) { width: 15%; }
-    #questionsTable th:nth-child(4),
-    #questionsTable td:nth-child(4) { width: 10%; }
-    #questionsTable th:nth-child(5),
-    #questionsTable td:nth-child(5) { width: 10%; }
-    #questionsTable th:nth-child(6),
-    #questionsTable td:nth-child(6) { width: 10%; }
-    #questionsTable th:nth-child(7),
-    #questionsTable td:nth-child(7) { width: 10%; }
-    #questionsTable th:nth-child(8),
-    #questionsTable td:nth-child(8) { width: 10%; }
-    #questionsTable th:nth-child(9),
-    #questionsTable td:nth-child(9) { width: 10%; }
-    #questionsTable th:nth-child(10),
-    #questionsTable td:nth-child(10) { width: 20%; }
-
+}
 </style>
 
     <div class="hero overlay" style="height: 150px !important; max-height: 150px !important; min-height: 100px !important">

@@ -103,6 +103,7 @@ if(isset($_POST['action'])) {
         $stmt->bind_param("sssssi", $fullname, $dob, $email, $phone, $avatar, $userID);
 
         if($stmt->execute()){
+            $_SESSION['user_fullname'] = $fullname;
             echo json_encode([
                 'success' => true,
                 'message' => 'Updated successfully'

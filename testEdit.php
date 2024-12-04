@@ -187,6 +187,111 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
+        /* Hero Section Styling */
+.hero.inner-page {
+    position: relative;
+    background: linear-gradient(135deg, #4154f1 0%, #2c3cdd 100%);
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Background Animation */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.hero-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('images/grid.png');
+    opacity: 0.1;
+    animation: backgroundMove 20s linear infinite;
+}
+
+@keyframes backgroundMove {
+    0% { transform: translateX(0) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-50%); }
+}
+
+/* Floating Shapes */
+.shape {
+    position: absolute;
+    opacity: 0.1;
+}
+
+.shape-1 {
+    top: 10%;
+    left: 10%;
+    width: 100px;
+    height: 100px;
+    background: white;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-2 {
+    top: 60%;
+    right: 10%;
+    width: 150px;
+    height: 150px;
+    background: white;
+    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+    animation: float 8s ease-in-out infinite;
+}
+
+.shape-3 {
+    bottom: 10%;
+    left: 30%;
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 41% 59% 41% 59% / 41% 59% 41% 59%;
+    animation: float 7s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* Text Gradient */
+.text-gradient {
+    background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero.inner-page {
+        min-height: 280px;
+    }
+    
+    .heading {
+        font-size: 2rem !important;
+    }
+    
+    .text-gradient {
+        font-size: 1rem;
+    }
+    
+    .shape {
+        display: none;
+    }
+}
         .btn-outline-white-reverse {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
@@ -270,16 +375,23 @@
             border-radius: 2px;
         }
     </style>
-	<div class="hero overlay inner-page">
-		<img src="images/blob.svg" alt="" class="img-fluid blob">
+	<div class="hero inner-page">
+		<div class="hero-background"></div>
+		
+		<!-- Floating Shapes -->
+		<div class="shape shape-1"></div>
+		<div class="shape shape-2"></div>
+		<div class="shape shape-3"></div>
+		
 		<div class="container">
-			<div class="row align-items-center justify-content-center pt-5">
-				<div class="col-lg-6 text-center pe-lg-5">
-					<h1 class="heading text-white mb-3" data-aos="fade-up">Sửa Đề Thi</h1>
-					<div class="align-items-center mb-4" data-aos="fade-up" data-aos-delay="200">
-						<a href="#content" class="btn btn-outline-white-reverse me-4">Bắt Đầu</a>
-					</div>
-				</div>
+			<div class="hero-content">
+				<span class="text-gradient d-block mb-2 text-center" data-aos="fade-up">Chỉnh Sửa Đề Thi</span>
+				<h1 class="heading text-white mb-4 text-center" data-aos="fade-up" data-aos-delay="100" 
+					style="font-size: 3rem; font-weight: 700;">Cập Nhật Đề Thi</h1>
+				<p class="text-white-50 mb-0 text-center" data-aos="fade-up" data-aos-delay="200" 
+				   style="font-size: 1.1rem;">
+					Điều chỉnh và cập nhật thông tin đề thi của bạn
+				</p>
 			</div>
 		</div>
 	</div>

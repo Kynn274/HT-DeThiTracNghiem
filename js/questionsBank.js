@@ -30,7 +30,7 @@ $(document).ready(function(){
         
         let editRow = questionItem.next('.editQuestion');
         
-        $('.editQuestion').not(editRow).hide();
+        $('.editQuestion').not(editRow).slideUp();
         
         editRow.slideToggle();
     });
