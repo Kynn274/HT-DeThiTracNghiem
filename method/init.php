@@ -32,6 +32,7 @@
 	        Name NVARCHAR(500), -- Tên người phản hồi
 	        Email NVARCHAR(100), -- Email người phản hồi
 	        Message NVARCHAR(1000), -- Nội dung phản hồi
+			CreateDate DATE, -- Ngày tạo
             FOREIGN KEY (UserID) REFERENCES Users(UserId) ON DELETE CASCADE
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 
@@ -103,7 +104,7 @@
 	        JoiningContestID INT AUTO_INCREMENT PRIMARY KEY, -- Mã tham gia cuộc thi
 	        UserID INT NOT NULL, -- Mã người tham gia cuộc thi
 	        ContestID INT NOT NULL, -- Mã cuộc thi
-	        TakingTime INT DEFAULT 0, -- Thời gian tiêu tốn để làm bài
+	        TakingTime INT DEFAULT 0, -- Thời gian tiêu tốn để làm bài (tính bằng giây)
 			CorrectAnswer INT DEFAULT 0, -- Số câu đúng
 	        Score DECIMAL(5,2) DEFAULT 0, -- Điểm thi
 			CreateDate DATE, -- Ngày tham gia
@@ -134,12 +135,22 @@
             FOREIGN KEY (ContestID) REFERENCES Contests(ContestID) ON DELETE CASCADE
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
 
+		// Tạo bảng yêu cầu khôi phục mật khẩu
 		"CREATE TABLE IF NOT EXISTS ResetPasswordRequests(
 			ResetPasswordRequestID INT AUTO_INCREMENT PRIMARY KEY, -- Mã yêu cầu khôi phục mật khẩu
 			UserID INT NOT NULL, -- Mã người dùng
 			CreateDate DATE, -- Ngày tạo
             FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
-		)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
+		)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4",
+
+		// Tạo bảng phản hồi
+        "CREATE TABLE IF NOT EXISTS FeedbackReplies (
+            ReplyID INT AUTO_INCREMENT PRIMARY KEY,
+            FeedbackID INT NOT NULL,
+            Reply TEXT,
+            CreateDate DATE,
+            FOREIGN KEY (FeedbackID) REFERENCES Feedbacks(FeedbackID) ON DELETE CASCADE
+        )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
     ];
 
     foreach ($tableQueries as $tableQuery) {

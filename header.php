@@ -152,6 +152,7 @@
 							<ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto fw-bold">
 								<li class="active"><a href="index.php">TRANG CHỦ</a></li>
 								<li><a href="<?php echo $is_logged_in? 'contestZone.php' : 'DangNhap.php' ?>">CUỘC THI</a></li>
+								<li><a href="<?php echo $is_logged_in? 'FeedbackBox.php' : 'DangNhap.php' ?>">HỘP THƯ</a></li>
 								<?php if($is_logged_in): 
 									if($user_type == 0 || $user_type == 2): ?>
 										<li class="has-children">

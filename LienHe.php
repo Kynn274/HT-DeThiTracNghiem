@@ -185,34 +185,34 @@
 				<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
 					<div class="contact-form-wrapper">
 						<h3 class="mb-4">Gửi tin nhắn cho chúng tôi</h3>
-						<form class="contact-form">
+						<form class="contact-form" id="contactForm">
 							<div class="row g-4">
 								<div class="col-md-6">
 									<div class="form-floating">
-										<input type="text" class="form-control" id="name" placeholder="Họ và tên">
+										<input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên" required>
 										<label for="name">Họ và tên</label>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-floating">
-										<input type="email" class="form-control" id="email" placeholder="Email">
+										<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
 										<label for="email">Email</label>
 									</div>
 								</div>
 								<div class="col-12">
 									<div class="form-floating">
-										<input type="text" class="form-control" id="subject" placeholder="Tiêu đề">
+										<input type="text" class="form-control" id="subject" name="subject" placeholder="Tiêu đề" required>
 										<label for="subject">Tiêu đề</label>
 									</div>
 								</div>
 								<div class="col-12">
 									<div class="form-floating">
-										<textarea class="form-control" id="message" style="height: 150px" placeholder="Nội dung"></textarea>
+										<textarea class="form-control" id="message" name="message" style="height: 150px" placeholder="Nội dung" required></textarea>
 										<label for="message">Nội dung</label>
 									</div>
 								</div>
 								<div class="col-12">
-									<button type="submit" class="btn btn-primary">
+									<button type="submit" class="btn btn-primary" id="sendMessageBtn">
 										Gửi tin nhắn
 										<i class="bi bi-send-fill ms-2"></i>
 									</button>
@@ -426,6 +426,65 @@
 		}
 	}
 	</style>
+
+	<!-- Toast Notification -->
+	<div class="toast-container position-fixed bottom-0 start-0 p-3">
+		<div class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" id="successToast">
+			<div class="d-flex">
+				<div class="toast-body">
+					Gửi tin nhắn thành công!
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+		</div>
+		<div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" id="errorToast">
+			<div class="d-flex">
+				<div class="toast-body">
+					Không thể gửi được phản hồi!
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			$('#contactForm').on('submit', function(e) {
+				e.preventDefault();
+				
+				$.ajax({
+					url: 'process.php',
+					type: 'POST',
+					data: {
+						action: 'sendMessage',
+						name: $('#name').val(),
+						email: $('#email').val(),
+						subject: $('#subject').val(),
+						message: $('#message').val()
+					},
+					success: function(response) {
+						if(response.success) {
+							// Show success toast
+							var toast = new bootstrap.Toast($('#successToast'));
+							toast.show();
+							
+							// Clear form
+							$('#contactForm')[0].reset();
+						} else {
+							// Show error toast
+							var toast = new bootstrap.Toast($('#errorToast'));
+							toast.show();
+						}
+					},
+					error: function() {
+						// Show error toast
+						var toast = new bootstrap.Toast($('#errorToast'));
+						toast.show();
+					}
+				});
+			});
+		});
+	</script>
 
 	<?php
 		include 'footer.php';

@@ -703,42 +703,52 @@ if(isset($_POST['action'])) {
         exit;
     }
     if($_POST['action'] == 'submitAnswer'){
-        $joiningContestID = intval($_POST['joiningContestID']);
+        $joiningContestID = $_POST['joiningContestID'];
         $questionsArray = $_POST['questionsArray'];
-        $questionAndAnswer = [];
+        $takingTime = $_POST['takingTime'];
+        
+        // Cập nhật thời gian làm bài (giờ lưu theo giây)
+        $sql = "UPDATE JoiningContests SET TakingTime = ? WHERE JoiningContestID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $takingTime, $joiningContestID);
+        $stmt->execute();
+        
+        // Tính điểm và lưu câu trả lời
         $correctAnswer = 0;
-        $totalQuestions = count($questionsArray);
-        //  Xử lý dữ liệu
-        $i = 0;
-        foreach($questionsArray as $question){
-            $questionAndAnswer[] = [
-                'questionID' => intval($question['QuestionID']),
-                'selectedAnswer' => intval($question['SelectedAnswer']),
-                'isCorrect' => intval($question['SelectedAnswer'] == $question['QuestionAnswerID'] ? 1 : 0)
-            ];
+        foreach($questionsArray as $question) {
+            $questionID = $question['QuestionID'];
+            $selectedAnswer = $question['SelectedAnswer'];
+            $isCorrect = 0;
             
-            if($questionAndAnswer[$i]['isCorrect'] == 1){
+            // Kiểm tra đáp án đúng
+            if($selectedAnswer == $question['QuestionAnswerID']) {
                 $correctAnswer++;
+                $isCorrect = 1;
             }
-            $i++;
+            
+            // Lưu câu trả lời
+            $sql = "INSERT INTO JoiningContestAnswers (JoiningContestID, QuestionID, SelectedAnswer, IsCorrect) 
+                    VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iiii", $joiningContestID, $questionID, $selectedAnswer, $isCorrect);
+            $stmt->execute();
         }
-        $sql = "INSERT INTO JoiningContestAnswers (JoiningContestID, QuestionID, SelectedAnswer, IsCorrect) VALUES (?, ?, ?, ?)";
+        
+        // Cập nhật số câu đúng
+        $sql = "UPDATE JoiningContests SET CorrectAnswer = ? WHERE JoiningContestID = ?";
         $stmt = $conn->prepare($sql);
-        foreach($questionAndAnswer as $question){
-            $stmt->bind_param("iiii", $joiningContestID, $question['questionID'], $question['selectedAnswer'], $question['isCorrect']);
-            if(!$stmt->execute()){
-                echo json_encode(['success' => false, 'error' => $conn->error]);
-                exit;
-            }
-        }
-        $score = floatval($correctAnswer/$totalQuestions) * 10;
-        $sql = "UPDATE JoiningContests SET Score = ?, CorrectAnswer = ? WHERE JoiningContestID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iii", $score, $correctAnswer, $joiningContestID);
-        if($stmt->execute()){
-            echo json_encode(['success' => true]);
-        }else{
-            echo json_encode(['success' => false, 'error' => $conn->error]);
+        $stmt->bind_param("ii", $correctAnswer, $joiningContestID);
+        
+        if($stmt->execute()) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Nộp bài thành công'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra'
+            ]);
         }
         exit;
     }
@@ -910,6 +920,103 @@ if(isset($_POST['action'])) {
             'data' => $data
         ]);
         exit();
+    }
+    if($_POST['action'] == 'sendMessage') {
+        $userID = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+        $senderName = $_POST['name'];
+        $senderEmail = $_POST['email'];
+        $subject = $_POST['subject'];
+        $message = $_POST['message'];
+        $messageContent = $subject . ' - ' . $message;
+        $createDate = date('Y-m-d');
+
+        $sql = "INSERT INTO Feedbacks (UserID, Name, Email, Message, CreateDate) 
+                VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("issss", $userID, $senderName, $senderEmail, $messageContent, $createDate);
+
+        if($stmt->execute()) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Gửi tin nhắn thành công!'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Có lỗi xảy ra, vui lòng thử lại!'
+            ]);
+        }
+        exit;
+    }
+    if($_POST['action'] == 'getFeedbacks') {
+        $userID = $_SESSION['user_id'];
+        $userType = $_SESSION['user_type'];
+        
+        if($userType == 0) {
+            // Admin sees all feedbacks
+            $sql = "SELECT f.*, r.Reply, r.CreateDate as ReplyDate 
+                    FROM Feedbacks f 
+                    LEFT JOIN FeedbackReplies r ON f.FeedbackID = r.FeedbackID 
+                    ORDER BY f.CreateDate DESC";
+            $stmt = $conn->prepare($sql);
+        } else {
+            // Users see only their feedbacks
+            $sql = "SELECT f.*, r.Reply, r.CreateDate as ReplyDate 
+                    FROM Feedbacks f 
+                    LEFT JOIN FeedbackReplies r ON f.FeedbackID = r.FeedbackID 
+                    WHERE f.UserID = ? 
+                    ORDER BY f.CreateDate DESC";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $userID);
+        }
+        
+        if($stmt->execute()) {
+            $result = $stmt->get_result();
+            $feedbacks = array();
+            while($row = $result->fetch_assoc()) {
+                $feedbacks[] = $row;
+            }
+            echo json_encode([
+                'success' => true,
+                'feedbacks' => $feedbacks
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Không thể tải phản hồi'
+            ]);
+        }
+        exit;
+    }
+    if($_POST['action'] == 'sendReply') {
+        if($_SESSION['user_type'] != 0) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Không có quyền thực hiện'
+            ]);
+            exit;
+        }
+
+        $feedbackID = $_POST['feedbackID'];
+        $reply = $_POST['reply'];
+        $createDate = date('Y-m-d');
+
+        $sql = "INSERT INTO FeedbackReplies (FeedbackID, Reply, CreateDate) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iss", $feedbackID, $reply, $createDate);
+
+        if($stmt->execute()) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Gửi phản hồi thành công'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Không thể gửi phản hồi'
+            ]);
+        }
+        exit;
     }
 }
 if(isset($_GET['action'])){

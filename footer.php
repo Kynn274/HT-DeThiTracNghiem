@@ -123,9 +123,9 @@
                 <div>
                     <h3 class="footer-heading mb-4">LIÊN KẾT NHANH</h3>
                     <ul class="list-unstyled footer-links">
-                        <li class="mb-3"><a href="#" class="text-white-50">Thông tin về chúng tôi</a></li>
+                        <li class="mb-3"><a href="index.php" class="text-white-50">Thông tin về chúng tôi</a></li>
                         <li class="mb-3"><a href="LienHe.php" class="text-white-50">Liên hệ với chúng tôi</a></li>
-                        <li class="mb-3"><a href="#" class="text-white-50">Điều khoản sử dụng</a></li>
+                        <li class="mb-3"><a href="DieuKhoanSuDung.php" class="text-white-50">Điều khoản sử dụng</a></li>
                     </ul>
                 </div>
             </div>

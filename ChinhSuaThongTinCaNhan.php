@@ -358,6 +358,15 @@
     <!-- Form Section -->
     <div class="section">
         <div class="container article">
+            <?php if(isset($_SESSION['success_message'])): ?>
+                <div class="alert alert-success alert-dismissible fade show position-fixed bottom-0 start-0 m-3" role="alert" style="z-index: 1050;">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <?php echo $_SESSION['success_message']; ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['success_message']); ?>
+            <?php endif; ?>
+
             <div class="avatar">
                 <img src="images/<?php echo $userDetails['Avatar'] ? $userDetails['Avatar'] : 'no-avatar.jpg'; ?>" alt="avatar">
                 <button type="button" class="open-avatar-selector">
