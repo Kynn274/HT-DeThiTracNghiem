@@ -421,6 +421,7 @@
                                 <td>${row.TakingTime}</td>
                                 <td>${row.CorrectAnswer} / ${row.TotalQuestions} câu</td>
                                 <td>${score.toFixed(2)}</td>
+
                         `;
                         
                         // Thêm kết quả đúng/sai cho từng câu
@@ -438,7 +439,7 @@
                     $('#previewData').html(html);
                     $('#previewModal').modal('show');
                 } else {
-                    alert('Có lỗi xảy ra khi tải dữ liệu');
+                    alert('Có lỗi xảy ra khi tải dữ liệu1');
                 }
             },
             error: function() {

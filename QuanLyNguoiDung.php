@@ -561,7 +561,7 @@
               <?php } else { ?>
                 <button class="btn btn-success activate-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-unlock-fill"></i><p class="m-0">Kích hoạt<br>tài khoản</p></button>
               <?php } ?>
-              <button class="btn btn-warning reset-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-key-fill"></i><p class="m-0">Khôi phục<br>mật khẩu</p></button>
+              <!-- <button class="btn btn-warning reset-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-key-fill"></i><p class="m-0">Khôi phục<br>mật khẩu</p></button> -->
               <button class="btn btn-primary show-info-btn" value="<?php echo $user['UserID'] ?>"><i class="bi bi-info-circle"></i><p class="m-0">Thông tin<br>chi tiết</p></button>
             </td>
             </tr>

@@ -895,7 +895,7 @@ if(isset($_POST['action'])) {
             // Lấy chi tiết câu hỏi và đáp án của mỗi học sinh
             $sql2 = "SELECT 
                     q.QuestionDescription,
-                    jca.IsCorrect,s
+                    jca.IsCorrect,
                     a.AnswerDescription as CorrectAnswerText,
                     (SELECT AnswerDescription FROM Answers WHERE AnswerID = jca.SelectedAnswer) as SelectedAnswerText
                     FROM JoiningContestAnswers jca
