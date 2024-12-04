@@ -332,7 +332,13 @@
                       
                       // Tạo HTML content
                       var htmlContent = `
-                          <div id="pdf-content" style="font-family: Times New Roman, serif; font-size: 13pt; padding: 20mm;">
+                          <style>
+                            .page {
+                                padding: -5mm 0 0 0;
+                                margin: 0;
+                            }
+                          </style>
+                          <div id="pdf-content" style="font-family: Times New Roman, serif; font-size: 13pt; padding: 0 20mm 20mm 20mm;">
                               <!-- Trang đầu tiên với 4 câu -->
                               <div class="page" style="font-family: 'Times New Roman', Times, serif; font-size: 13pt; line-height: 1.15;">
                                   <div style="text-align: center;">
@@ -340,7 +346,7 @@
                                           <p style="margin: 0;">TRƯỜNG: ${contest.School}</p>
                                           <p style="margin-top: 10pt;">KHOA:........................</p>
                                       </div>
-                                      <div style="width: 50%; float: right; text-transform: uppercase;">
+                                      <div style="width: 50%; float: right; text-transform: uppercase; font-family: 'Times New Roman', Times, serif;">
                                           <h3 style="font-size: 13pt; font-weight: bold; margin: 0;">ĐỀ THI KẾT THÚC HỌC PHẦN</h3>
                                           <h3 style="font-size: 13pt; font-weight: bold; margin-top: 8pt;">HỌC KỲ ...... NĂM HỌC .................</h3>
                                       </div>
@@ -380,7 +386,7 @@
                                       <h4 style="text-align: center; font-size: 13pt; font-family: 'Times New Roman', Times, serif;"><b>NỘI DUNG ĐỀ THI</b></h4>
                                       
                                       <!-- 4 câu đầu tiên -->
-                                      ${questions.slice(0, 5).map((question, index) => `
+                                      ${questions.slice(0, 4).map((question, index) => `
                                           <div style="margin-bottom: 15pt;">
                                               <p>Câu ${index + 1}: ${question.QuestionDescription}</p>
                                               <div style="margin-left: 20pt;">
@@ -395,19 +401,14 @@
                                               </div>
                                           </div>
                                       `).join('')}
-
-                                       <!-- Số trang 1 -->
-                                       <!-- <div style="text-align: center; position: absolute; bottom: 20mm; left: 0; right: 0;">
-                                           <p style="margin: 0;">Trang 1/${Math.ceil((questions.length - 4) / 7) + 1} - Mã đề: ${contest.ContestCode}</p>
-                                       </div> -->
                                   </div>
 
                                   <!-- Các trang tiếp theo, mỗi trang 7 câu -->
-                                  ${Array.from({ length: Math.ceil((questions.length - 5) / 7) }, (_, pageIndex) => `
-                                      <div class="page" style="page-break-before: always; padding: 25mm 0;font-family: 'Times New Roman', Times, serif; font-size: 13pt; line-height: 1.3;">
-                                          ${questions.slice(5 + pageIndex * 7, 5 + (pageIndex + 1) * 7).map((question, index) => `
+                                  ${Array.from({ length: Math.ceil((questions.length - 4) / 7) }, (_, pageIndex) => `
+                                      <div class="page" style="page-break-before: always; padding: 5mm 0 0 0;font-family: 'Times New Roman', Times, serif; font-size: 13pt; line-height: 1.3;">
+                                          ${questions.slice(4 + pageIndex * 7, 4 + (pageIndex + 1) * 7).map((question, index) => `
                                               <div style="margin-bottom: 15pt;">
-                                                  <p>Câu ${5 + pageIndex * 7 + index + 1}: ${question.QuestionDescription}</p>
+                                                  <p>Câu ${4 + pageIndex * 7 + index + 1}: ${question.QuestionDescription}</p>
                                                   <div style="margin-left: 20pt;">
                                                       <div style="display: flex;">
                                                           <p style="margin: 5pt 0; margin-right: 10pt; flex: 1;">a. ${question.Answer[0].AnswerDescription}</p>

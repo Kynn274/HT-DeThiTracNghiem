@@ -392,6 +392,7 @@
                             <th>STT</th>
                             <th>Họ và tên</th>
                             <th>Ngày thi</th>
+                            <th>Thời gian</th>
                             <th>Kết quả chung</th>
                             <th>Điểm</th>
                     `;
@@ -417,6 +418,7 @@
                                 <td>${index + 1}</td>
                                 <td>${row.FullName}</td>
                                 <td>${row.LastAttemptDate}</td>
+                                <td>${row.TakingTime}</td>
                                 <td>${row.CorrectAnswer} / ${row.TotalQuestions} câu</td>
                                 <td>${score.toFixed(2)}</td>
                         `;

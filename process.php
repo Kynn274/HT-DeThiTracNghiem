@@ -775,6 +775,7 @@ if(isset($_POST['action'])) {
                 jc.JoiningContestID,
                 jc.CreateDate as LastAttemptDate,
                 jc.CorrectAnswer,
+                jc.TakingTime,
                 c.TotalQuestions,
                 c.ContestName
                 FROM JoiningContests jc
@@ -827,7 +828,7 @@ if(isset($_POST['action'])) {
         }
         
         // Tạo header cho file CSV
-        $header = ['STT', 'Họ và tên', 'Ngày thi', 'Kết quả chung', 'Điểm'];
+        $header = ['STT', 'Họ và tên', 'Ngày thi', 'Thời gian', 'Kết quả chung', 'Điểm'];
         
         // Thêm các cột câu hỏi vào header
         if(count($data) > 0 && isset($data[0]['QuestionResults'])) {
@@ -847,6 +848,7 @@ if(isset($_POST['action'])) {
                 $stt,
                 $row['FullName'],
                 $row['LastAttemptDate'],
+                $row['TakingTime'],
                 $row['CorrectAnswer'] . ' / ' . $row['TotalQuestions'] . ' câu',
                 number_format($score, 2)
             ];
@@ -874,6 +876,7 @@ if(isset($_POST['action'])) {
                 jc.JoiningContestID,
                 jc.CreateDate as LastAttemptDate,
                 jc.CorrectAnswer,
+                jc.TakingTime,
                 c.TotalQuestions,
                 c.ContestName
                 FROM JoiningContests jc
