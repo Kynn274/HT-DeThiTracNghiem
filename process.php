@@ -49,37 +49,118 @@ if(isset($_POST['action'])) {
         exit;
     }
     if($_POST['action'] == 'banUser'){
+        // Kiểm tra quyền admin
+        if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] != 0) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Không có quyền thực hiện hành động này'
+            ]);
+            exit;
+        }
+
         $userID = $_POST['userID'];
+        
+        // Kiểm tra userID hợp lệ
+        if (!is_numeric($userID)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'UserID không hợp lệ'
+            ]);
+            exit;
+        }
+
+        // Kiểm tra user tồn tại và không phải admin
+        $checkSql = "SELECT Type FROM Users WHERE UserID = ?";
+        $checkStmt = $conn->prepare($checkSql);
+        $checkStmt->bind_param("i", $userID);
+        $checkStmt->execute();
+        $result = $checkStmt->get_result();
+        
+        if ($result->num_rows == 0) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Không tìm thấy người dùng'
+            ]);
+            exit;
+        }
+        
+        $userData = $result->fetch_assoc();
+        if ($userData['Type'] == 0) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Không thể hạn chế tài khoản admin'
+            ]);
+            exit;
+        }
+
+        // Thực hiện hạn chế
         $sql = "UPDATE Users SET Status = 0 WHERE UserID = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $userID);
+        
         if($stmt->execute()){
             echo json_encode([
-                'success' => true
+                'success' => true,
+                'message' => 'Hạn chế tài khoản thành công'
             ]);
-            exit;
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Lỗi khi cập nhật trạng thái: ' . $conn->error
+            ]);
         }
-        echo json_encode([
-            'success' => false,
-            'message' => 'Could not ban user'
-        ]);
         exit;
     }
     if($_POST['action'] == 'activateUser'){
-        $userID = $_POST['userID'];
-        $sql = "UPDATE Users SET Status = 1 WHERE UserID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $userID);
-        if($stmt->execute()){
+        // Kiểm tra quyền admin  
+        if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] != 0) {
             echo json_encode([
-                'success' => true
+                'success' => false,
+                'message' => 'Không có quyền thực hiện hành động này'
             ]);
             exit;
         }
-        echo json_encode([
-            'success' => false,
-            'message' => 'Could not activate user'
-        ]);
+
+        $userID = $_POST['userID'];
+        
+        // Kiểm tra userID hợp lệ
+        if (!is_numeric($userID)) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'UserID không hợp lệ'
+            ]);
+            exit;
+        }
+
+        // Kiểm tra user tồn tại
+        $checkSql = "SELECT UserID FROM Users WHERE UserID = ?";
+        $checkStmt = $conn->prepare($checkSql);
+        $checkStmt->bind_param("i", $userID);
+        $checkStmt->execute();
+        
+        if ($checkStmt->get_result()->num_rows == 0) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Không tìm thấy người dùng'
+            ]);
+            exit;
+        }
+
+        $sql = "UPDATE Users SET Status = 1 WHERE UserID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        
+        if($stmt->execute()){
+            echo json_encode([
+                'success' => true,
+                'message' => 'Kích hoạt tài khoản thành công'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Lỗi khi cập nhật trạng thái: ' . $conn->error
+            ]);
+        }
         exit;
     }
     if($_POST['action'] == 'updateUserDetails') {

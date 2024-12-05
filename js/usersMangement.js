@@ -96,7 +96,39 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Update ban button click handler
+// Thêm function hiển thị toast
+function showToast(type, title, message) {
+    const toast = document.querySelector('.toast');
+    const icon = toast.querySelector('.toast-content .bi');
+    const title_text = toast.querySelector('.text.text-1');
+    const message_text = toast.querySelector('.text.text-2');
+    
+    // Set icon và màu dựa vào type
+    if (type === 'success') {
+        icon.className = 'bi bi-check-circle-fill';
+        toast.style.borderLeft = '6px solid #2dce89';
+    } else {
+        icon.className = 'bi bi-x-circle-fill';
+        toast.style.borderLeft = '6px solid #f5365c';
+    }
+    
+    title_text.textContent = title;
+    message_text.textContent = message;
+    
+    toast.classList.add('active');
+    
+    // Tự động ẩn toast sau 5s
+    setTimeout(() => {
+        toast.classList.remove('active');
+    }, 5000);
+}
+
+// Xử lý đóng toast khi click
+document.querySelector('.toast .close').addEventListener('click', () => {
+    document.querySelector('.toast').classList.remove('active');
+});
+
+// Cập nhật các hàm xử lý ban/activate để sử dụng toast
 $('.ban-btn').click(function() {
     const userID = $(this).val();
     const username = $(this).closest('tr').find('input[type="text"]').val();
@@ -104,18 +136,13 @@ $('.ban-btn').click(function() {
     const confirmBtn = confirmationPanel.find('.confirm-btn');
     const cancelBtn = confirmationPanel.find('.cancel-btn');
 
-    // Update confirmation message with username
     confirmationPanel.find('p').text(`Bạn có chắc chắn muốn hạn chế tài khoản "${username}" không?`);
-
-    // Show confirmation panel
     confirmationPanel.css('display', 'block');
 
-        // Handle cancel
     cancelBtn.click(function() {
         confirmationPanel.css('display', 'none');
     });
 
-    // Handle confirm
     confirmBtn.click(function() {
         $.ajax({
             url: 'process.php',
@@ -128,18 +155,19 @@ $('.ban-btn').click(function() {
                 userID: userID
             },
             success: function(response) {
-                const data = JSON.parse(response);
-                if (data.success) {
-                    alert('Hạn chế tài khoản thành công');
-                    // Reload page to reflect changes
-                    window.location.reload();
+                if (response.success) {
+                    showToast('success', 'Thành công', response.message);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
                 } else {
-                    alert('Không thể hạn chế tài khoản này');
+                    showToast('error', 'Lỗi', response.message);
                 }
+                confirmationPanel.css('display', 'none');
             },
-            error: function(textStatus) {
-                console.error('Error:', textStatus);
-                alert('Đã xảy ra lỗi khi hạn chế tài khoản');
+            error: function(xhr, status, error) {
+                showToast('error', 'Lỗi', 'Đã xảy ra lỗi khi thực hiện thao tác');
+                confirmationPanel.css('display', 'none');
             }
         });
     });
@@ -152,24 +180,23 @@ $('.activate-btn').click(function() {
         type: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            },
+        },
         data: {
             action: 'activateUser',
             userID: userID
         },
         success: function(response) {
-            const data = JSON.parse(response);
-            if(data.success){
-                alert('Kích hoạt tài khoản thành công');
-                // Reload page to reflect changes
-                window.location.reload();
-            }else{
-                alert('Không thể kích hoạt tài khoản này');
+            if(response.success){
+                showToast('success', 'Thành công', response.message);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } else {
+                showToast('error', 'Lỗi', response.message);
             }
         },
-        error: function(textStatus) {
-            console.error('Error:', textStatus);
-            alert('Đã xảy ra lỗi khi kích hoạt tài khoản');
+        error: function(xhr, status, error) {
+            showToast('error', 'Lỗi', 'Đã xảy ra lỗi khi thực hiện thao tác');
         }
     });
 });

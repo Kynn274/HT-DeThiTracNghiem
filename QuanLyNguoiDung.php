@@ -502,6 +502,112 @@
             display: none;
         }
     }
+
+    .toast-container {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 999999;
+    }
+
+    .toast {
+      position: relative;
+      width: 400px;
+      padding: 20px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+      display: none;
+    }
+
+    .toast.active {
+      display: block;
+      animation: show_toast 0.3s ease forwards;
+    }
+
+    @keyframes show_toast {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .toast .toast-content {
+      display: flex;
+      align-items: center;
+    }
+
+    .toast-content .bi {
+      font-size: 25px;
+      margin-right: 12px;
+    }
+
+    .toast-content .bi.bi-check-circle-fill {
+      color: #2dce89;
+    }
+
+    .toast-content .bi.bi-x-circle-fill {
+      color: #f5365c;
+    }
+
+    .toast-content .message {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message .text {
+      font-size: 16px;
+      font-weight: 400;
+      color: #666666;
+    }
+
+    .message .text.text-1 {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .toast .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+
+    .toast .close:hover {
+      opacity: 1;
+    }
+
+    .toast .progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background: #ddd;
+    }
+
+    .toast .progress:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #4154f1;
+    }
+
+    .toast.active .progress:before {
+      animation: progress 5s linear forwards;
+    }
+
+    @keyframes progress {
+      100% {
+        right: 100%;
+      }
+    }
   </style>
   <div class="hero inner-page">
     <div class="hero-background"></div>
@@ -609,10 +715,24 @@
       <img src="" alt="">
     </div>
   </div>
+  <div class="toast-container">
+    <div class="toast" role="alert">
+      <div class="toast-content">
+        <i class="bi"></i>
+        <div class="message">
+          <span class="text text-1"></span>
+          <span class="text text-2"></span>
+        </div>
+      </div>
+      <i class="bi bi-x-lg close"></i>
+      <div class="progress"></div>
+    </div>
+  </div>
   <script src="js/usersMangement.js"></script>
   <?php
     include 'footer.php';
     include 'javascript.php';
   ?>
+  
   </body>
   </html>
