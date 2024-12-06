@@ -1,87 +1,82 @@
-# MindBridge Institute - Hệ Thống Thi Trực Tuyến
+# Hệ Thống Thi Trực Tuyến
 
-## Giới Thiệu
-MindBridge Institute là nền tảng trực tuyến chuyên biệt cho phép giáo viên tạo và tổ chức các bài kiểm tra, đề thi một cách dễ dàng và hiệu quả. Hệ thống được thiết kế để đáp ứng nhu cầu đánh giá năng lực học sinh thông qua các bài kiểm tra trực tuyến.
+## Yêu Cầu Phần Cứng & Phần Mềm
 
-## Tính Năng Chính
+### Yêu Cầu Tối Thiểu
+- **CPU:** Intel Core i3 hoặc AMD tương đương
+- **RAM:** 4GB
+- **Ổ cứng:** 10GB dung lượng trống
+- **Kết nối mạng:** Tốc độ tối thiểu 5Mbps
+- **Màn hình:** Độ phân giải 1366x768
+- **Trình duyệt:** Chrome 88+, Firefox 85+, Edge 88+ hoặc Safari 14+
 
-### Dành Cho Giáo Viên
-- **Quản Lý Ngân Hàng Câu Hỏi**
-  - Tạo và quản lý câu hỏi theo môn học
-  - Phân loại độ khó (Dễ, Trung bình, Khó)
-  - Tùy chỉnh đáp án và giải thích
+### Yêu Cầu Khuyến Nghị
+- **CPU:** Intel Core i5/AMD Ryzen 5 hoặc cao hơn
+- **RAM:** 8GB hoặc cao hơn
+- **Ổ cứng:** 20GB dung lượng trống hoặc nhiều hơn
+- **Kết nối mạng:** Tốc độ từ 10Mbps trở lên
+- **Màn hình:** Độ phân giải 1920x1080 hoặc cao hơn
+- **Trình duyệt:** Phiên bản mới nhất của Chrome, Firefox, Edge hoặc Safari
 
-- **Tạo Đề Thi**
-  - Tạo đề thi với nhiều định dạng
-  - Tùy chỉnh thời gian làm bài
-  - Thiết lập số lượng câu hỏi và độ khó
-  - Xuất đề thi dạng PDF
+### Yêu Cầu Phần Mềm Server
+- **Hệ điều hành:** Windows Server 2016/2019, Ubuntu 18.04/20.04 LTS
+- **Web Server:** Apache 2.4+ hoặc Nginx 1.18+
+- **PHP:** Phiên bản 7.4+ (Khuyến nghị PHP 8.0+)
+- **MySQL:** Phiên bản 5.7+ (Khuyến nghị MySQL 8.0+)
+- **SSL Certificate:** Yêu cầu cho bảo mật HTTPS
 
-- **Quản Lý Cuộc Thi**
-  - Tạo và quản lý các kỳ thi
-  - Thiết lập thời gian thi
-  - Kiểm soát số lần thi lại
-  - Theo dõi tiến trình thi
+### Yêu Cầu Phần Mềm Client
+- **Hệ điều hành:** Windows 10/11, macOS 10.15+, Ubuntu 18.04+
+- **Trình duyệt web hiện đại với các tính năng:**
+  - JavaScript được bật
+  - Cookies được cho phép
+  - Local Storage được hỗ trợ
+  - WebSocket được hỗ trợ (cho tính năng real-time)
 
-- **Thống Kê và Báo Cáo**
-  - Xem kết quả chi tiết từng học sinh
-  - Phân tích thống kê kết quả
-  - Xuất báo cáo dạng CSV
-  - Đánh giá hiệu quả đề thi
+### Yêu Cầu Bảo Mật
+- Firewall được cấu hình đúng
+- Antivirus/Antimalware được cài đặt và cập nhật
+- Chính sách mật khẩu mạnh
+- Backup dữ liệu định kỳ
 
-### Dành Cho Học Sinh
-- Tham gia các kỳ thi trực tuyến
-- Xem kết quả ngay sau khi nộp bài
-- Theo dõi lịch sử làm bài
-- Gửi phản hồi cho giáo viên
+### Yêu Cầu Khác
+- Camera (cho chức năng giám sát thi)
+- Microphone (cho chức năng tương tác)
+- Dung lượng lưu trữ cho tài liệu và bài thi
+- Băng thông đủ cho số lượng người dùng đồng thời
 
-## Yêu Cầu Hệ Thống
-- PHP 7.4 trở lên
-- MySQL 5.7 trở lên
-- Web Server (Apache/Nginx)
-- Modern Web Browser (Chrome, Firefox, Safari)
+## Hướng Dẫn Cài Đặt
 
-## Cài Đặt
-1. Clone repository về máy local
-2. Import file database từ thư mục `database`
-3. Cấu hình kết nối database trong file `method/database.php`
-4. Cấu hình domain trong file config
-5. Khởi chạy ứng dụng
+1. **Cài đặt XAMPP/WAMP/LAMP**
+   - Tải và cài đặt XAMPP từ trang chủ
+   - Khởi động Apache và MySQL
 
-## Cấu Trúc Thư Mục 
-mindbridge/
-├── css/ # Style sheets
-├── js/ # JavaScript files
-├── images/ # Image assets
-├── method/ # Core PHP functions
-├── database/ # Database scripts
-└── README.md # This file
+2. **Cài đặt Database**
+   - Import file SQL vào phpMyAdmin
+   - Cấu hình kết nối trong file config
 
-## Công Nghệ Sử Dụng
-- Frontend: HTML5, CSS3, JavaScript, jQuery, Bootstrap 5
-- Backend: PHP, MySQL
-- Libraries: html2pdf, DataTables, Chart.js
+3. **Cấu hình Web Server**
+   - Copy source code vào thư mục web root
+   - Cấu hình virtual host (nếu cần)
+   - Cấu hình SSL (nếu có)
 
-## Tính Năng Bảo Mật
-- Mã hóa mật khẩu
-- Phân quyền người dùng
-- Bảo vệ form submission
-- Chống SQL injection
-- Session management
+4. **Kiểm tra và Khởi chạy**
+   - Kiểm tra các quyền thư mục
+   - Khởi động lại web server
+   - Truy cập website qua trình duyệt
 
-## Người Đóng Góp
-- [Phạm Thiên Kim]
-- [kimpham22072004@gmail.com]
-- [Dương Bảo Trân]
-- [Nguyễn Văn Hậu]
-- [Huỳnh Thị Ngọc Hương]
+## Lưu ý Quan Trọng
 
-## License
-[Loại giấy phép]
+- Đảm bảo tất cả extension PHP cần thiết được cài đặt
+- Cấu hình PHP memory limit phù hợp
+- Thiết lập cron jobs cho các tác vụ tự động
+- Cấu hình backup tự động
+- Theo dõi log files thường xuyên
 
-## Liên Hệ Hỗ Trợ
-Nếu bạn có bất kỳ câu hỏi hoặc góp ý nào, vui lòng liên hệ:
-- Email: [kimpham22072004@gmail.com]
-- Website: [website]
-- Tel: [0967785209]
+## Hỗ Trợ
+
+Nếu gặp vấn đề trong quá trình cài đặt, vui lòng liên hệ:
+- Email: support@example.com
+- Phone: xxx-xxx-xxxx
+- Website: www.example.com/support
 
