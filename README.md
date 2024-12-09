@@ -1,5 +1,21 @@
 # Hệ Thống Thi Trực Tuyến
 
+## Công Nghệ Sử Dụng
+
+### Frontend
+- **HTML5/CSS3:** Xây dựng giao diện người dùng
+- **JavaScript/jQuery:** Xử lý tương tác và hiệu ứng
+- **Bootstrap 5:** Framework CSS cho giao diện responsive
+- **AJAX:** Giao tiếp với backend không đồng bộ
+- **Font Awesome & Bootstrap Icons:** Thư viện icon
+
+### Backend
+- **PHP:** Ngôn ngữ lập trình phía server
+- **MySQL:** Hệ quản trị cơ sở dữ liệu
+- **Apache:** Web server
+- **PHPMailer:** Thư viện gửi email
+- **PHP Sessions:** Quản lý phiên đăng nhập
+
 ## Yêu Cầu Phần Cứng & Phần Mềm
 
 ### Yêu Cầu Tối Thiểu
@@ -73,10 +89,15 @@
 - Cấu hình backup tự động
 - Theo dõi log files thường xuyên
 
-## Hỗ Trợ
+### Công Cụ Kiểm Thử
+- **Manual Testing:** Kiểm thử thủ công các test case
+- **Selenium:** Tự động hóa kiểm thử UI
+- **PHPUnit:** Unit testing cho PHP
+- **Browser DevTools:** Kiểm tra request/response
+- **Postman:** Kiểm thử API đăng nhập
 
-Nếu gặp vấn đề trong quá trình cài đặt, vui lòng liên hệ:
-- Email: support@example.com
-- Phone: xxx-xxx-xxxx
-- Website: www.example.com/support
+### Môi Trường Kiểm Thử
+- **Trình duyệt:** Chrome, Firefox, Safari, Edge
+- **Thiết bị:** Desktop, Tablet, Mobile
+- **Hệ điều hành:** Windows, macOS, Linux
 
